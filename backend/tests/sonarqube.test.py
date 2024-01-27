@@ -6,7 +6,7 @@ import os
 # Add the path to the parent directory to sys.path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/..")
 
-from sonarqube import total_sum
+from api.sonarqube import total_sum
 
 class TestTotalSumFunction(unittest.TestCase):
 
