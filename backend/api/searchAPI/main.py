@@ -20,6 +20,7 @@ class NewsArticle(BaseModel):
 
 class Profile(BaseModel):
     person_id: int
+    name: str
     occupation: str
     dob: str
     nationality: str
@@ -46,6 +47,7 @@ async def get_articles_by_query(
     #this is the sample data
     profile = Profile(
         person_id=123,
+        name = "Anthony Tan",
         occupation="Software Engineer",
         dob="1990-01-01T00:00:00Z",
         nationality="American",
