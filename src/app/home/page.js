@@ -1,6 +1,5 @@
 "use client";
 import SearchBar from "@/components/SearchBar";
-import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -20,13 +19,7 @@ export default function Home() {
   return (
     <div className="flex h-screen justify-center items-center">
       <div className="w-full flex-col flex justify-center items-center">
-        <Image
-          src="/logo.png"
-          width={350}
-          height={300}
-          alt="logo"
-          className="m-4"
-        ></Image>
+        <img src="/logo.png" className="sm:w-1/3 w-1/2 m-3"></img>
         <SearchBar
           searchQuery={search}
           onSearchChange={handleSearchChange}

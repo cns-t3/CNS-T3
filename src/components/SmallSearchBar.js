@@ -27,7 +27,7 @@ export default function SmallSearchBar({ initialValue }) {
           defaultValue={value}
           onChange={handleChange}
           onKeyDown={onSearchSubmit}
-          className="block w-full p-4 rounded-md  text-gray-700 bg-gray-100 lg:text-2xl md:text-xl sm:text-xs focus:outline-none caret-red-500"
+          className="block w-full p-4 rounded-md  text-gray-700 bg-gray-100 lg:text-xl md:text-lg text-md sm:text-lg focus:outline-none caret-red-500"
         />
         <img
           src="/search.svg"

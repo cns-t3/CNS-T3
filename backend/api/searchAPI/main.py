@@ -50,7 +50,7 @@ async def get_articles_by_query(
         occupation="CEO",
         dob="1960-11-01T00:00:00Z",
         nationality="American",
-        description="An accomplished business executive known for his leadership at Apple Inc.",
+        description='Tim Cook is a distinguished business leader known for his role as the CEO of Apple Inc., a position he assumed in 2011 following the iconic Steve Jobs. Cook\'s professional trajectory is marked by his strategic vision, operational prowess, and commitment to innovation. Renowned for his disciplined management style and focus on sustainability, Cook has steered Apple through significant milestones, including the launch of groundbreaking products like the iPhone X and the Apple Watch. Under his stewardship, Apple has expanded its global footprint, diversified its product offerings, and emphasized corporate social responsibility initiatives. Cook\'s leadership is characterized by a blend of foresight, integrity, and a relentless drive for excellence, making him a pivotal figure in the tech industry.',
         company="Apple Inc.",
         img_url="https://www.apple.com/leadership/images/bio/tim-cook_image.png.og.png?1696970027442",
     )
