@@ -6,6 +6,7 @@ import os, requests, threading, time
 load_dotenv()
 openAI_client = OpenAI()
 
+
 class NewsArticle(BaseModel):
     news_id: int
     title: str
@@ -20,16 +21,16 @@ class NewsArticle(BaseModel):
 
 
 def get_summarised_news_articles(search_query: str):
-    '''
-    Get news articles from the Event Registry API and summarise them using the 
+    """
+    Get news articles from the Event Registry API and summarise them using the
     OpenAI GPT-3.5 API
-    '''
+    """
     url = (
         "http://eventregistry.org/api/v1/article/getArticles?apiKey="
         + os.getenv("NEWS_API_KEY")
         + "&keyword="
         + search_query
-        + "&lang=eng&articlesSortBy=rel&articlesCount=5"
+        + "&lang=eng&articlesSortBy=rel&articlesCount=20"
     )
     news_articles = []
     try:
