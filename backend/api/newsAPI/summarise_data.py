@@ -11,6 +11,7 @@ class NewsArticle(BaseModel):
     news_id: int
     title: str
     content: str
+    publisher: str
     publishedAt: str
     image_url: str = ""
     source_url: str
@@ -55,6 +56,7 @@ def get_summarised_news_articles(search_query: str):
                 news = NewsArticle(
                     news_id=count,
                     title=article["title"],
+                    publisher=article["source"]["title"],
                     content=article["body"],
                     publishedAt=article["dateTimePub"],
                     source_url=article["url"],
