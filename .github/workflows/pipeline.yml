@@ -110,15 +110,14 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          cd backend
           python -m pip install --upgrade pip 
-          pip install -r requirements.txt
+          pip install -r backend/requirements.txt
       - name: Run unit tests
         run: |
-          coverage run -m unittest discover tests
+          coverage run -m unittest discover backend/tests
           python -m coverage xml
       - name: Store python unit test coverage report 
         uses: actions/upload-artifact@v2
         with:
           name: unittest-coverage
-          path: htmlcov/index.html
+          path: coverage.xml
