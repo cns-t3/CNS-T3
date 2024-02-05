@@ -7,3 +7,7 @@ fastapi==0.105.0
 requests==2.31.0
 selenium==4.17.2
 coverage==7.4.1
+flake8==7.0.0
+mccabe==0.7.0
+pycodestyle==2.11.1 
+pyflakes==3.2.0
