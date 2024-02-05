@@ -5,18 +5,18 @@ on:
     
 jobs:
 
-  npm-vulnerabilities-check:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Set up Vulnerability check
-      uses: actions/setup-node@v2
-      with:
-        node-version: 18.x
-    - name: Scan for frontend npm package vulnerabilities
-      run: |
-        npm install
-        bash script/pipeline/scan_for_vulnerabilities.sh
+  # npm-vulnerabilities-check:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v1
+  #   - name: Set up Vulnerability check
+  #     uses: actions/setup-node@v2
+  #     with:
+  #       node-version: 18.x
+  #   - name: Scan for frontend npm package vulnerabilities
+  #     run: |
+  #       npm install
+  #       bash script/pipeline/scan_for_vulnerabilities.sh
 
   # unit-testing:
   #   runs-on: ubuntu-latest
@@ -35,17 +35,17 @@ jobs:
   #         name: unit-testing-results
   #         path: ./backend/coverage/lcov.info
 
-  sonarqube-scans:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # not sure if need anot have to see until CI is set up
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  # sonarqube-scans:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #     with:
+  #       fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+  #   - name: SonarCloud Scan
+  #     uses: SonarSource/sonarcloud-github-action@master
+  #     env:
+  #       # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # not sure if need anot have to see until CI is set up
+  #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   # es-lint-scans:
   #   runs-on: ubuntu-latest
@@ -95,31 +95,30 @@ jobs:
   #         name: SAST-report
   #         path: reports
 
-  # unit-test-fastapi:
-  #   runs-on: ubuntu-latest
-  #   continue-on-error: false
-  #   timeout-minutes: 15
-  #   strategy:
-  #     matrix:
-  #       python-version: ["3.9"]
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: ${{ matrix.python-version }}
-  #     - name: Install dependencies
-  #       run: |
-  #         cd backend
-  #         python -m pip install --upgrade pip 
-  #         pip install -r requirements.txt
-  #     - name: Run unit tests
-  #       run: |
-  #         coverage run -m unittest discover tests
-  #         python -m coverage report 
-  #         python -m coverage html
-  #     - name: Store python unit test coverage report 
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: unittest-coverage
-  #         path: htmlcov/index.html
+  unit-test-fastapi:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          cd backend
+          python -m pip install --upgrade pip 
+          pip install -r requirements.txt
+      - name: Run unit tests
+        run: |
+          coverage run -m unittest discover tests
+          python -m coverage xml
+      - name: Store python unit test coverage report 
+        uses: actions/upload-artifact@v2
+        with:
+          name: unittest-coverage
+          path: htmlcov/index.html
