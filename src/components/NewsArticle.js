@@ -3,15 +3,7 @@ import React, { useRef, useEffect } from "react";
 import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-const NewsArticle = ({
-  title,
-  publishedAt,
-  summary,
-  score,
-  riskRating,
-  tag,
-  publisher,
-}) => {
+const NewsArticle = ({ articleDetails }) => {
   const matchChartRef = useRef(null);
   const riskChartRef = useRef(null);
 
@@ -25,8 +17,8 @@ const NewsArticle = ({
       data: {
         datasets: [
           {
-            data: [score, 1 - score],
-            backgroundColor: ["#3498db", "transparent"],
+            data: [articleDetails.score, 1 - articleDetails.score],
+            backgroundColor: ["#5B5D5C", "transparent"],
             borderWidth: 0,
           },
         ],
@@ -52,7 +44,10 @@ const NewsArticle = ({
       data: {
         datasets: [
           {
-            data: [riskRating === "low" ? 1 : 0, riskRating === "low" ? 0 : 1],
+            data: [
+              articleDetails.risk_rating === "low" ? 1 : 0,
+              articleDetails.risk_rating === "low" ? 0 : 1,
+            ],
             backgroundColor: ["#2ecc71", "transparent"],
             borderWidth: 0,
           },
@@ -82,7 +77,7 @@ const NewsArticle = ({
       matchChart.destroy();
       riskChart.destroy();
     };
-  }, [score, riskRating]);
+  }, [articleDetails]);
 
   // Format the date
   const formatDate = (dateString) => {
@@ -95,20 +90,24 @@ const NewsArticle = ({
   };
 
   return (
-    <div className="flex justify-between items-center bg-white px-4 py-5 shadow rounded-lg relative">
+    <div className="flex justify-between items-center bg-white px-4 py-5 shadow rounded-lg relative my-5">
       <div className="flex-1 pr-3">
         <p className="text-xs font-semibold text-gray-500 border border-gray-300 rounded px-2 py-1 mb-2 block md:hidden w-min">
-          {tag}
+          {articleDetails.tag}
         </p>
-        <p className="text-sky-800 text-xs font-bold uppercase">{publisher}</p>
+        <p className="text-sky-800 text-xs font-bold uppercase">
+          {articleDetails.publisher}
+        </p>
         <div className="flex items-center flex-row">
-          <h2 className="text-xl font-bold text-gray-900 my-1">{title}</h2>
+          <h2 className="text-xl font-bold text-gray-900 my-1">
+            {articleDetails.title}
+          </h2>
           <p className="text-xs font-semibold text-gray-500 border border-gray-300 rounded px-2 py-1 ml-5 hidden md:block">
-            {tag}
+            {articleDetails.tag}
           </p>
         </div>
-        <p className="text-gray-500 text-sm">
-          {formatDate(publishedAt)} — "{summary}"
+        <p className="text-gray-500 text-sm line-clamp-2">
+          {formatDate(articleDetails.publishedAt)} — "{articleDetails.summary}"
         </p>
       </div>
       <div className="flex items-center md:space-x-0 space-x-0 relative md:flex-row flex-col ">
@@ -117,7 +116,7 @@ const NewsArticle = ({
           <div className="absolute inset-0 flex items-center justify-center">
             <p className="text-center text-gray-900 text-xs md:pr-3">
               <span className="text-sm font-semibold">
-                {(score * 100).toFixed(0)}%
+                {(articleDetails.score * 100).toFixed(0)}%
               </span>{" "}
               <span className="block text-xs max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
                 MATCH
@@ -130,7 +129,7 @@ const NewsArticle = ({
           <div className="absolute inset-0 flex items-center justify-center">
             <p className="text-center text-gray-900 text-xs">
               <span className="text-sm font-semibold">
-                {riskRating === "low" ? "LOW" : "HIGH"}
+                {articleDetails.risk_rating.toUpperCase()}
               </span>{" "}
               <span className="block text-xs max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
                 RISK
