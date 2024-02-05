@@ -2,22 +2,20 @@ import Image from "next/image";
 
 const Profile = ({ profileDetails }) => {
   return (
-    <div className="col-span-1 bg-beige p-8">
-      <div className="grid grid-cols-2 gap-5 ">
-        <div className="w-48 h-96">
-          <Image
+    <div className="col-span-1 p-8">
+      <div className="grid grid-cols-2 gap-1 ">
+        <div className="">
+          <img
             src={profileDetails.img_url}
             alt="Profile image"
-            width={150}
-            height={300}
-            className="object-cover w-full h-full"
+            className="object-cover w-3/4 h-full"
           />
         </div>
         <div>
           <h2 className="text-xl font-bold text-gray-900 my-1">
             {profileDetails.name}
           </h2>
-          <p className="text-gray-500 text-sm">
+          <p className="text-sm mb-5">
             {profileDetails.occupation}, at {profileDetails.company}
           </p>
           {profileDetails.dob !== "" && (

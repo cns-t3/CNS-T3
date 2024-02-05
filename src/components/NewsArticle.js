@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from "react";
 import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-const NewsArticle = ({ articleDetails }) => {
+const NewsArticle = ({ articleDetails, setArticleDetails }) => {
   const matchChartRef = useRef(null);
   const riskChartRef = useRef(null);
 
@@ -90,7 +90,10 @@ const NewsArticle = ({ articleDetails }) => {
   };
 
   return (
-    <div className="flex justify-between items-center bg-white px-4 py-5 shadow rounded-lg relative my-5">
+    <div
+      className="flex justify-between items-center bg-white px-4 pb-10 relative my-5"
+      // onClick={setArticleDetails(articleDetails)}
+    >
       <div className="flex-1 pr-3">
         <p className="text-xs font-semibold text-gray-500 border border-gray-300 rounded px-2 py-1 mb-2 block md:hidden w-min">
           {articleDetails.tag}

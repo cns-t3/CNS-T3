@@ -1,8 +1,23 @@
 import React from "react";
-import NewsArticle from "../../components/NewsArticle";
+import NewsArticle from "@/components/NewsArticle";
 import Profile from "@/components/Profile";
+import SmallSearchBar from "@/components/SmallSearchBar";
+import ArticleSum from "@/components/ArticleSummaryBox";
 
-const SearchPage = () => {
+const SearchPage = async ({ params }) => {
+  // async function getData(query) {
+  //   const url = "http://127.0.0.1:8000/search?search_query=" + query;
+  //   const res = await fetch(url);
+  //   if (!res.ok) {
+  //     throw new Error("Failed to fetch data");
+  //   }
+  //   return res.json();
+  // }
+
+  const query = decodeURIComponent(params.query);
+  // const data = await getData(query);
+  // const string = JSON.stringify(data);
+
   const json = {
     profile: {
       person_id: 456,
@@ -14,7 +29,7 @@ const SearchPage = () => {
         "Tim Cook is a distinguished business leader known for his role as the CEO of Apple Inc., a position he assumed in 2011 following the iconic Steve Jobs. Cook's professional trajectory is marked by his strategic vision, operational prowess, and commitment to innovation. Renowned for his disciplined management style and focus on sustainability, Cook has steered Apple through significant milestones, including the launch of groundbreaking products like the iPhone X and the Apple Watch. Under his stewardship, Apple has expanded its global footprint, diversified its product offerings, and emphasized corporate social responsibility initiatives. Cook's leadership is characterized by a blend of foresight, integrity, and a relentless drive for excellence, making him a pivotal figure in the tech industry.",
       company: "Apple Inc.",
       img_url:
-        "https://www.apple.com/leadership/images/bio/tim-cook_image.png.og.png?1696970027442",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Visit_of_Tim_Cook_to_the_European_Commission_-_P061904-946789.jpg/1024px-Visit_of_Tim_Cook_to_the_European_Commission_-_P061904-946789.jpg",
     },
     newsArticles: [
       {
@@ -106,15 +121,54 @@ const SearchPage = () => {
     ],
   };
 
-  return (
-    <div className="grid grid-cols-3">
-      <div className="col-span-2">
-        {json.newsArticles.map((article, index) => (
-          <NewsArticle articleDetails={article} key={index} />
-        ))}
-      </div>
+  async function getData(query) {
+    const url = "http://127.0.0.1:8000/search?search_query=" + query;
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    return res.json();
+  }
 
-      <Profile profileDetails={json.profile} />
+  var articleDetails = null;
+
+  // function setArticleDetails(article) {
+  //   articleDetails = article;
+  // }
+
+  return (
+    <div>
+      <div className="flex md:flex-row flex-col m-6 items-center justify-center">
+        <img src="/logo.png" className="md:w-2/12 sm:w-1/3 w-1/2 m-3"></img>
+        <SmallSearchBar initialValue={query}></SmallSearchBar>
+      </div>
+      <div className="px-10">
+        <hr className=" mb-5"></hr>
+        <div className="grid grid-cols-3 gap-7">
+          {/* <div className="col-span-2">
+            {json.newsArticles.map((article, index) => (
+              <NewsArticle
+                articleDetails={article}
+                setArticleDetails={setArticleDetails}
+                key={index}
+              />
+            ))}
+          </div> */}
+          <div className="col-span-2">
+            {json.newsArticles.map((article, index) => (
+              <NewsArticle articleDetails={article} key={index} />
+            ))}
+          </div>
+          <div className="bg-beige rounded-md h-min">
+            {articleDetails == null && (
+              <Profile profileDetails={json.profile} />
+            )}
+            {articleDetails != null && (
+              <ArticleSum article={articleDetails}></ArticleSum>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
