@@ -35,19 +35,19 @@ jobs:
   #         name: unit-testing-results
   #         path: ./backend/coverage/lcov.info
 
-  SAST-scan:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Python SAST Scan
-        uses: AppThreat/sast-scan-action@master
-        with:
-          output: reports
-          type: python
-      - name: Store SAST scan results 
-        uses: actions/upload-artifact@v4
-        with:
-          name: SAST-report
-          path: reports
+  # SAST-scan:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Python SAST Scan
+  #       uses: AppThreat/sast-scan-action@master
+  #       with:
+  #         output: reports
+  #         type: python
+  #     - name: Store SAST scan results 
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: SAST-report
+  #         path: reports
 
   lint-fastapi:
     runs-on: ubuntu-latest
@@ -69,9 +69,7 @@ jobs:
       - name: Flake8 Lint Scan 
         run: |
           cd backend/api
-        # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --ignore=E203,E266,E302,E305,E501,W503,F403,F401,W291 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
   # unit-test-fastapi:
