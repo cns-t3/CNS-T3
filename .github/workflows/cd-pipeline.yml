@@ -1,9 +1,9 @@
 name: FYP CD Pipeline
 
 on:
-    push:
-      branches:
-        - 'feature/*'
+  push:
+    branches:
+      - "feature/*"
 #   workflow_run:
 #     workflows: [FYP CI Pipeline]
 #     types:
@@ -14,7 +14,6 @@ jobs:
   build_and_push_images:
     runs-on: ubuntu-latest
 
-    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -26,7 +25,12 @@ jobs:
           username: ${{ secrets.AZURE_REGISTRY_USERNAME }}
           password: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
 
-      - name: Build and Push Docker Images
+      - name: Build and Push Docker Images for Next.js Frontend
+        run: |
+          docker build -t CNSt3.azurecr.io/frontend:latest .
+          docker push CNSt3.azurecr.io/frontend:latest
+
+      - name: Build and Push Docker Images for newsAPI
         run: |
           docker build -t CNSt3.azurecr.io/news:latest ./backend/api/newsAPI
           docker push CNSt3.azurecr.io/news:latest
@@ -53,4 +57,5 @@ jobs:
 
       - name: Deploy to AKS
         run: |
+          kubectl apply -f ./k8s/frontend-deployment.yml
           kubectl apply -f ./k8s/news-deployment.yml
