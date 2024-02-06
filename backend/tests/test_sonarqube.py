@@ -3,10 +3,10 @@ import unittest
 import sys
 import os
 
-from api.sonarqube import total_sum
-
 # Add the path to the parent directory to sys.path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/..")
+
+from api.sonarqube import total_sum
 
 class TestTotalSumFunction(unittest.TestCase):
 

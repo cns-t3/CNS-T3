@@ -70,7 +70,7 @@ jobs:
       - name: Flake8 Lint Scan 
         run: |
           cd backend/api
-          flake8 . --count --ignore=E203,E266,E302,E305,E501,W503,F403,F401,W291,W292 --show-source --statistics
+          flake8 . --count --ignore=E203,E266,E302,E305,E402,E501,W503,F403,F401,W291,W292 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
   unit-test-fastapi:
