@@ -58,6 +58,6 @@ jobs:
       - name: Deploy to AKS
         run: |
           kubectl apply -f ./k8s/frontend-deployment.yml
-          kubectl apply -f k8s/service-frontend.yml
+          kubectl apply -f k8s/frontend-service.yml
           kubectl apply -f k8s/news-deployment.yml
           kubectl apply -f k8s/news-service.yml
