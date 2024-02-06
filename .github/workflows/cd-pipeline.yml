@@ -30,7 +30,7 @@ jobs:
           docker build -t CNSt3.azurecr.io/frontend:latest .
           docker push CNSt3.azurecr.io/frontend:latest
 
-      - name: Build and Push Docker Images for newsAPI
+      - name: Build and Push Docker Images for NewsAPI
         run: |
           docker build -t CNSt3.azurecr.io/news:latest ./backend/api/newsAPI
           docker push CNSt3.azurecr.io/news:latest
@@ -58,4 +58,6 @@ jobs:
       - name: Deploy to AKS
         run: |
           kubectl apply -f ./k8s/frontend-deployment.yml
-          kubectl apply -f ./k8s/news-deployment.yml
+          kubectl apply -f k8s/service-frontend.yml
+          kubectl apply -f k8s/news-deployment.yml
+          kubectl apply -f k8s/news-service.yml
