@@ -5,49 +5,49 @@ on:
     
 jobs:
 
-  # npm-vulnerabilities-check:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - name: Set up Vulnerability check
-  #     uses: actions/setup-node@v2
-  #     with:
-  #       node-version: 18.x
-  #   - name: Scan for frontend npm package vulnerabilities
-  #     run: |
-  #       npm install
-  #       bash script/pipeline/scan_for_vulnerabilities.sh
+  npm-vulnerabilities-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Vulnerability check
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+    - name: Scan for frontend npm package vulnerabilities
+      run: |
+        npm install
+        bash script/pipeline/scan_for_vulnerabilities.sh
 
-  # unit-testing:
-  #   runs-on: ubuntu-latest
-  #   container: node:16
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Install Backend Packages
-  #       working-directory: ./backend
-  #       run: npm install
-  #     - name: Run Tests
-  #       working-directory: ./backend/tests
-  #       run: npm run test
-  #     - name: Store unit testing coverage report
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: unit-testing-results
-  #         path: ./backend/coverage/lcov.info
+  SAST-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Python SAST Scan
+        uses: AppThreat/sast-scan-action@master
+        with:
+          output: reports
+          type: python
+      - name: Store SAST scan results 
+        uses: actions/upload-artifact@v4
+        with:
+          name: SAST-report
+          path: reports
 
-  # SAST-scan:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Python SAST Scan
-  #       uses: AppThreat/sast-scan-action@master
-  #       with:
-  #         output: reports
-  #         type: python
-  #     - name: Store SAST scan results 
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: SAST-report
-  #         path: reports
+  lint-nextjs:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - name: Install dependencies
+        run: |
+          npm i
+      # - name: Nextjs Lint Scan 
+      #   run: npm run lint
+      - name: Airbnb Lint Scan 
+        run: npm run airbnb-lint
 
   lint-fastapi:
     runs-on: ubuntu-latest
@@ -72,41 +72,41 @@ jobs:
           flake8 . --count --ignore=E203,E266,E302,E305,E501,W503,F403,F401,W291 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-  # unit-test-fastapi:
-  #   runs-on: ubuntu-latest
-  #   continue-on-error: false
-  #   timeout-minutes: 15
-  #   strategy:
-  #     matrix:
-  #       python-version: ["3.11"]
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: ${{ matrix.python-version }}
-  #     - name: Install dependencies
-  #       run: |
-  #         python -m pip install --upgrade pip 
-  #         pip install -r backend/requirements.txt
-  #     - name: Run unit tests
-  #       run: |
-  #         coverage run -m unittest discover backend/tests
-  #         python -m coverage xml
-  #     - name: Store python unit test coverage report 
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: unittest-coverage
-  #         path: coverage.xml
+  unit-test-fastapi:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip 
+          pip install -r backend/requirements.txt
+      - name: Run unit tests
+        run: |
+          coverage run -m unittest discover backend/tests
+          python -m coverage xml
+      - name: Store python unit test coverage report 
+        uses: actions/upload-artifact@v4
+        with:
+          name: unittest-coverage
+          path: coverage.xml
 
-  # sonarqube-scans:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #     with:
-  #       fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-  #   - name: SonarCloud Scan
-  #     uses: SonarSource/sonarcloud-github-action@master
-  #     env:
-  #       # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # not sure if need anot have to see until CI is set up
-  #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  sonarqube-scans:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # not sure if need anot have to see until CI is set up
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
