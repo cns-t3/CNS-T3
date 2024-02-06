@@ -14,6 +14,7 @@ module.exports = {
       },
       colors: {
         beige: "#F9F9F7",
+        red: "#E60000",
       },
     },
   },

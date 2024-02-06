@@ -3,6 +3,7 @@ import NewsArticle from "@/components/NewsArticle";
 import Profile from "@/components/Profile";
 import SmallSearchBar from "@/components/SmallSearchBar";
 import ArticleSum from "@/components/ArticleSummaryBox";
+import Data from "@/components/Data";
 
 const SearchPage = async ({ params }) => {
   // async function getData(query) {
@@ -130,11 +131,6 @@ const SearchPage = async ({ params }) => {
     return res.json();
   }
 
-  var articleDetails = null;
-
-  // function setArticleDetails(article) {
-  //   articleDetails = article;
-  // }
 
   return (
     <div>
@@ -142,10 +138,11 @@ const SearchPage = async ({ params }) => {
         <img src="/logo.png" className="md:w-2/12 sm:w-1/3 w-1/2 m-3"></img>
         <SmallSearchBar initialValue={query}></SmallSearchBar>
       </div>
-      <div className="px-10">
+      <Data json={json}></Data>
+      {/* <div className="px-10">
         <hr className=" mb-5"></hr>
         <div className="grid grid-cols-3 gap-7">
-          {/* <div className="col-span-2">
+          <div className="col-span-2">
             {json.newsArticles.map((article, index) => (
               <NewsArticle
                 articleDetails={article}
@@ -153,7 +150,7 @@ const SearchPage = async ({ params }) => {
                 key={index}
               />
             ))}
-          </div> */}
+          </div>
           <div className="col-span-2">
             {json.newsArticles.map((article, index) => (
               <NewsArticle articleDetails={article} key={index} />
@@ -168,7 +165,7 @@ const SearchPage = async ({ params }) => {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

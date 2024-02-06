@@ -2,10 +2,17 @@
 import React, { useRef, useEffect } from "react";
 import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import Tag from "./Tag";
 
 const NewsArticle = ({ articleDetails, setArticleDetails }) => {
   const matchChartRef = useRef(null);
   const riskChartRef = useRef(null);
+
+  const handleArticleClick = () => {
+    return () => {
+      setArticleDetails(articleDetails);
+    };
+  };
 
   useEffect(() => {
     const matchCtx = matchChartRef.current.getContext("2d");
@@ -92,12 +99,10 @@ const NewsArticle = ({ articleDetails, setArticleDetails }) => {
   return (
     <div
       className="flex justify-between items-center bg-white px-4 pb-10 relative my-5"
-      // onClick={setArticleDetails(articleDetails)}
+      onClick={handleArticleClick()}
     >
       <div className="flex-1 pr-3">
-        <p className="text-xs font-semibold text-gray-500 border border-gray-300 rounded px-2 py-1 mb-2 block md:hidden w-min">
-          {articleDetails.tag}
-        </p>
+        <Tag tagDetails={articleDetails.tag}></Tag>
         <p className="text-sky-800 text-xs font-bold uppercase">
           {articleDetails.publisher}
         </p>
