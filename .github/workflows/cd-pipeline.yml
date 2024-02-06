@@ -28,7 +28,7 @@ jobs:
 
       - name: Build and Push Docker Images
         run: |
-          docker build -t CNSt3.azurecr.io/news:latest./backend/api/newsAPI
+          docker build -t CNSt3.azurecr.io/news:latest ./backend/api/newsAPI
           docker push CNSt3.azurecr.io/news:latest
 
   deploy_to_aks:
