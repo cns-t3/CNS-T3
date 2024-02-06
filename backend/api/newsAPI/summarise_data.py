@@ -2,7 +2,6 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from pydantic import BaseModel
 import os, requests, threading, time
-import json
 
 load_dotenv()
 openAI_client = OpenAI()
@@ -39,19 +38,17 @@ def get_summarised_news_articles(search_query: str):
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
-            articles = data["articles"]["results"]
+            count = 0
             threads = []
-            summaries = [""] * len(articles)
-            tags = [""] * len(articles)
+            summaries = [""] * len(data["articles"]["results"])
             # the summaries are not returned in the same order as the articles, so we need to keep track of the order
-            for count, article in enumerate(articles):
+            for article in data["articles"]["results"]:
                 thread = threading.Thread(
                     target=handle_body,
                     args=(
                         article["body"],
                         count,
                         summaries,
-                        tags,
                     ),
                 )
                 thread.start()
@@ -75,7 +72,6 @@ def get_summarised_news_articles(search_query: str):
                 thread.join()
             for i in range(len(news_articles)):
                 news_articles[i].summary = summaries[i]
-                news_articles[i].tag = tags[i]
             return news_articles
     except Exception as e:
         print("Error: ", e)
@@ -85,25 +81,19 @@ def summarise_article(article_body, client):
     input = "Summarise this article for me: " + article_body
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo-0125",
-        response_format={"type": "json_object"},
         messages=[
             {
                 "role": "system",
-                "content": 'Given a news article, summarize its content in less than 100 words and provide a tag for the article (e.g., business, finance, lifestyle, politics, economics, investment). Return the data in JSON format: {"summary": "", "tag": ""}.',
+                "content": "You are an assistant that can summarise news articles to 100 words or less",
             },
             {"role": "user", "content": input},
         ],
     )
-    try:
-        result = json.loads(completion.choices[0].message.content)
-    except Exception as e:
-        print("Error: ", e)
-        result = {"summary": "", "tag": ""}
-    return result
+    summary = completion.choices[0].message.content
+    return summary
 
 
-def handle_body(article_body, news_id, summaries, tags):
-    result = summarise_article(article_body, openAI_client)
-    summaries[news_id] = result["summary"]
-    tags[news_id] = result["tag"]
+def handle_body(article_body, news_id, summaries):
+    summary = summarise_article(article_body, openAI_client)
+    summaries[news_id] = summary
     time.sleep(0.001)
