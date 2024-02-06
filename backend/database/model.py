@@ -14,7 +14,7 @@ class Person(Base):
 
 class Company(Base):
     __tablename__ = 'company'
-    CompanyID = Column(Integer, primary_key=True)
+    CompanyID = Column(Integer, primary_key=True, autoincrement=True)
     Name = Column(String(50), nullable=False)
     Industry = Column(String(25), nullable=False)
     CountryofHeadquarters = Column(String(50), nullable=False)
@@ -25,4 +25,3 @@ class PersonCompany(Base):
     PersonID = Column(Integer, ForeignKey('person.PersonID'), primary_key=True)
     CompanyID = Column(Integer, ForeignKey('company.CompanyID'), primary_key=True)
     Role = Column(String(25), nullable=False)
-    

@@ -6,9 +6,9 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 load_dotenv()
 
-Azure_MYSQL_URL = '' # empty for now
+AZURE_MYSQL_URL = '' # empty for now
 
-engine = create_engine(Azure_MYSQL_URL)
+engine = create_engine(AZURE_MYSQL_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
