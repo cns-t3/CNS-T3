@@ -1,0 +1,1 @@
+## To input queries as functions
