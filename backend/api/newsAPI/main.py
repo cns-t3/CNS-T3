@@ -4,11 +4,21 @@ from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
 from openai import OpenAI
 from summarise_data import get_summarised_news_articles
+from fastapi.middleware.cors import CORSMiddleware
+
 
 
 load_dotenv()
-app = FastAPI()
+app = FastAPI() 
 openAI_client = OpenAI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins, you can restrict as needed
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],  # Add other allowed methods as needed
+    allow_headers=["*"],  # Allow all headers, you can restrict as needed
+)
 
 
 class NewsArticle(BaseModel):
