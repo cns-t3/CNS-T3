@@ -21,6 +21,7 @@ export default function NewsSummary({ article, setArticleDetails }) {
           fill="none"
           viewBox="0 0 24 24"
           stroke="red"
+          transform="rotate(180, 0,0)"
         >
           <path
             strokeLinecap="round"

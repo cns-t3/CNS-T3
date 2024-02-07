@@ -12,7 +12,7 @@ const ResultsViewer = ({ json }) => {
       <hr className=" mb-5"></hr>
       <div className="flex flex-row w-full">
         <div
-          className={`flex flex-col ${
+          className={`flex flex-col pr-4 ${
             articleDetails == null ? "w-2/3" : "w-1/2"
           }`}
         >
