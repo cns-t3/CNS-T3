@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: news-container
-        image: CNSt3.azurecr.io/news:${TIMESTAMP}
+        image: CNSt3.azurecr.io/news:${COMMIT-HASH}
         ports:
         - containerPort: 8000
         resources:
