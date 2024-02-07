@@ -65,8 +65,8 @@ jobs:
 
       - name: Replace TIMESTAMP placeholder
         run: |
-          sed -i "s/\${TIMESTAMP}/${TIMESTAMP}/g" ./k8s/frontend-deployment.yml  
-          sed -i "s/\${TIMESTAMP}/${TIMESTAMP}/g" ./k8s/news-deployment.yml
+          sed -i "s/\${TIMESTAMP}/${{ env.TIMESTAMP }}/g" ./k8s/frontend-deployment.yml  
+          sed -i "s/\${TIMESTAMP}/${{ env.TIMESTAMP }}/g" ./k8s/news-deployment.yml
         env:
           TIMESTAMP: ${{ env.TIMESTAMP }}
 
