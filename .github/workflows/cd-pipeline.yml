@@ -23,7 +23,8 @@ jobs:
         run: echo "::set-output name=timestamp::$(date +'%Y%m%d%H%M%S')"
       
       - name: Set Timestamp Environment Variable
-        run: echo "export TIMESTAMP=${{ steps.timestamp.outputs.timestamp }}" >> $GITHUB_ENV
+        run: |
+          echo "TIMESTAMP=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
@@ -34,13 +35,13 @@ jobs:
 
       - name: Build and Push Docker Images for Next.js Frontend
         run: |
-          docker build -t CNSt3.azurecr.io/frontend:$TIMESTAMP .
-          docker push CNSt3.azurecr.io/frontend:$TIMESTAMP
+          docker build -t CNSt3.azurecr.io/frontend:${{ env.TIMESTAMP }} .
+          docker push CNSt3.azurecr.io/frontend:${{ env.TIMESTAMP }}
 
       - name: Build and Push Docker Images for NewsAPI
         run: |
-          docker build -t CNSt3.azurecr.io/news:$TIMESTAMP ./backend/api/newsAPI
-          docker push CNSt3.azurecr.io/news:$TIMESTAMP
+          docker build -t CNSt3.azurecr.io/news:${{ env.TIMESTAMP }} ./backend/api/newsAPI
+          docker push CNSt3.azurecr.io/news:${{ env.TIMESTAMP }}
 
   deploy_to_aks:
     needs: build_and_push_images
@@ -64,10 +65,10 @@ jobs:
 
       - name: Deploy to AKS
         run: |
-          sed -i "s/\${TIMESTAMP}/$TIMESTAMP/g" ./k8s/frontend-deployment.yml
+          sed -i "s/\${TIMESTAMP}/${{ env.TIMESTAMP }}/g" ./k8s/frontend-deployment.yml
           kubectl apply -f ./k8s/frontend-deployment.yml
           kubectl apply -f k8s/frontend-service.yml
 
-          sed -i "s/\${TIMESTAMP}/$TIMESTAMP/g" ./k8s/news-deployment.yml
+          sed -i "s/\${TIMESTAMP}/${{ env.TIMESTAMP }}/g" ./k8s/news-deployment.yml
           kubectl apply -f k8s/news-deployment.yml
           kubectl apply -f k8s/news-service.yml
