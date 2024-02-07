@@ -36,7 +36,7 @@ jobs:
           docker push CNSt3.azurecr.io/news:${{ github.sha }}
 
   deploy_to_aks:
-    # needs: build_and_push_images
+    needs: build_and_push_images
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
