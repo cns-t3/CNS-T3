@@ -17,3 +17,4 @@ spec:
         image: CNSt3.azurecr.io/frontend:latest
         ports:
         - containerPort: 80
+        imagePullPolicy: Always
