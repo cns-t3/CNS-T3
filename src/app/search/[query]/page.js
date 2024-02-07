@@ -95,12 +95,16 @@ const SearchPage = () => {
 
   return (
     <div className="px-10">
-      <hr className=" mb-5"></hr>
+      <hr className="mb-5"></hr>
       <div className="grid grid-cols-3 gap-7">
         <div className="col-span-2">
-          {json.newsArticles.map((article, index) => (
-            <NewsArticle articleDetails={article} key={index} />
-          ))}
+          {json.newsArticles.length > 0 ? (
+            json.newsArticles.map((article, index) => (
+              <NewsArticle articleDetails={article} key={index} />
+            ))
+          ) : (
+            <p className="text-gray-500 text-lg">No articles found</p>
+          )}
         </div>
       </div>
     </div>
