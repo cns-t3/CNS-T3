@@ -62,16 +62,18 @@ jobs:
       - name: Set AKS Context
         run: |
           az aks get-credentials --name CNSt3 --resource-group FYP
-          
+      
+      - name: Retrieve TIMESTAMP from build_and_push_images job
+        run: |
+          echo "::set-env name=NEW_TIMESTAMP::${{ needs.build_and_push_images.outputs.TIMESTAMP }}"
+
       - name: Print TIMESTAMP environment variable
-        run: echo "TIMESTAMP=${{ env.TIMESTAMP }}"
+        run: echo "TIMESTAMP=${{ env.NEW_TIMESTAMP }}"
         
       - name: Replace TIMESTAMP placeholder
         run: |
-          sed -i "s/\${TIMESTAMP}/${{ env.TIMESTAMP }}/g" ./k8s/frontend-deployment.yml  
-          sed -i "s/\${TIMESTAMP}/${{ env.TIMESTAMP }}/g" ./k8s/news-deployment.yml
-        env:
-          TIMESTAMP: ${{ env.TIMESTAMP }}
+          sed -i "s/\${TIMESTAMP}/${{ env.NEW_TIMESTAMP }}/g" ./k8s/frontend-deployment.yml  
+          sed -i "s/\${TIMESTAMP}/${{ env.NEW_TIMESTAMP }}/g" ./k8s/news-deployment.yml
       
       - name: Print news-deployment.yml content
         run: |
