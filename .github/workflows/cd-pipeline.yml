@@ -63,12 +63,17 @@ jobs:
         run: |
           az aks get-credentials --name CNSt3 --resource-group FYP
 
+      - name: Replace TIMESTAMP placeholder
+        run: |
+          sed -i "s/\${TIMESTAMP}/${TIMESTAMP}/g" ./k8s/frontend-deployment.yml  
+          sed -i "s/\${TIMESTAMP}/${TIMESTAMP}/g" ./k8s/news-deployment.yml
+        env:
+          TIMESTAMP: ${{ env.TIMESTAMP }}
+
       - name: Deploy to AKS
         run: |
-          sed -i "s/\${TIMESTAMP}/${{ env.TIMESTAMP }}/g" ./k8s/frontend-deployment.yml
           kubectl apply -f ./k8s/frontend-deployment.yml
           kubectl apply -f k8s/frontend-service.yml
 
-          sed -i "s/\${TIMESTAMP}/${{ env.TIMESTAMP }}/g" ./k8s/news-deployment.yml
           kubectl apply -f k8s/news-deployment.yml
           kubectl apply -f k8s/news-service.yml
