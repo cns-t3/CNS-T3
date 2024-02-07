@@ -13,18 +13,16 @@ on:
 jobs:
   build_and_push_images:
     runs-on: ubuntu-latest
+    outputs:
+      TIMESTAMP: ${{ steps.set_timestamp.outputs.TIMESTAMP }}
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
       
-      - name: Get Current Timestamp
-        id: timestamp
-        run: echo "::set-output name=timestamp::$(date +'%Y%m%d%H%M%S')"
-      
-      - name: Set Timestamp Environment Variable
-        run: |
-          echo "TIMESTAMP=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+      - name: Set Timestamp
+        id: set_timestamp
+        run: echo "::set-output name=TIMESTAMP::$(date +'%Y%m%d%H%M%S')"
 
       # - name: Login to Azure Container Registry
       #   uses: azure/docker-login@v1
@@ -50,22 +48,21 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install Azure CLI
-        run: |
-          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      # - name: Install Azure CLI
+      #   run: |
+      #     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      # - name: Login to Azure
+      #   uses: azure/login@v1
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Set AKS Context
-        run: |
-          az aks get-credentials --name CNSt3 --resource-group FYP
+      # - name: Set AKS Context
+      #   run: |
+      #     az aks get-credentials --name CNSt3 --resource-group FYP
       
       - name: Retrieve TIMESTAMP from build_and_push_images job
-        run: |
-          echo "NEW_TIMESTAMP=${{ needs.build_and_push_images.outputs.TIMESTAMP }}" >> $GITHUB_ENV
+        run: echo "NEW_TIMESTAMP=${{ needs.build_and_push_images.outputs.TIMESTAMP }}" >> $GITHUB_ENV
 
       - name: Print TIMESTAMP environment variable
         run: echo "TIMESTAMP=${{ env.NEW_TIMESTAMP }}"
