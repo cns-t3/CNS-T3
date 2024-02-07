@@ -6,10 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "airbnb-lint": "./node_modules/.bin/eslint"
   },
   "dependencies": {
-    "jslint": "^0.12.1",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18"
@@ -17,7 +17,8 @@
   "devDependencies": {
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
-    "eslint-config-next": "14.1.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-next": "^14.1.0",
     "postcss": "^8",
     "tailwindcss": "^3.3.0"
   }
