@@ -1,7 +1,8 @@
 "use client";
 import React, { useRef, useEffect } from "react";
 
-const NewsArticle = ({ articleDetails }) => {
+
+const NewsArticle = ({ articleDetails, setArticleDetails }) => {
   // Format the date
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-SG", {
@@ -12,18 +13,18 @@ const NewsArticle = ({ articleDetails }) => {
     });
   };
 
+  const handleArticleClick = () => {
+    setArticleDetails(articleDetails);
+    console.log("Article clicked!");
+  };
+  
   return (
     <div
       id="news-article-container"
-      className="flex justify-between items-center bg-white px-4 py-5 shadow rounded-lg relative my-5"
+      className="flex justify-between items-center bg-white px-4 py-5 rounded-lg relative my-2"
+      onClick={handleArticleClick}
     >
       <div className="flex-1 pr-3">
-        <p
-          id="article-tag"
-          className="text-xs font-semibold text-gray-500 border border-gray-300 rounded px-2 py-1 mb-2 block md:hidden w-min"
-        >
-          {articleDetails.tag}
-        </p>
         <p
           id="article-publisher"
           className="text-sky-800 text-xs font-bold uppercase"
@@ -37,12 +38,7 @@ const NewsArticle = ({ articleDetails }) => {
           >
             {articleDetails.title}
           </h2>
-          <p
-            id="article-tag-hidden"
-            className="text-xs font-semibold text-gray-500 border border-gray-300 rounded px-2 py-1 ml-5 hidden md:block"
-          >
-            {articleDetails.tag}
-          </p>
+
         </div>
         <p id="article-summary" className="text-gray-500 text-sm line-clamp-2">
           {formatDate(articleDetails.publishedAt)} — "{articleDetails.summary}"

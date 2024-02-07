@@ -1,8 +1,20 @@
 import React from "react";
-import NewsArticle from "@/components/NewsArticle";
-import Profile from "@/components/Profile";
+import ResultsViewer from "@/components/ResultsViewer";
 
-const SearchPage = () => {
+const SearchPage = async ({ params }) => {
+  // async function getData(query) {
+  //   const url = "http://127.0.0.1:8000/search?search_query=" + query;
+  //   const res = await fetch(url);
+  //   if (!res.ok) {
+  //     throw new Error("Failed to fetch data");
+  //   }
+  //   return res.json();
+  // }
+
+  const query = decodeURIComponent(params.query);
+  // const data = await getData(query);
+  // const string = JSON.stringify(data);
+
   const json = {
     profile: {
       person_id: 456,
@@ -108,18 +120,10 @@ const SearchPage = () => {
 
   return (
     <div>
-      <div className="px-10">
-        <div className="grid grid-cols-3 gap-7">
-          <div className="col-span-2">
-            {json.newsArticles.map((article, index) => (
-              <NewsArticle articleDetails={article} key={index} />
-            ))}
-          </div>
-          <div className="bg-beige rounded-md h-min">
-            <Profile profileDetails={json.profile} />
-          </div>
-        </div>
+      <div className="flex md:flex-row flex-col m-6 items-center justify-center">
+        {/* <img src="/logo.png" className="md:w-2/12 sm:w-1/3 w-1/2 m-3"></img> */}
       </div>
+      <ResultsViewer json={json}></ResultsViewer>
     </div>
   );
 };
