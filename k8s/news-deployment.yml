@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: news-container
-        image: CNSt3.azurecr.io/news:latest
+        image: CNSt3.azurecr.io/news:${TIMESTAMP}
         ports:
         - containerPort: 8000
         resources:
