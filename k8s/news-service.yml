@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: news-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: news
   ports:
