@@ -34,4 +34,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.env
+
+# python
+__pycache__/
+*.pyc
+
+# bash 
+npm_install_output.txt
+
+# coverage
+.coverage
+.coverage.xml.env
