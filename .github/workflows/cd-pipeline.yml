@@ -69,11 +69,16 @@ jobs:
           sed -i "s/\${TIMESTAMP}/${{ env.TIMESTAMP }}/g" ./k8s/news-deployment.yml
         env:
           TIMESTAMP: ${{ env.TIMESTAMP }}
+      
+      - name: Print news-deployment.yml content
+        run: |
+          cat ./k8s/frontend-deployment.yml
+          cat ./k8s/news-deployment.yml
 
       - name: Deploy to AKS
         run: |
           kubectl apply -f ./k8s/frontend-deployment.yml
-          kubectl apply -f k8s/frontend-service.yml
+          kubectl apply -f ./k8s/frontend-service.yml
 
-          kubectl apply -f k8s/news-deployment.yml
-          kubectl apply -f k8s/news-service.yml
+          kubectl apply -f ./k8s/news-deployment.yml
+          kubectl apply -f ./k8s/news-service.yml

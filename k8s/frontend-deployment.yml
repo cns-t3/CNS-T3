@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: CNSt3.azurecr.io/frontend:${{ env.TIMESTAMP }}
+        image: CNSt3.azurecr.io/frontend:${TIMESTAMP}
         ports:
         - containerPort: 3000
         imagePullPolicy: Always
