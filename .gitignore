@@ -44,4 +44,5 @@ npm_install_output.txt
 
 # coverage
 .coverage
-.coverage.xml.env
+.coverage.xml
+.env
