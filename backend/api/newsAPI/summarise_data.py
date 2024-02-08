@@ -1,24 +1,11 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 from pydantic import BaseModel
+from news import NewsArticle
 import os, requests, threading, time, json
 
 load_dotenv()
 openAI_client = OpenAI()
-
-
-class NewsArticle(BaseModel):
-    news_id: int
-    title: str
-    content: str
-    publisher: str
-    publishedAt: str
-    image_url: str = ""
-    source_url: str
-    risk_rating: str
-    summary: str
-    score: int
-    tag: str
 
 
 def get_summarised_news_articles(search_query: str):
@@ -46,12 +33,7 @@ def get_summarised_news_articles(search_query: str):
             for count, article in enumerate(articles):
                 thread = threading.Thread(
                     target=handle_body,
-                    args=(
-                        article["body"],
-                        count,
-                        summaries,
-                        tags
-                    ),
+                    args=(article["body"], count, summaries, tags),
                 )
                 thread.start()
                 threads.append(thread)
@@ -99,6 +81,7 @@ def summarise_article(article_body, client):
         print("Error: ", e)
         result = {"summary": "", "tag": ""}
     return result
+
 
 def handle_body(article_body, news_id, summaries, tags):
     result = summarise_article(article_body, openAI_client)

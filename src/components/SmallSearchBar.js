@@ -3,6 +3,7 @@
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function SmallSearchBar({ initialValue }) {
   const [value, setValue] = useState(initialValue);
@@ -29,11 +30,13 @@ export default function SmallSearchBar({ initialValue }) {
           onKeyDown={onSearchSubmit}
           className="block w-full p-4 rounded-md  text-gray-700 bg-gray-100 lg:text-xl md:text-lg text-md sm:text-lg focus:outline-none caret-red-500"
         />
-        <img
+        <Image
           src="/search.svg"
           className="absolute mr-2 w-10"
           alt="Search Icon"
-        />
+          width={1000}
+          height={1000}
+        ></Image>
       </div>
     </>
   );

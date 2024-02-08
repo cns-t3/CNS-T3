@@ -1,12 +1,13 @@
 from fastapi import FastAPI, HTTPException, Query, Depends
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, Date, ForeignKey
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
 from dotenv import load_dotenv
+from sqlalchemy_models import Person, Company, PersonCompany
+from backend.api.personAPI.pydantic_models import PersonSchema
 import os
 
 load_dotenv()
-from pydantic import BaseModel
 
 SQLALCHEMY_DATABASE_URL = (
     "mysql+pymysql://root:" + os.getenv("DB_KEY") + "@localhost:3306/CNS-T3"
@@ -15,53 +16,6 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
-
-
-# Define SQLAlchemy model for Person
-class Person(Base):
-    __tablename__ = "Person"
-    PersonID = Column(Integer, primary_key=True)
-    Name = Column(String(50))
-    Occupation = Column(String(25))
-    DoB = Column(Date)
-    Nationality = Column(String(25))
-    Description = Column(String(255))
-    CountryOfResidency = Column(String(50))
-    PEPStatus = Column(Boolean)
-    SourceOfWealth = Column(String(25))
-    ImgURL = Column(String(255))
-
-
-class Company(Base):
-    __tablename__ = "Company"
-    CompanyID = Column(Integer, primary_key=True)
-    Name = Column(String(100))
-    Industry = Column(String(25))
-    CountryOfHeadquarters = Column(String(50))
-    Type = Column(String(25))
-
-
-class PersonCompany(Base):
-    __tablename__ = "Person-Company"
-    PersonID = Column(Integer, ForeignKey("Person.PersonID"), primary_key=True)
-    CompanyID = Column(Integer, ForeignKey("Company.CompanyID"), primary_key=True)
-    Role = Column(String(25))
-
-
-# Pydantic model for Person
-class PersonOut(BaseModel):
-    person_id: int | None
-    name: str | None
-    occupation: str | None
-    dob: str | None
-    nationality: str | None
-    description: str | None
-    company: str | None
-    country_of_residency: str | None
-    pep_status: str | None
-    source_of_wealth: str | None
-    img_url: str | None
-
 
 app = FastAPI()
 
@@ -99,9 +53,9 @@ async def search_persons_by_name(
     if companies:
         company = companies[0].Name
 
-    # convert ORM to pydantic model
+    # convert ORM to Pydantic model
     person = persons[0]
-    person_out = PersonOut(
+    return PersonSchema(
         person_id=person.PersonID,
         name=person.Name,
         occupation=person.Occupation,
@@ -114,5 +68,3 @@ async def search_persons_by_name(
         source_of_wealth=person.SourceOfWealth,
         img_url=person.ImgURL,
     )
-
-    return person_out
