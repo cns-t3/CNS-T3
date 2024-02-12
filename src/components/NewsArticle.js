@@ -1,8 +1,7 @@
 "use client";
 import React, { useRef, useEffect } from "react";
 
-
-const NewsArticle = ({ articleDetails, setArticleDetails }) => {
+const NewsArticle = ({ articleDetails, onOpen }) => {
   // Format the date
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-SG", {
@@ -13,16 +12,11 @@ const NewsArticle = ({ articleDetails, setArticleDetails }) => {
     });
   };
 
-  const handleArticleClick = () => {
-    setArticleDetails(articleDetails);
-    console.log("Article clicked!");
-  };
-  
   return (
     <div
       id="news-article-container"
       className="flex justify-between items-center bg-white px-4 py-5 rounded-lg relative my-2"
-      onClick={handleArticleClick}
+      onClick={() => onOpen(articleDetails)}
     >
       <div className="flex-1 pr-3">
         <p
@@ -38,7 +32,6 @@ const NewsArticle = ({ articleDetails, setArticleDetails }) => {
           >
             {articleDetails.title}
           </h2>
-
         </div>
         <p id="article-summary" className="text-gray-500 text-sm line-clamp-2">
           {formatDate(articleDetails.publishedAt)} — "{articleDetails.summary}"
