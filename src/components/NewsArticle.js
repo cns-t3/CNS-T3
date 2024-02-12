@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useEffect } from "react";
+import RiskRating from "./RiskRating";
 
 const NewsArticle = ({ articleDetails, onOpen }) => {
   // Format the date
@@ -36,6 +37,9 @@ const NewsArticle = ({ articleDetails, onOpen }) => {
         <p id="article-summary" className="text-gray-500 text-sm line-clamp-2">
           {formatDate(articleDetails.publishedAt)} — "{articleDetails.summary}"
         </p>
+      </div>
+      <div className="flex items-center md:space-x-0 space-x-0 relative md:flex-row flex-col ">
+        <RiskRating riskRating={articleDetails.risk_rating} />
       </div>
     </div>
   );

@@ -44,6 +44,7 @@ const ResultsViewer = ({ data }) => {
           )}
         </div>
         <div
+          id="news-articles-container"
           className={`flex flex-col  ${
             articleDetails == null
               ? "lg:w-2/3 pr-4"
