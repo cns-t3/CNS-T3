@@ -39,9 +39,6 @@ const Result = ({ data }) => {
   return (
     <>
       <ResultHeader
-        selectedFilterOptions={selectedFilterOptions}
-        setSelectedFilterOptions={setSelectedFilterOptions}
-        setFilterNow={setFilterNow}
       />
       <ResultsViewer data={filteredData}></ResultsViewer>
     </>

@@ -9,7 +9,6 @@ const ResultsViewer = ({ data }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleArticleOpen = (article) => {
-    console.log(article);
     setArticleDetails(article);
     setScrollPosition(document.documentElement.scrollTop);
     window.scrollTo({
