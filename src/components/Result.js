@@ -21,6 +21,9 @@ const Result = ({ data }) => {
 
   const filterData = (data, selectedFilterOptions) => {
     const riskRatingOptions = selectedFilterOptions.riskRating;
+    if (riskRatingOptions.length == 0){
+        return data;
+    }
     const filteredArticles = data.newsArticles.filter((article) =>
       riskRatingOptions.includes(article.risk_rating)
     );

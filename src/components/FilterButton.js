@@ -54,6 +54,7 @@ const FilterButton = ({
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
+        id="filterButton"
         className="flex flex-row text-gray-500 pr-3"
         onClick={handleFilterOpen}
       >
@@ -98,6 +99,7 @@ const FilterButton = ({
                 Reset
               </button>
               <button
+                id="applyButton"
                 type="button"
                 onClick={applyFilters}
                 className="bg-sky-800 text-xs text-white px-3 py-2 rounded-md hover:bg-sky-900"
