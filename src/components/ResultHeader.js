@@ -1,7 +1,10 @@
-
+import FilterButton from "./FilterButton";
+import SortButton from "./SortButton";
 
 const ResultHeader = ({
-
+  selectedFilterOptions,
+  setSelectedFilterOptions,
+  setFilterNow,
 }) => {
   return (
     <div className="px-10">
@@ -11,7 +14,12 @@ const ResultHeader = ({
           <hr className="border-red border-t-2" />
         </div>
         <div className="flex flex-row">
-          {/* button */}
+          <SortButton />
+          <FilterButton
+            selectedFilterOptions={selectedFilterOptions}
+            setSelectedFilterOptions={setSelectedFilterOptions}
+            setFilterNow={setFilterNow}
+          />
         </div>
       </div>
       <hr className=" mb-5"></hr>

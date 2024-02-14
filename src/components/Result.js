@@ -21,6 +21,9 @@ const Result = ({ data }) => {
 
   const filterData = (data, selectedFilterOptions) => {
     const riskRatingOptions = selectedFilterOptions.riskRating;
+    if (riskRatingOptions.length == 0){
+        return data;
+    }
     const filteredArticles = data.newsArticles.filter((article) =>
       riskRatingOptions.includes(article.risk_rating)
     );
@@ -39,6 +42,9 @@ const Result = ({ data }) => {
   return (
     <>
       <ResultHeader
+        selectedFilterOptions={selectedFilterOptions}
+        setSelectedFilterOptions={setSelectedFilterOptions}
+        setFilterNow={setFilterNow}
       />
       <ResultsViewer data={filteredData}></ResultsViewer>
     </>
