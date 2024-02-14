@@ -9,7 +9,6 @@ const ResultsViewer = ({ data }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleArticleOpen = (article) => {
-    console.log(article);
     setArticleDetails(article);
     setScrollPosition(document.documentElement.scrollTop);
     window.scrollTo({
@@ -44,6 +43,7 @@ const ResultsViewer = ({ data }) => {
           )}
         </div>
         <div
+          id="news-articles-container"
           className={`flex flex-col  ${
             articleDetails == null
               ? "lg:w-2/3 pr-4"
