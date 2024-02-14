@@ -48,7 +48,7 @@ jobs:
       # - name: Nextjs Lint Scan 
       #   run: npm run lint
       - name: Airbnb Lint Scan 
-        run: npm run airbnb-lint
+        run: npm run airbnb-lint src
 
   lint-fastapi:
     runs-on: ubuntu-latest

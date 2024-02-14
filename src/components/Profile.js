@@ -34,7 +34,7 @@ const Profile = ({ profileDetails }) => {
     profileDetails.dob !== "" ? formatDate(profileDetails.dob) : "";
 
   return (
-    <div id="profile-container" className="col-span-1 p-8">
+    <div id="profile-container" className="p-8">
       <div className="grid grid-cols-2 gap-1 ">
         <div id="profile-image-container" className="">
           <img

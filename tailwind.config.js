@@ -7,9 +7,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors:{
-        'custom-beige': '#F9F9F7',
-      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -17,6 +14,11 @@ module.exports = {
       },
       colors: {
         beige: "#F9F9F7",
+        red: "#E60000",
+        cream: "#F4F3ED",
+        grey: "#CDCDCC",
+        darkgrey: "#ABABAB",
+        textgrey: "#5B5D5C"
       },
     },
   },

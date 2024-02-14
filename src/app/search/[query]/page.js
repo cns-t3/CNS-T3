@@ -1,7 +1,8 @@
 import React from "react";
-import ResultsViewer from "@/components/ResultsViewer";
+import Result from "@/components/Result";
 
 const SearchPage = async ({ params }) => {
+  
   // async function getData(query) {
   //   const url = "http://127.0.0.1:8000/search?search_query=" + query;
   //   const res = await fetch(url);
@@ -15,7 +16,7 @@ const SearchPage = async ({ params }) => {
   // const data = await getData(query);
   // const string = JSON.stringify(data);
 
-  const json = {
+  const data = {
     profile: {
       person_id: 456,
       name: "Tim Cook",
@@ -58,7 +59,7 @@ const SearchPage = async ({ params }) => {
           "https://www.bognor.news/wp-content/uploads/2024/01/APPLE-__A.jpg",
         source_url:
           "https://www.bognor.news/tech/apple-ceo-tim-cooks-2023-compensation-declines-to-63-2-million-insights-into-salary-structure-and-future-equity-awards/",
-        risk_rating: "low",
+        risk_rating: "high",
         summary:
           "Apple CEO Tim Cook's earnings for 2023 have been revealed in Apple's proxy statement, showing a decline to $63.2 million from $99.4 million in 2022. His total earnings consist of a base salary of $3 million, stock awards of $47 million, bonus awards worth $10.7 million, and other compensation. Tim Cook's ownership of Apple stock and RSUs is significant, with a target equity award for 2024 set at $50 million. The decrease in Cook's compensation was a deliberate decision to align earnings with Apple's outstanding performance. Other Apple senior executives also received substantial earnings in 2023.",
         score: 0.7,
@@ -92,7 +93,7 @@ const SearchPage = async ({ params }) => {
           "https://i-invdn-com.investing.com/news/https://i-invdn-com.investing.com/akapi-images/800x450/c08c214ed892738f4c20488995f38ac6_w_800_h_450.jpg",
         source_url:
           "https://in.investing.com/news/earnings-call-apple-posts-record-revenue-and-eps-in-q1-fy2024-93CH-4000911",
-        risk_rating: "low",
+        risk_rating: "medium",
         summary:
           "Apple Inc. reported a modest revenue increase in the December quarter, with record-breaking earnings per share. The tech giant saw growth in services and active installed base, showcasing resilience and innovation in a challenging market. With a focus on expanding services and investments in AI, Apple remains optimistic about growth trajectory. Financially robust with a market capitalization of $2.89 trillion USD, Apple's P/E ratio is at 30.3, reflecting investor confidence in profitability and future growth. The company's track record of dividend increases and low price volatility make it an attractive investment option.",
         score: 0.9,
@@ -109,7 +110,7 @@ const SearchPage = async ({ params }) => {
           "https://i-invdn-com.investing.com/news/https://i-invdn-com.investing.com/akapi-images/800x450/c08c214ed892738f4c20488995f38ac6_w_800_h_450.jpg",
         source_url:
           "https://za.investing.com/news/earnings-call-apple-posts-record-revenue-and-eps-in-q1-fy2024-93CH-2998284",
-        risk_rating: "low",
+        risk_rating: "high",
         summary:
           "Apple Inc. (AAPL) reported a modest 2% revenue increase to $119.6 billion in the December quarter, with a record-breaking earnings per share (EPS) of $2.18, up 16%. Despite challenges, they saw significant growth in services and active installed base. The company remains optimistic about growth through expansion in services and AI investment. With a focus on privacy and security, Apple continues to adapt to regulatory environments. The company's strong financials, strategic plans, and market capitalization of $2.89 trillion underscore its position as an industry heavyweight with a P/E ratio of 30.3. Initiatives like raising dividends for 12 years demonstrate financial stability.",
         score: 0.8,
@@ -123,7 +124,7 @@ const SearchPage = async ({ params }) => {
       <div className="flex md:flex-row flex-col m-6 items-center justify-center">
         {/* <img src="/logo.png" className="md:w-2/12 sm:w-1/3 w-1/2 m-3"></img> */}
       </div>
-      <ResultsViewer json={json}></ResultsViewer>
+      <Result data={data}/>
     </div>
   );
 };

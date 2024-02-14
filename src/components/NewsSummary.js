@@ -1,19 +1,11 @@
 // import { useState } from 'react';
 
-export default function NewsSummary({ article, setArticleDetails }) {
-
-  // Return null if the container should not be visible
-  // if (!isVisible) return null;
-
-  const handleArticleClose = () => {
-    setArticleDetails(null);
-  };
-
+export default function NewsSummary({ article, onClose }) {
   return (
-    <div className="flex flex-row justify-end p-8">
+    <div className="flex flex-row p-8">
       <button
         className="text-red transition duration-300 ease-in-out pr-4"
-        onClick={handleArticleClose}
+        onClick={onClose}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -31,17 +23,15 @@ export default function NewsSummary({ article, setArticleDetails }) {
           />
         </svg>
       </button>
-      <div className="">
+      <div className="flex flex-col">
         {/* Article Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center">
           <h1 className="text-xl font-bold text-gray-800">{article.title}</h1>
         </div>
         {/* Summary with smaller font */}
-        <div className="mt-4">
-          <p className="font-semibold">Summary:</p>
-          <p className="text-gray-600 text-sm whitespace-pre-wrap pt-2">
-            {article.summary}
-          </p>
+        <div className="pt-4">
+          <p className="font-semibold text-sm">Summary:</p>
+          <p className="text-gray-600 text-sm pt-2">{article.summary}</p>
         </div>
         {/* Content with a top border as a divider and smaller font */}
         {/* <div className="mt-4 pt-4 border-t border-blue-300">
@@ -50,19 +40,18 @@ export default function NewsSummary({ article, setArticleDetails }) {
           </p>
         </div> */}
         {/* Read More Link */}
-        <div className="mt-4">
-          <p>
-            {" "}
-            Source URL:{" "}
+        <div className="pt-4">
+          <div>
+            <p className="font-semibold text-sm">Source URL:</p>
             <a
               href={article.source_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 hover:text-gray-800 underline transition duration-300 ease-in-out"
+              className="text-gray-600 hover:text-gray-800 text-sm underline transition duration-300 ease-in-out"
             >
               {article.source_url}
             </a>
-          </p>
+          </div>
         </div>
         {/* <div className="mt-4">
           <p>Analytics: {article.analytics}</p>
