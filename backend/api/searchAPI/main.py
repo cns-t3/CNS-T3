@@ -4,10 +4,8 @@ from pydantic_models import SearchResult
 
 app = FastAPI()
 
-
 @app.get(
     "/search",
-    # response_model=SearchResult,
     tags=["search"],
     summary="Get relevant news articles and social media posts by search query",
     description="Returns person's profile and an array of news articles",

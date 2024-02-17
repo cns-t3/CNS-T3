@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
 from dotenv import load_dotenv
 from sqlalchemy_models import Person, Company, PersonCompany
-from backend.api.personAPI.pydantic_models import PersonSchema
+from pydantic_models import PersonSchema
 import os
 
 load_dotenv()

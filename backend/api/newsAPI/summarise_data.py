@@ -29,7 +29,7 @@ def get_summarised_news_articles(search_query: str):
             threads = []
             summaries = [""] * len(articles)
             tags = [""] * len(articles)
-            # the summaries are not returned in the same order as the articles, so we need to keep track of the order
+            #the summaries are not returned in the same order as the articles, so we need to keep track of the order
             for count, article in enumerate(articles):
                 thread = threading.Thread(
                     target=handle_body,
