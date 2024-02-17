@@ -4,37 +4,59 @@ import NewsArticle from "./NewsArticle";
 import Profile from "./Profile";
 import NewsSummary from "./NewsSummary";
 
-const ResultsViewer = ({ json }) => {
+const ResultsViewer = ({ data }) => {
   const [articleDetails, setArticleDetails] = useState(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const handleArticleOpen = (article) => {
+    setArticleDetails(article);
+    setScrollPosition(document.documentElement.scrollTop);
+    window.scrollTo({
+      top: 0,
+      left:0,
+      behavior: "smooth",
+    });
+  };
+
+  const handleArticleClose = () => {
+    setArticleDetails(null);
+    window.scrollTo({
+      top: scrollPosition,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <div className="px-10">
-      <hr className=" mb-5"></hr>
-      <div className="flex flex-row w-full">
+      <div className="flex flex-col lg:flex-row w-full">
         <div
-          className={`flex flex-col pr-4 ${
-            articleDetails == null ? "w-2/3" : "w-1/2"
+          className={`flex bg-beige rounded-md h-min lg:order-last ${
+            articleDetails == null ? "lg:w-1/3" : "lg:w-1/2"
           }`}
         >
-          {json.newsArticles.map((article, index) => (
+          {articleDetails == null && <Profile profileDetails={data.profile} />}
+          {articleDetails != null && (
+            <NewsSummary
+              article={articleDetails}
+              onClose={handleArticleClose}
+            ></NewsSummary>
+          )}
+        </div>
+        <div
+          id="news-articles-container"
+          className={`flex flex-col  ${
+            articleDetails == null
+              ? "lg:w-2/3 pr-4"
+              : "lg:w-1/2 lg:pr-4 hidden lg:flex"
+          }`}
+        >
+          {data.newsArticles.map((article, index) => (
             <NewsArticle
               articleDetails={article}
-              setArticleDetails={setArticleDetails}
+              onOpen={handleArticleOpen}
               key={index}
             />
           ))}
-        </div>
-        <div
-          className={`flex bg-beige rounded-md h-min ${
-            articleDetails == null ? "w-1/3" : "w-1/2"
-          }`}
-        >
-          {articleDetails == null && (
-            <Profile profileDetails={json.profile} />
-          )}
-          {articleDetails != null && (
-            <NewsSummary article={articleDetails} setArticleDetails={setArticleDetails}></NewsSummary>
-          )}
         </div>
       </div>
     </div>
