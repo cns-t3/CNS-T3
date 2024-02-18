@@ -1,17 +1,16 @@
-"use client";
-import React, { useRef, useEffect } from "react";
-import RiskRating from "./RiskRating";
+'use client';
 
-const NewsArticle = ({ articleDetails, onOpen }) => {
+import React, { useRef, useEffect } from 'react';
+import RiskRating from './RiskRating';
+
+function NewsArticle({ articleDetails, onOpen }) {
   // Format the date
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-SG", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      timeZone: "Asia/Singapore",
-    });
-  };
+  const formatDate = (dateString) => new Date(dateString).toLocaleDateString('en-SG', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'Asia/Singapore',
+  });
 
   return (
     <div
@@ -35,7 +34,11 @@ const NewsArticle = ({ articleDetails, onOpen }) => {
           </h2>
         </div>
         <p id="article-summary" className="text-gray-500 text-sm line-clamp-2">
-          {formatDate(articleDetails.publishedAt)} — "{articleDetails.summary}"
+          {formatDate(articleDetails.publishedAt)}
+          {' '}
+          — "
+          {articleDetails.summary}
+          "
         </p>
       </div>
       <div className="flex items-center md:space-x-0 space-x-0 relative md:flex-row flex-col ">
@@ -43,6 +46,6 @@ const NewsArticle = ({ articleDetails, onOpen }) => {
       </div>
     </div>
   );
-};
+}
 
 export default NewsArticle;

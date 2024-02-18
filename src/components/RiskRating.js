@@ -1,34 +1,34 @@
-"use client";
+'use client';
 
-import { useRef, useEffect } from "react";
-import Chart from "chart.js/auto";
-import ChartDataLabels from "chartjs-plugin-datalabels";
+import { useRef, useEffect } from 'react';
+import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-const RiskRating = ({ riskRating }) => {
+function RiskRating({ riskRating }) {
   const riskChartRef = useRef(null);
 
   useEffect(() => {
-    const riskCtx = riskChartRef.current.getContext("2d");
+    const riskCtx = riskChartRef.current.getContext('2d');
 
     // Determine the chart color based on the risk rating
     let chartColor;
     switch (riskRating) {
-      case "low":
-        chartColor = "#2ecc71"; // Green for low risk
+      case 'low':
+        chartColor = '#2ecc71'; // Green for low risk
         break;
-      case "medium":
-        chartColor = "#f39c12"; // Orange for medium risk
+      case 'medium':
+        chartColor = '#f39c12'; // Orange for medium risk
         break;
-      case "high":
-        chartColor = "#E60000"; // Red for high risk
+      case 'high':
+        chartColor = '#E60000'; // Red for high risk
         break;
       default:
-        chartColor = "transparent"; // Default case
+        chartColor = 'transparent'; // Default case
     }
 
     // Risk chart configuration
     const riskConfig = {
-      type: "doughnut",
+      type: 'doughnut',
       data: {
         datasets: [
           {
@@ -39,7 +39,7 @@ const RiskRating = ({ riskRating }) => {
         ],
       },
       options: {
-        cutout: "90%",
+        cutout: '90%',
         rotation: 270,
         circumference: 360,
         plugins: {
@@ -69,7 +69,8 @@ const RiskRating = ({ riskRating }) => {
         <p className="text-center text-gray-900 text-xs">
           <span className="text-sm font-semibold riskRating">
             {riskRating.toUpperCase()}
-          </span>{" "}
+          </span>
+          {' '}
           <span className="block text-xs max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
             RISK
           </span>
@@ -77,6 +78,6 @@ const RiskRating = ({ riskRating }) => {
       </div>
     </div>
   );
-};
+}
 
 export default RiskRating;

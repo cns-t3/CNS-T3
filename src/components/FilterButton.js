@@ -1,13 +1,13 @@
-import { useState, useRef, useEffect } from "react";
-import { IoFilterOutline } from "react-icons/io5";
+import { useState, useRef, useEffect } from 'react';
+import { IoFilterOutline } from 'react-icons/io5';
 
-const FilterButton = ({
+function FilterButton({
   selectedFilterOptions,
   setSelectedFilterOptions,
   setFilterNow,
-}) => {
+}) {
   const [isFilterOpen, setFilterOpen] = useState(false);
-  const options = ["low", "medium", "high"];
+  const options = ['low', 'medium', 'high'];
   const dropdownRef = useRef();
 
   useEffect(() => {
@@ -17,9 +17,9 @@ const FilterButton = ({
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -112,6 +112,6 @@ const FilterButton = ({
       )}
     </div>
   );
-};
+}
 
 export default FilterButton;
