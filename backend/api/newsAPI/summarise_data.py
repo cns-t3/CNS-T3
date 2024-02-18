@@ -3,15 +3,19 @@ from pydantic import BaseModel
 import requests, threading, time
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
+import os
 
-def get_secret_client():
-    credential = DefaultAzureCredential()
-    secret_client = SecretClient(vault_url="https://cnst3.vault.azure.net/", credential=credential)
-    return secret_client
+#def get_secret_client():
+#    credential = DefaultAzureCredential()
+#    secret_client = SecretClient(vault_url="https://cnst3.vault.azure.net/", credential=credential)
+#    return secret_client
+
+#def get_news_api_key():
+#    secret_client = get_secret_client()
+#    return secret_client.get_secret("NEWS-API-KEY").value
 
 def get_news_api_key():
-    secret_client = get_secret_client()
-    return secret_client.get_secret("NEWS-API-KEY").value
+    return os.getenv("NEWSAPIKEY")
 
 openAI_client = OpenAI()
 
