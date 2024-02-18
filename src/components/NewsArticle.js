@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import RiskRating from './RiskRating';
 
 function NewsArticle({ articleDetails, onOpen }) {

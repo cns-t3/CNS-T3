@@ -1,3 +1,4 @@
+import React from 'react';
 import { BiSortAlt2 } from 'react-icons/bi';
 
 function SortButton({}) {

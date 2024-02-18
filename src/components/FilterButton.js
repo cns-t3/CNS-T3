@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import { IoFilterOutline } from 'react-icons/io5';
 

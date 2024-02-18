@@ -1,3 +1,4 @@
+import React from 'react';
 import FilterButton from './FilterButton';
 import SortButton from './SortButton';
 
