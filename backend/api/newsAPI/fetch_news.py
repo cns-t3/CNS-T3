@@ -1,7 +1,7 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 from pydantic_models import NewsArticle
-import os, requests, threading, json
+import os, requests, time, threading, json
 
 load_dotenv()
 openAI_client = OpenAI()
@@ -17,7 +17,7 @@ def get_summarised_news_articles(search_query: str):
         + os.getenv("NEWS_API_KEY")
         + "&keyword="
         + search_query
-        + "&lang=eng&articlesSortBy=rel&articlesCount=20"
+        + "&lang=eng&articlesSortBy=rel&articlesCount=15"
     )
     news_articles = []
     try:
