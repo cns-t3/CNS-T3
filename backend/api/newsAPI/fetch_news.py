@@ -1,6 +1,6 @@
 from openai import OpenAI
 from dotenv import load_dotenv
-from backend.api.newsAPI.pydantic_models import NewsArticle
+from pydantic_models import NewsArticle
 import os, requests, threading, time, json
 
 load_dotenv()
