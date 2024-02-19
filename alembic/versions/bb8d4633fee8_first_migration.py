@@ -22,12 +22,14 @@ def upgrade() -> None:
         'person',
         Column('PersonID', Integer, primary_key=True, autoincrement=True),
         Column('Name', String(50), nullable=False),
-        Column('DoB', Date, nullable=False),
-        Column('CountryOfResidency', String(50), nullable=False),
-        Column('Nationality', String(25), nullable=False),
         Column('Occupation', String(25), nullable=False),
+        Column('DoB', Date, nullable=False),
+        Column('Nationality', String(25), nullable=False),
+        Column('Description', String(255), nullable=False),
+        Column('CountryOfResidency', String(50), nullable=False),
         Column('PEPStatus', Boolean),
-        Column('SourceOfWealth', String(25))
+        Column('SourceOfWealth', String(25)),
+        Column('ImgURL', String(255))
     )
 
     op.create_table(
