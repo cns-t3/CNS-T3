@@ -1,7 +1,7 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 from pydantic_models import NewsArticle
-import os, requests, threading, time, json
+import os, requests, threading, json
 
 load_dotenv()
 openAI_client = OpenAI()
