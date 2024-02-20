@@ -1,14 +1,14 @@
-import React from "react";
-import Image from "next/image";
-import Result from "@/components/Result";
-import SmallSearchBar from "@/components/SmallSearchBar";
+import React from 'react';
+import Image from 'next/image';
+import Result from '@/components/Result';
+import SmallSearchBar from '@/components/SmallSearchBar';
 
 async function getData(query) {
   const url = `http://127.0.0.1:8000/search?search_query=${query}`;
   try {
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) {
-      throw new Error("Failed to fetch data");
+      throw new Error('Failed to fetch data');
     }
     return res.json();
   } catch {

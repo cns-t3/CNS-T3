@@ -7,3 +7,6 @@ pydantic_core==2.14.5
 fastapi==0.105.0
 uvicorn==0.15.0
 requests==2.31.0
+fastapi[all]
+httpx==0.25.2
+SQLAlchemy==2.0.21

@@ -1,27 +1,14 @@
 from typing import List
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, status
-from pydantic import BaseModel
 from openai import OpenAI
-from fetch_news import fetch_news_articles
+
+# from fetch_news import get_summarised_news_articles
+from backend.api.newsAPI.fetch_news import get_summarised_news_articles
+from backend.api.newsAPI.pydantic_models import NewsArticle
 
 load_dotenv()
 app = FastAPI()
-openAI_client = OpenAI()
-
-
-class NewsArticle(BaseModel):
-    news_id: int
-    title: str
-    content: str
-    publisher: str
-    publishedAt: str
-    image_url: str = ""
-    source_url: str
-    risk_rating: str
-    summary: str
-    score: int
-    tag: str
 
 
 @app.get(
@@ -33,8 +20,8 @@ class NewsArticle(BaseModel):
 )
 async def get_news_articles(search_query: str):
     try:
-        return fetch_news_articles(search_query)
-    except Exception as e:
+        return get_summarised_news_articles(search_query)
+    except Exception:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error",
