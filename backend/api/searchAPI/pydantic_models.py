@@ -13,7 +13,8 @@ class NewsArticle(BaseModel):
     risk_rating: str
     summary: str
     score: int
-    tag: str
+    category: str
+    is_related: bool
 
 
 class Person(BaseModel):
