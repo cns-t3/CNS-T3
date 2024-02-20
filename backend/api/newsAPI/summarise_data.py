@@ -15,7 +15,7 @@ import os
 #    return secret_client.get_secret("NEWS-API-KEY").value
 
 def get_news_api_key():
-    return os.getenv("NEWSAPIKEY")
+    return os.getenv("NEWS-API-KEY")
 
 openAI_client = OpenAI()
 

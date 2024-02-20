@@ -28,12 +28,12 @@ spec:
             cpu: "500m"
         imagePullPolicy: Always
         env:
-        - name: NEWSAPIKEY
+        - name: NEWS-API-KEY
           valueFrom:
             secretKeyRef:
               name: k8s-secret
               key: newsApiKey
-        - name: OPENAIAPIKEY
+        - name: OPENAI-API-KEY
           valueFrom:
             secretKeyRef:
               name: k8s-secret
