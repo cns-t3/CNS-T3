@@ -1,7 +1,10 @@
 from openai import OpenAI
 from dotenv import load_dotenv
-from pydantic_models import NewsArticle
-import os, requests, time, threading, json
+from backend.api.newsAPI.pydantic_models import NewsArticle
+import os
+import requests
+import threading
+import json
 
 load_dotenv()
 openAI_client = OpenAI()
@@ -43,7 +46,7 @@ def get_summarised_news_articles(search_query: str):
                     content=article["body"],
                     publishedAt=article["dateTimePub"],
                     source_url=article["url"],
-                    image_url=article["image"] if article["image"] != None else "",
+                    image_url=article["image"] if article["image"] is not None else "",
                     risk_rating="low",
                     summary="",
                     score=0,
