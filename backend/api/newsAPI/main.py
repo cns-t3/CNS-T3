@@ -33,11 +33,7 @@ class NewsArticle(BaseModel):
     summary: str
     score: int
     tag: str
-
-@app.get("/health", tags=["health"], summary="Check health status", description="Returns the health status of the service")
-async def health_check():
-    return {"status": "healthy"}
-
+    
 @app.get(
     "/news/{search_query}",
     response_model=List[NewsArticle],
