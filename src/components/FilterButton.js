@@ -1,6 +1,6 @@
-import React from 'react';
-import { useState, useRef, useEffect } from 'react';
-import { IoFilterOutline } from 'react-icons/io5';
+import React from "react";
+import { useState, useRef, useEffect } from "react";
+import { IoFilterOutline } from "react-icons/io5";
 
 function FilterButton({
   selectedFilterOptions,
@@ -8,7 +8,14 @@ function FilterButton({
   setFilterNow,
 }) {
   const [isFilterOpen, setFilterOpen] = useState(false);
-  const options = ['low', 'medium', 'high'];
+  const riskRatingOptions = ["low", "medium", "high"];
+  const categoryOptions = [
+    "source of wealth",
+    "family circumstances",
+    "sanctioned countries",
+    "sensitive industries",
+    "others",
+  ];
   const dropdownRef = useRef();
 
   useEffect(() => {
@@ -18,9 +25,9 @@ function FilterButton({
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -45,11 +52,24 @@ function FilterButton({
 
   const removeFilters = () => {
     setSelectedFilterOptions({
-      riskRating: [],
-      categories: [],
+      riskRating: ["low", "medium", "high"],
+      category: [
+        "source of wealth",
+        "family circumstances",
+        "sanctioned countries",
+        "sensitive industries",
+        "others",
+      ],
     });
     setFilterNow(true);
     setFilterOpen(false);
+  };
+
+  const capitaliseWords = (option) => {
+    let capitalizedWords = option.split(" ").map(
+      (word) => word.charAt(0).toUpperCase() + word.slice(1)
+    );
+    return capitalizedWords.join(" ");
   };
 
   return (
@@ -70,7 +90,7 @@ function FilterButton({
               <p className="text-xs m-2 text-gray-500 font-semibold">
                 Risk Rating
               </p>
-              {options.map((option) => (
+              {riskRatingOptions.map((option) => (
                 <label key={option} className="flex items-center space-x-2 m-2">
                   <input
                     type="checkbox"
@@ -89,7 +109,26 @@ function FilterButton({
 
             <hr className="m-2 my-5" />
 
-            {/* You can add category checkboxes similar to the riskRating ones here */}
+            <div>
+              <p className="text-xs m-2 text-gray-500 font-semibold">
+                Category
+              </p>
+              {categoryOptions.map((option) => (
+                <label key={option} className="flex items-center space-x-2 m-2">
+                  <input
+                    type="checkbox"
+                    value={option}
+                    name="category"
+                    checked={selectedFilterOptions.category.includes(option)}
+                    onChange={handleCheckboxChange}
+                    className="h-4 w-4 accent-sky-900 cursor-pointer"
+                  />
+                  <span className="text-sm text-gray-900">
+                    {capitaliseWords(option)}
+                  </span>
+                </label>
+              ))}
+            </div>
 
             <div className="grid grid-cols-2 gap-2 m-2 mt-5">
               <button
