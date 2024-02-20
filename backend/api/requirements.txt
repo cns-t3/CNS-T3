@@ -8,3 +8,4 @@ fastapi==0.105.0
 uvicorn==0.15.0
 requests==2.31.0
 fastapi[all]
+httpx==0.25.2
