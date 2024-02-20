@@ -27,3 +27,14 @@ spec:
             memory: "256Mi"
             cpu: "500m"
         imagePullPolicy: Always
+        env:
+        - name: NEWSAPIKEY
+          valueFrom:
+            secretKeyRef:
+              name: k8s-secret
+              key: newsApiKey
+        - name: OPENAIAPIKEY
+          valueFrom:
+            secretKeyRef:
+              name: k8s-secret
+              key: openAiApiKey
