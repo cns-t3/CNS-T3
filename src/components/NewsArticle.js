@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import React from "react";
-import RiskRating from "./RiskRating";
-import Category from "./Category";
+import React from 'react';
+import RiskRating from './RiskRating';
+import Category from './Category';
 
 function NewsArticle({ articleDetails, onOpen }) {
   // Format the date
   const formatDate = (dateString) =>
-    new Date(dateString).toLocaleDateString("en-SG", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      timeZone: "Asia/Singapore",
+    new Date(dateString).toLocaleDateString('en-SG', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      timeZone: 'Asia/Singapore',
     });
 
   return (
@@ -21,7 +21,9 @@ function NewsArticle({ articleDetails, onOpen }) {
       onClick={() => onOpen(articleDetails)}
     >
       <div className="flex-1 pr-3">
-        <Category categoryDetails={articleDetails.category}></Category>
+        <Category
+          categoryDetails={articleDetails.category}
+        ></Category>
         <p
           id="article-publisher"
           className="text-sky-800 text-xs font-bold uppercase"
