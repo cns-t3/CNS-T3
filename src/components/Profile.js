@@ -30,7 +30,8 @@ const formatDate = (inputDate) => {
 };
 
 function Profile({ profileDetails }) {
-  const formattedDate = profileDetails.dob !== '' ? formatDate(profileDetails.dob) : '';
+  const formattedDate =
+    profileDetails.dob !== '' ? formatDate(profileDetails.dob) : '';
 
   return (
     <div id="profile-container" className="p-8">
@@ -50,22 +51,16 @@ function Profile({ profileDetails }) {
             {profileDetails.name}
           </h2>
           <p id="profile-occupation" className="text-sm mb-5">
-            {profileDetails.occupation}
-            , at
-            {profileDetails.company}
+            {`${profileDetails.occupation}, at ${profileDetails.company}`}
           </p>
           {profileDetails.dob !== '' && (
             <p id="profile-dob" className="text-gray-500 text-sm">
-              Born:
-              {' '}
-              {formattedDate}
+              Born: {formattedDate}
             </p>
           )}
           {profileDetails.nationality !== '' && (
             <p id="profile-nationality" className="text-gray-500 text-sm">
-              Nationality:
-              {' '}
-              {profileDetails.nationality}
+              Nationality: {profileDetails.nationality}
             </p>
           )}
         </div>

@@ -22,7 +22,7 @@ def get_summarised_news_articles(search_query: str):
         + os.getenv("NEWS_API_KEY")
         + "&keyword="
         + search_query
-        + "&lang=eng&articlesSortBy=rel&articlesCount=15"
+        + "&lang=eng&articlesSortBy=rel&articlesCount=5"
     )
     news_articles = []
     try:
@@ -39,7 +39,14 @@ def get_summarised_news_articles(search_query: str):
             for count, article in enumerate(articles):
                 thread = threading.Thread(
                     target=handle_body,
-                    args=(article["body"], count, summaries, categories, relations, risks),
+                    args=(
+                        article["body"],
+                        count,
+                        summaries,
+                        categories,
+                        relations,
+                        risks,
+                    ),
                 )
                 thread.start()
                 threads.append(thread)
@@ -78,7 +85,7 @@ def summarise_article(article_body, client):
         messages=[
             {
                 "role": "system",
-                "content": '''Given a news article, complete the following actions
+                "content": """Given a news article, complete the following actions
 
 1. Summarize the news content in less than 100 words
 
@@ -110,8 +117,7 @@ Medium-Risk Cases:
 
 If the news does not belong to any of the above cases, return Low for its risk rating.
 
-Return the data in JSON format: {"summary": "", "category": "", "is_related": "", "risk_rating":""}'''
-,
+Return the data in JSON format: {"summary": "", "category": "", "is_related": "", "risk_rating":""}""",
             },
             {"role": "user", "content": input},
         ],
