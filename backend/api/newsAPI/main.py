@@ -9,7 +9,6 @@ from backend.api.newsAPI.pydantic_models import NewsArticle
 
 load_dotenv()
 app = FastAPI()
-openAI_client = OpenAI()
 
 
 @app.get(
