@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Query, HTTPException
 import requests
-from pydantic_models import SearchResult
+from backend.api.searchAPI.pydantic_models import SearchResult
 
 app = FastAPI()
 

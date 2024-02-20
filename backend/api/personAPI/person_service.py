@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy_models import Person, Company, PersonCompany
+from backend.api.personAPI.sqlalchemy_models import Person, Company, PersonCompany
 
 
 def search_person_by_name(db: Session, name: str):

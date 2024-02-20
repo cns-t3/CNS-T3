@@ -1,8 +1,8 @@
 from fastapi import FastAPI, HTTPException, Query, Depends
 from sqlalchemy.orm import Session
-from pydantic_models import PersonSchema
-from database import get_db
-from person_service import search_person_by_name
+from backend.api.personAPI.pydantic_models import PersonSchema
+from backend.api.personAPI.database import get_db
+from backend.api.personAPI.person_service import search_person_by_name
 
 app = FastAPI()
 

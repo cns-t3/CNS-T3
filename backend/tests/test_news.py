@@ -7,6 +7,6 @@ class TestNewsAPI(unittest.TestCase):
     def setUp(self):
         self.client = TestClient(app)
 
-    def test_get_(self):
+    def test_get_news(self):
         response = self.client.get("/news/anthony%20tan")
         self.assertEqual(response.status_code, 200)
