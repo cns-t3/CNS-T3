@@ -2,15 +2,17 @@
 
 import React from 'react';
 import RiskRating from './RiskRating';
+import Category from './Category';
 
 function NewsArticle({ articleDetails, onOpen }) {
   // Format the date
-  const formatDate = (dateString) => new Date(dateString).toLocaleDateString('en-SG', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    timeZone: 'Asia/Singapore',
-  });
+  const formatDate = (dateString) =>
+    new Date(dateString).toLocaleDateString('en-SG', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      timeZone: 'Asia/Singapore',
+    });
 
   return (
     <div
@@ -19,6 +21,9 @@ function NewsArticle({ articleDetails, onOpen }) {
       onClick={() => onOpen(articleDetails)}
     >
       <div className="flex-1 pr-3">
+        <Category
+          categoryDetails={articleDetails.category}
+        ></Category>
         <p
           id="article-publisher"
           className="text-sky-800 text-xs font-bold uppercase"
@@ -34,11 +39,7 @@ function NewsArticle({ articleDetails, onOpen }) {
           </h2>
         </div>
         <p id="article-summary" className="text-gray-500 text-sm line-clamp-2">
-          {formatDate(articleDetails.publishedAt)}
-          {' '}
-          — "
-          {articleDetails.summary}
-          "
+          {formatDate(articleDetails.publishedAt)} — "{articleDetails.summary}"
         </p>
       </div>
       <div className="flex items-center md:space-x-0 space-x-0 relative md:flex-row flex-col ">

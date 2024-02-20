@@ -14,13 +14,13 @@ function RiskRating({ riskRating }) {
     // Determine the chart color based on the risk rating
     let chartColor;
     switch (riskRating) {
-      case 'low':
+      case 'Low':
         chartColor = '#2ecc71'; // Green for low risk
         break;
-      case 'medium':
+      case 'Medium':
         chartColor = '#f39c12'; // Orange for medium risk
         break;
-      case 'high':
+      case 'High':
         chartColor = '#E60000'; // Red for high risk
         break;
       default:
@@ -70,8 +70,7 @@ function RiskRating({ riskRating }) {
         <p className="text-center text-gray-900 text-xs">
           <span className="text-sm font-semibold riskRating">
             {riskRating.toUpperCase()}
-          </span>
-          {' '}
+          </span>{' '}
           <span className="block text-xs max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
             RISK
           </span>
