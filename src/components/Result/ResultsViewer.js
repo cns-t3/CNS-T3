@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import NewsArticle from "./NewsArticle";
-import Profile from "./Profile";
-import NewsSummary from "./NewsSummary";
+import NewsArticle from "../NewsArticle/NewsArticle";
+import Profile from "../Profile/Profile";
+import NewsSummary from "../NewsArticleDetails/NewsSummary";
 
 function ResultsViewer({ data }) {
   const [articleDetails, setArticleDetails] = useState(null);
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [noArticlesMessage, setNoArticlesMessage] = useState("");
 
   const handleArticleOpen = (article) => {
     setArticleDetails(article);
@@ -27,14 +26,6 @@ function ResultsViewer({ data }) {
       behavior: "smooth",
     });
   };
-
-  useEffect(() => {
-    if (data.length === 0) {
-      setNoArticlesMessage("No articles match your filter criteria.");
-    } else {
-      setNoArticlesMessage("");
-    }
-  }, [data]);
 
   return (
     <div>
@@ -61,6 +52,7 @@ function ResultsViewer({ data }) {
                 : "lg:w-1/2 lg:pr-4 hidden lg:flex"
             }`}
           >
+            {data.newsArticles.length == 0 && <div>No articles match your filter criteria.</div>}
             {data.newsArticles.map((article, index) => (
               <NewsArticle
                 articleDetails={article}
@@ -70,6 +62,7 @@ function ResultsViewer({ data }) {
             ))}
           </div>
         </div>
+        
       </div>
     </div>
   );

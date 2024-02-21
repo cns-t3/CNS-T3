@@ -42,11 +42,6 @@ function Result({ data }) {
         categoryOptions.includes(article.category.toLowerCase())
     );
 
-    console.log({
-      ...data,
-      newsArticles: filteredArticles,
-    });
-
     return {
       ...data,
       newsArticles: filteredArticles,
