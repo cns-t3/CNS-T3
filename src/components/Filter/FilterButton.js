@@ -1,6 +1,8 @@
-import React from 'react';
-import { useState, useRef, useEffect } from 'react';
-import { IoFilterOutline } from 'react-icons/io5';
+import React from "react";
+import { useState, useRef, useEffect } from "react";
+import { IoFilterOutline } from "react-icons/io5";
+import CategoryFilter from "./CategoryFilter";
+import RiskRatingFilter from "./RiskRatingFilter";
 
 function FilterButton({
   selectedFilterOptions,
@@ -8,7 +10,7 @@ function FilterButton({
   setFilterNow,
 }) {
   const [isFilterOpen, setFilterOpen] = useState(false);
-  const options = ['low', 'medium', 'high'];
+
   const dropdownRef = useRef();
 
   useEffect(() => {
@@ -18,9 +20,9 @@ function FilterButton({
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -45,8 +47,14 @@ function FilterButton({
 
   const removeFilters = () => {
     setSelectedFilterOptions({
-      riskRating: [],
-      categories: [],
+      riskRating: ["low", "medium", "high"],
+      category: [
+        "source of wealth",
+        "family circumstances",
+        "sanctioned countries",
+        "sensitive industries",
+        "others",
+      ],
     });
     setFilterNow(true);
     setFilterOpen(false);
@@ -66,30 +74,18 @@ function FilterButton({
         <div className="absolute mt-[6px] right-0 bg-white rounded-md border border-gray-200 shadow-lg z-50 w-64 py-2 px-3">
           <form>
             <div className="mx-2 my-4 font-semibold">Filter By</div>
-            <div>
-              <p className="text-xs m-2 text-gray-500 font-semibold">
-                Risk Rating
-              </p>
-              {options.map((option) => (
-                <label key={option} className="flex items-center space-x-2 m-2">
-                  <input
-                    type="checkbox"
-                    value={option}
-                    name="riskRating"
-                    checked={selectedFilterOptions.riskRating.includes(option)}
-                    onChange={handleCheckboxChange}
-                    className="h-4 w-4 accent-sky-900 cursor-pointer"
-                  />
-                  <span className="text-sm text-gray-900">
-                    {option.charAt(0).toUpperCase() + option.slice(1)}
-                  </span>
-                </label>
-              ))}
-            </div>
+
+            <RiskRatingFilter
+              selectedFilterOptions={selectedFilterOptions}
+              handleCheckboxChange={handleCheckboxChange}
+            />
 
             <hr className="m-2 my-5" />
 
-            {/* You can add category checkboxes similar to the riskRating ones here */}
+            <CategoryFilter
+              selectedFilterOptions={selectedFilterOptions}
+              handleCheckboxChange={handleCheckboxChange}
+            />
 
             <div className="grid grid-cols-2 gap-2 m-2 mt-5">
               <button

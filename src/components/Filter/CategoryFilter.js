@@ -1,0 +1,41 @@
+const CategoryFilter = ({
+  selectedFilterOptions,
+  handleCheckboxChange,
+}) => {
+  const categoryOptions = [
+    "source of wealth",
+    "family circumstances",
+    "sanctioned countries",
+    "sensitive industries",
+    "others",
+  ];
+
+  const capitaliseWords = (option) => {
+    let capitalizedWords = option
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
+    return capitalizedWords.join(" ");
+  };
+  return (
+    <div>
+      <p className="text-xs m-2 text-gray-500 font-semibold">Category</p>
+      {categoryOptions.map((option) => (
+        <label key={option} className="flex items-center space-x-2 m-2">
+          <input
+            type="checkbox"
+            value={option}
+            name="category"
+            checked={selectedFilterOptions.category.includes(option)}
+            onChange={handleCheckboxChange}
+            className="h-4 w-4 accent-sky-900 cursor-pointer"
+          />
+          <span className="text-sm text-gray-900">
+            {capitaliseWords(option)}
+          </span>
+        </label>
+      ))}
+    </div>
+  );
+};
+
+export default CategoryFilter;

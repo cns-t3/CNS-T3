@@ -17,7 +17,7 @@ function NewsArticle({ articleDetails, onOpen }) {
   return (
     <div
       id="news-article-container"
-      className="flex justify-between items-center bg-white px-4 py-5 rounded-lg relative my-2"
+      className="flex justify-between items-center bg-white px-4 pb-5 rounded-lg relative my-2"
       onClick={() => onOpen(articleDetails)}
     >
       <div className="flex-1 pr-3">

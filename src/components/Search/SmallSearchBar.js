@@ -19,7 +19,7 @@ export default function SmallSearchBar({ initialValue }) {
   };
 
   return (
-    <div className="w-full md:m-6 pl-4 border-l-4 border-red-700 flex justify-end items-center">
+    <div className="w-full md:mx-6 md:mt-6 pl-4 border-l-4 border-red flex justify-end items-center">
       <input
         type="text"
         id="large-input"
