@@ -20,6 +20,7 @@ export default function SearchBar({
       {loading ? (
         <div className="absolute m-3" role="status">
           <svg
+            id="loading-spinner"
             aria-hidden="true"
             class="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7  text-gray-200 animate-spin dark:text-gray-600 fill-rose-800"
             viewBox="0 0 100 101"
