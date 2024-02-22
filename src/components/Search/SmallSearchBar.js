@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 export default function SmallSearchBar({ initialValue }) {
   const [value, setValue] = useState(initialValue);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const handleChange = (e) => {
     setValue(e.target.value);
