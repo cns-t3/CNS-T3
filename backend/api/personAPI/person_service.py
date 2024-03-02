@@ -12,7 +12,7 @@ def search_person_by_name(db: Session, name: str):
     person = persons[0]
     companies = (
         db.query(Company)
-        .join(PersonCompany)
+        .join(PersonCompany, Company.CompanyID == PersonCompany.CompanyID)
         .filter(PersonCompany.PersonID == person.PersonID)
         .all()
     )

@@ -1,22 +1,21 @@
 name: FYP CI Pipeline
 on:
   push:
-    branches: ["main", "prod", "feature/*", "hotfix"]
-    
-jobs:
+    branches: ["main", "feature/*", "hotfix/*"]
 
+jobs:
   npm-vulnerabilities-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Vulnerability check
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20.x
-    - name: Scan for frontend npm package vulnerabilities
-      run: |
-        npm install
-        bash script/pipeline/scan_for_vulnerabilities.sh
+      - uses: actions/checkout@v4
+      - name: Set up Vulnerability check
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - name: Scan for frontend npm package vulnerabilities
+        run: |
+          npm install
+          bash script/pipeline/scan_for_vulnerabilities.sh
 
   SAST-scan:
     runs-on: ubuntu-latest
@@ -26,7 +25,7 @@ jobs:
         with:
           output: reports
           type: python
-      - name: Store SAST scan results 
+      - name: Store SAST scan results
         uses: actions/upload-artifact@v4
         with:
           name: SAST-report
@@ -45,9 +44,9 @@ jobs:
       - name: Install dependencies
         run: |
           npm i
-      # - name: Nextjs Lint Scan 
+      # - name: Nextjs Lint Scan
       #   run: npm run lint
-      - name: Airbnb Lint Scan 
+      - name: Airbnb Lint Scan
         run: npm run airbnb-lint src
 
   lint-fastapi:
@@ -67,7 +66,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip 
           pip install -r backend/requirements.txt
-      - name: Flake8 Lint Scan 
+      - name: Flake8 Lint Scan
         run: |
           cd backend/api
           flake8 . --count --ignore=E203,E266,E302,E305,E402,E501,W503,F403,F401,W291,W292 --show-source --statistics
@@ -94,7 +93,7 @@ jobs:
         run: |
           coverage run -m unittest discover backend/tests
           python -m coverage xml
-      - name: Store python unit test coverage report 
+      - name: Store python unit test coverage report
         uses: actions/upload-artifact@v4
         with:
           name: unittest-coverage
@@ -103,11 +102,11 @@ jobs:
   sonarqube-scans:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # not sure if need anot have to see until CI is set up
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # not sure if need anot have to see until CI is set up
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
