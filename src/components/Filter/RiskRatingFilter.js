@@ -1,8 +1,18 @@
 const RiskRatingFilter = ({
     selectedFilterOptions,
-    handleCheckboxChange,
+    setSelectedFilterOptions
   }) => {
     const riskRatingOptions = ["low", "medium", "high"];
+
+    const handleCheckboxChange = (e) => {
+      const { name, value, checked } = e.target;
+      setSelectedFilterOptions((prevState) => ({
+        ...prevState,
+        [name]: checked
+          ? [...prevState[name], value]
+          : prevState[name].filter((item) => item !== value),
+      }));
+    };
   
     return (
         <div>

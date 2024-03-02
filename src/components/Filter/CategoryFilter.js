@@ -1,6 +1,6 @@
 const CategoryFilter = ({
   selectedFilterOptions,
-  handleCheckboxChange,
+  setSelectedFilterOptions,
 }) => {
   const categoryOptions = [
     "source of wealth",
@@ -9,6 +9,16 @@ const CategoryFilter = ({
     "sensitive industries",
     "others",
   ];
+
+  const handleCheckboxChange = (e) => {
+    const { name, value, checked } = e.target;
+    setSelectedFilterOptions((prevState) => ({
+      ...prevState,
+      [name]: checked
+        ? [...prevState[name], value]
+        : prevState[name].filter((item) => item !== value),
+    }));
+  };
 
   const capitaliseWords = (option) => {
     let capitalizedWords = option
