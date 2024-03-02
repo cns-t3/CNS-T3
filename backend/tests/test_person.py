@@ -23,7 +23,6 @@ def override_get_db():
     finally:
         db.close()
 
-
 class TestPersonAPI(unittest.TestCase):
     def setUp(self):
         Base.metadata.create_all(bind=engine)
