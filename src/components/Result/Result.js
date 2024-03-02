@@ -26,8 +26,6 @@ function Result({ data }) {
       const newFilteredData = filterData(data, selectedFilterOptions);
       setFilteredData(newFilteredData);
       setFilterNow(false);
-      console.log(selectedFilterOptions);
-      console.log("sefew");
     }
   }, [filterNow]);
 
@@ -77,18 +75,29 @@ function Result({ data }) {
 
     const dates = processDateOption(dateOption);
 
-    if (riskRatingOptions.length == 3 && categoryOptions.length == 5 && dateOption == "all time") {
+    if (
+      riskRatingOptions.length == 3 &&
+      categoryOptions.length == 5 &&
+      dateOption == "all time"
+    ) {
       return data;
     }
-    console.log(data.newsArticles);
-    const filteredArticles = data.newsArticles.filter(
-      (article) =>
-        riskRatingOptions.includes(article.risk_rating.toLowerCase()) &&
-        categoryOptions.includes(article.category.toLowerCase()) &&
-        new Date(article.publishedAt) > dates[0] &&
-        new Date(article.publishedAt) < dates[1]
-    );
-
+    var filteredArticles = data;
+    if (dateOption == "all time") {
+      filteredArticles = data.newsArticles.filter(
+        (article) =>
+          riskRatingOptions.includes(article.risk_rating.toLowerCase()) &&
+          categoryOptions.includes(article.category.toLowerCase())
+      );
+    } else {
+      filteredArticles = data.newsArticles.filter(
+        (article) =>
+          riskRatingOptions.includes(article.risk_rating.toLowerCase()) &&
+          categoryOptions.includes(article.category.toLowerCase()) &&
+          new Date(article.publishedAt) > dates[0] &&
+          new Date(article.publishedAt) < dates[1]
+      );
+    }
     return {
       ...data,
       newsArticles: filteredArticles,

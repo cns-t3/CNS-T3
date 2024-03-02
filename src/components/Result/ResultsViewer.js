@@ -53,7 +53,7 @@ function ResultsViewer({ data }) {
             }`}
           >
             {data.newsArticles.length == 0 && (
-              <div>No articles match your filter criteria.</div>
+              <div id="noArticles">No articles match your filter criteria.</div>
             )}
             {data.newsArticles.map((article, index) => (
               <NewsArticle

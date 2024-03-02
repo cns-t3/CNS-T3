@@ -50,6 +50,7 @@ const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
     <div className="my-3 m-2" ref={dropdownRef}>
       <p className="text-xs text-gray-500 font-semibold mb-2">Date</p>
       <button
+        id="dateFilterButton"
         type="button"
         onClick={toggleDropdown}
         className="block text-sm text-gray-700 border rounded-md border-gray-200 p-2 text-sm text-gray-900 flex flex-rows w-full justify-between"
@@ -62,7 +63,7 @@ const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
           <div className="" role="none">
             {dateOptions.map((option) => (
               <div
-                key={option}
+                id={option}
                 onClick={() => handleDateChange(option)}
                 name="date"
                 // checked={selectedFilterOptions.date.includes(option)}
