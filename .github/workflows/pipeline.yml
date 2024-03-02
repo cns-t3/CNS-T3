@@ -1,7 +1,7 @@
 name: FYP CI Pipeline
 on:
   push:
-    branches: ['main', 'feature/*', 'hotfix/*']
+    branches: ["main", "feature/*", "hotfix/*"]
 
 jobs:
   npm-vulnerabilities-check:
@@ -55,7 +55,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        python-version: ['3.11']
+        python-version: ["3.11"]
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
@@ -78,7 +78,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        python-version: ['3.11']
+        python-version: ["3.11"]
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
