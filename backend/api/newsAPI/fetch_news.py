@@ -8,8 +8,8 @@ import json
 
 load_dotenv()
 
-
-openAI_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+if os.getenv("OPENAI_API_KEY"):
+    openAI_client = OpenAI()
 
 
 def get_summarised_news_articles(search_query: str):
