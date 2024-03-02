@@ -3,7 +3,6 @@ from datetime import datetime
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import inspect
 from unittest import mock
 from backend.api.personAPI.sqlalchemy_models import Person, PersonCompany, Company, Base
 from backend.api.personAPI.main import app
@@ -23,7 +22,6 @@ def override_get_db():
         yield db
     finally:
         db.close()
-
 
 class TestPersonAPI(unittest.TestCase):
     def setUp(self):

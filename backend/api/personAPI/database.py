@@ -4,7 +4,10 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-SQLALCHEMY_DATABASE_URL = os.getenv("AZURE_SQL_URL")
+if os.getenv("AZURE_SQL_URL"):
+    SQLALCHEMY_DATABASE_URL = os.getenv("AZURE_SQL_URL")
+else:
+    SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
