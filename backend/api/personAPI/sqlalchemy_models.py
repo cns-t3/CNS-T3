@@ -29,6 +29,6 @@ class Company(Base):
 
 class PersonCompany(Base):
     __tablename__ = "person_company"
-    PersonID = Column(Integer, ForeignKey("Person.PersonID"), primary_key=True)
-    CompanyID = Column(Integer, ForeignKey("Company.CompanyID"), primary_key=True)
+    PersonID = Column(Integer, ForeignKey("person.PersonID"), primary_key=True)
+    CompanyID = Column(Integer, ForeignKey("company.CompanyID"), primary_key=True)
     Role = Column(String(25))
