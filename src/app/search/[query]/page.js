@@ -23,12 +23,15 @@ export default async function Search({ params }) {
   return (
     <div>
       <div className="flex md:flex-row flex-col m-6 items-center justify-center">
-        <Image
-          width={1000}
-          height={1000}
-          className="md:w-2/12 sm:w-1/3 w-1/2 m-3"
-          src="/logo.png"
-        />
+        <a href="/home" className="w-1/6" id="logoLink">
+          <Image
+            layout="responsive"
+            width={800}
+            height={800}
+            className="m-3"
+            src="/logo.png"
+          />
+        </a>
         <SmallSearchBar initialValue={query} />
       </div>
       <div className="flex md:flex-row flex-col m-6 items-center justify-center" />
