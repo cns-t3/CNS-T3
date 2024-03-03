@@ -1,3 +1,5 @@
+import React from 'react';
+
 const CategoryFilter = ({
   selectedFilterOptions,
   setSelectedFilterOptions,
@@ -21,16 +23,17 @@ const CategoryFilter = ({
   };
 
   const capitaliseWords = (option) => {
-    let capitalizedWords = option
+    const capitalizedWords = option
       .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
     return capitalizedWords.join(' ');
   };
+
   return (
     <div>
       <p className="text-xs m-2 text-gray-500 font-semibold">Category</p>
       {categoryOptions.map((option) => (
-        <label key={option} className="flex items-center space-x-2 m-2">
+        <label htmlFor={option} key={option} className="flex items-center space-x-2 m-2">
           <input
             type="checkbox"
             value={option}

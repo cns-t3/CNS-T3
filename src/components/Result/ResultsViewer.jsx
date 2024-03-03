@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { React, useState } from 'react';
 import NewsArticle from '../NewsArticle/NewsArticle';
 import Profile from '../Profile/Profile';
 import NewsSummary from '../NewsArticleDetails/NewsSummary';
@@ -59,7 +59,7 @@ function ResultsViewer({ data }) {
               <NewsArticle
                 articleDetails={article}
                 onOpen={handleArticleOpen}
-                key={index}
+                key={article.news_id}
               />
             ))}
           </div>

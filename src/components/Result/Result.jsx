@@ -72,8 +72,8 @@ function Result({ data }) {
     const riskRatingOptions = selectedFilterOptions.riskRating;
     const categoryOptions = selectedFilterOptions.category;
     const dateOption = selectedFilterOptions.date;
-
     const dates = processDateOption(dateOption);
+    let filteredArticles;
 
     if (
       riskRatingOptions.length === 3
@@ -82,7 +82,7 @@ function Result({ data }) {
     ) {
       return data;
     }
-    var filteredArticles = data;
+    // var filteredArticles = data;
     if (dateOption === 'all time') {
       filteredArticles = data.newsArticles.filter(
         (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())

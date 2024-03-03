@@ -1,6 +1,8 @@
+import React from 'react';
+
 const Category = ({ categoryDetails }) => {
   const capitaliseWords = (option) => {
-    let capitalizedWords = option
+    const capitalizedWords = option
       .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
     return capitalizedWords.join(' ');

@@ -55,6 +55,7 @@ function FilterButton({
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
+        type="button"
         id="filterButton"
         className="flex flex-row text-gray-500 pr-3"
         onClick={handleFilterOpen}

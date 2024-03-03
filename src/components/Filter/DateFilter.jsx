@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { IoChevronDownOutline } from "react-icons/io5";
+import { IoChevronDownOutline, IoConstructOutline } from 'react-icons/io5';
 
 const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
   const dateOptions = [
@@ -32,7 +32,7 @@ const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
   const toggleDropdown = () => setIsDateFilterOpen(!isDateFilterOpen);
 
   const capitaliseWords = (option) => {
-    let capitalizedWords = option
+    const capitalizedWords = option
       .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
     return capitalizedWords.join(' ');

@@ -1,9 +1,10 @@
 import React from 'react';
+import Image from 'next/image';
 
 const formatDate = (inputDate) => {
   const dateObj = new Date(inputDate);
 
-  if (isNaN(dateObj.getTime())) {
+  if (Number.isNaN(dateObj.getTime())) {
     return 'Invalid Date';
   }
 
@@ -30,8 +31,7 @@ const formatDate = (inputDate) => {
 };
 
 function Profile({ profileDetails }) {
-  const formattedDate =
-    profileDetails.dob !== '' ? formatDate(profileDetails.dob) : '';
+  const formattedDate = profileDetails.dob !== '' ? formatDate(profileDetails.dob) : '';
 
   return (
     <div id="profile-container" className="p-8">
@@ -39,7 +39,7 @@ function Profile({ profileDetails }) {
         <div id="profile-image-container" className="">
           <img
             src={profileDetails.img_url}
-            alt="Profile image"
+            alt="Profile Pic"
             className="object-cover w-3/4 h-full"
           />
         </div>

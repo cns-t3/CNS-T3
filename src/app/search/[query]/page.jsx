@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import Result from "@/components/Result/Result";
-import SmallSearchBar from "@/components/Search/SmallSearchBar";
+import Result from '@/components/Result/Result';
+import SmallSearchBar from '@/components/Search/SmallSearchBar';
 
 async function getData(query) {
   const url = `http://127.0.0.1:8000/search?search_query=${query}`;
@@ -32,7 +32,11 @@ export default async function Search({ params }) {
         <SmallSearchBar initialValue={query} />
       </div>
       <div className="flex md:flex-row flex-col m-6 items-center justify-center" />
-      {data === null ? <></> : <Result data={data} />}
+      {data === null ? (
+        <p>
+          No Results Found
+        </p>
+      ) : <Result data={data} />}
     </div>
   );
 }
