@@ -3,11 +3,11 @@ const CategoryFilter = ({
   setSelectedFilterOptions,
 }) => {
   const categoryOptions = [
-    "source of wealth",
-    "family circumstances",
-    "sanctioned countries",
-    "sensitive industries",
-    "others",
+    'source of wealth',
+    'family circumstances',
+    'sanctioned countries',
+    'sensitive industries',
+    'others',
   ];
 
   const handleCheckboxChange = (e) => {
@@ -22,9 +22,9 @@ const CategoryFilter = ({
 
   const capitaliseWords = (option) => {
     let capitalizedWords = option
-      .split(" ")
+      .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
-    return capitalizedWords.join(" ");
+    return capitalizedWords.join(' ');
   };
   return (
     <div>

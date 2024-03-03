@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Spinner from './Spinner';
 import Image from 'next/image';
+import Spinner from './Spinner';
 
 export default function SmallSearchBar({ initialValue }) {
   const [value, setValue] = useState(initialValue);
@@ -32,7 +32,7 @@ export default function SmallSearchBar({ initialValue }) {
         className="block w-full p-4 rounded-md  text-gray-700 bg-gray-100 lg:text-xl md:text-lg text-md sm:text-lg focus:outline-none caret-red-500"
       />
       {isLoading ? (
-        <Spinner></Spinner>
+        <Spinner />
       ) : (
         <Image
           src="/search.svg"

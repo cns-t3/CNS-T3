@@ -1,26 +1,26 @@
 const RiskRatingFilter = ({
-    selectedFilterOptions,
-    setSelectedFilterOptions
-  }) => {
-    const riskRatingOptions = ["low", "medium", "high"];
+  selectedFilterOptions,
+  setSelectedFilterOptions
+}) => {
+  const riskRatingOptions = ['low', 'medium', 'high'];
 
-    const handleCheckboxChange = (e) => {
-      const { name, value, checked } = e.target;
-      setSelectedFilterOptions((prevState) => ({
-        ...prevState,
-        [name]: checked
-          ? [...prevState[name], value]
-          : prevState[name].filter((item) => item !== value),
-      }));
-    };
+  const handleCheckboxChange = (e) => {
+    const { name, value, checked } = e.target;
+    setSelectedFilterOptions((prevState) => ({
+      ...prevState,
+      [name]: checked
+        ? [...prevState[name], value]
+        : prevState[name].filter((item) => item !== value),
+    }));
+  };
   
-    return (
-        <div>
+  return (
+      <div>
         <p className="text-xs m-2 text-gray-500 font-semibold">
-          Risk Rating
-        </p>
+            Risk Rating
+          </p>
         {riskRatingOptions.map((option) => (
-          <label key={option} className="flex items-center space-x-2 m-2">
+            <label key={option} className="flex items-center space-x-2 m-2">
             <input
               type="checkbox"
               value={option}
@@ -35,8 +35,7 @@ const RiskRatingFilter = ({
           </label>
         ))}
       </div>
-    );
-  };
-  
-  export default RiskRatingFilter;
-  
+  );
+};
+
+export default RiskRatingFilter;

@@ -1,16 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 import { IoChevronDownOutline } from "react-icons/io5";
 
 const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
   const dateOptions = [
-    "all time",
-    "today",
-    "past 7 days",
-    "past 30 days",
-    "past 60 days",
-    "past 90 days",
-    "past 180 days",
-    "past year",
+    'all time',
+    'today',
+    'past 7 days',
+    'past 30 days',
+    'past 60 days',
+    'past 90 days',
+    'past 180 days',
+    'past year',
   ];
 
   const [isDateFilterOpen, setIsDateFilterOpen] = useState(false);
@@ -23,9 +23,9 @@ const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -33,9 +33,9 @@ const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
 
   const capitaliseWords = (option) => {
     let capitalizedWords = option
-      .split(" ")
+      .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
-    return capitalizedWords.join(" ");
+    return capitalizedWords.join(' ');
   };
 
   const handleDateChange = (value) => {
@@ -70,8 +70,8 @@ const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
                 // onChange={handleCheckboxChange}
                 className={`accent-sky-900 text-sm px-2 py-1.5 rounded-md ${
                   selectedFilterOptions.date === option
-                    ? "bg-sky-900 text-white"
-                    : "text-gray-900"
+                    ? 'bg-sky-900 text-white'
+                    : 'text-gray-900'
                 }`}
               >
                 {capitaliseWords(option)}

@@ -1,9 +1,9 @@
 const Category = ({ categoryDetails }) => {
   const capitaliseWords = (option) => {
     let capitalizedWords = option
-      .split(" ")
+      .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
-    return capitalizedWords.join(" ");
+    return capitalizedWords.join(' ');
   };
   return (
     <div
