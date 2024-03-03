@@ -23,7 +23,7 @@ export default async function Search({ params }) {
   return (
     <div>
       <div className="flex md:flex-row flex-col m-6 items-center justify-center">
-        <a href="/home" className="w-1/6" id="logoLink">
+        <a href="/home" className="w-1/6" id="logoLink" aria-label="Home">
           <Image
             layout="responsive"
             width={800}
