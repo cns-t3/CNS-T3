@@ -52,7 +52,7 @@ function ResultsViewer({ data }) {
                 : 'lg:w-1/2 lg:pr-4 hidden lg:flex'
             }`}
           >
-            {data.newsArticles.length == 0 && (
+            {data.newsArticles.length === 0 && (
               <div id="noArticles">No articles match your filter criteria.</div>
             )}
             {data.newsArticles.map((article, index) => (

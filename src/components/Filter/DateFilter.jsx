@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { IoChevronDownOutline, IoConstructOutline } from 'react-icons/io5';
+import { IoChevronDownOutline } from 'react-icons/io5';
 
 function DateFilter({ selectedFilterOptions, setSelectedFilterOptions }) {
   const dateOptions = [
