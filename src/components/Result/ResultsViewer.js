@@ -46,13 +46,15 @@ function ResultsViewer({ data }) {
           </div>
           <div
             id="news-articles-container"
-            className={`flex flex-col  ${
+            className={`flex flex-col pt-5 lg:pt-0 ${
               articleDetails == null
                 ? "lg:w-2/3 pr-4"
                 : "lg:w-1/2 lg:pr-4 hidden lg:flex"
             }`}
           >
-            {data.newsArticles.length == 0 && <div>No articles match your filter criteria.</div>}
+            {data.newsArticles.length == 0 && (
+              <div id="noArticles">No articles match your filter criteria.</div>
+            )}
             {data.newsArticles.map((article, index) => (
               <NewsArticle
                 articleDetails={article}
@@ -62,7 +64,6 @@ function ResultsViewer({ data }) {
             ))}
           </div>
         </div>
-        
       </div>
     </div>
   );

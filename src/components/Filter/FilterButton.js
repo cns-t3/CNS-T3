@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { IoFilterOutline } from "react-icons/io5";
 import CategoryFilter from "./CategoryFilter";
 import RiskRatingFilter from "./RiskRatingFilter";
+import DateFilter from "./DateFilter";
 
 function FilterButton({
   selectedFilterOptions,
@@ -30,16 +31,6 @@ function FilterButton({
     setFilterOpen((isOpen) => !isOpen);
   };
 
-  const handleCheckboxChange = (e) => {
-    const { name, value, checked } = e.target;
-    setSelectedFilterOptions((prevState) => ({
-      ...prevState,
-      [name]: checked
-        ? [...prevState[name], value]
-        : prevState[name].filter((item) => item !== value),
-    }));
-  };
-
   const applyFilters = () => {
     setFilterNow(true);
     setFilterOpen(false);
@@ -55,6 +46,7 @@ function FilterButton({
         "sensitive industries",
         "others",
       ],
+      date: "all time",
     });
     setFilterNow(true);
     setFilterOpen(false);
@@ -72,19 +64,26 @@ function FilterButton({
       </button>
       {isFilterOpen && (
         <div className="absolute mt-[6px] right-0 bg-white rounded-md border border-gray-200 shadow-lg z-50 w-64 py-2 px-3">
-          <form>
+          <form method="POST">
             <div className="mx-2 my-4 font-semibold">Filter By</div>
+
+            <DateFilter
+              selectedFilterOptions={selectedFilterOptions}
+              setSelectedFilterOptions={setSelectedFilterOptions}
+            />
+
+            <hr className="m-2 my-5" />
 
             <RiskRatingFilter
               selectedFilterOptions={selectedFilterOptions}
-              handleCheckboxChange={handleCheckboxChange}
+              setSelectedFilterOptions={setSelectedFilterOptions}
             />
 
             <hr className="m-2 my-5" />
 
             <CategoryFilter
               selectedFilterOptions={selectedFilterOptions}
-              handleCheckboxChange={handleCheckboxChange}
+              setSelectedFilterOptions={setSelectedFilterOptions}
             />
 
             <div className="grid grid-cols-2 gap-2 m-2 mt-5">

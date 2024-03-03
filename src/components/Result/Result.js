@@ -16,7 +16,9 @@ function Result({ data }) {
       "sensitive industries",
       "others",
     ],
+    date: "all time",
   });
+
   const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
@@ -27,21 +29,75 @@ function Result({ data }) {
     }
   }, [filterNow]);
 
+  //process date option
+  const processDateOption = (dateOption) => {
+    let startDate = new Date();
+    let endDate = new Date();
+
+    switch (dateOption) {
+      case "today":
+        // No change needed; start and end date are both today.
+        break;
+      case "past 7 days":
+        startDate.setDate(startDate.getDate() - 7);
+        break;
+      case "past 30 days":
+        startDate.setDate(startDate.getDate() - 30);
+        break;
+      case "past 60 days":
+        startDate.setDate(startDate.getDate() - 60);
+        break;
+      case "past 90 days":
+        startDate.setDate(startDate.getDate() - 90);
+        break;
+      case "past 180 days":
+        startDate.setDate(startDate.getDate() - 180);
+        break;
+      case "past year":
+        startDate.setFullYear(startDate.getFullYear() - 1);
+        break;
+      case "all time":
+        startDate = "";
+        endDate = "";
+        return;
+      default:
+        console.warn(`Unexpected date filter option: ${value}`);
+        return;
+    }
+
+    return [startDate, endDate];
+  };
+
   const filterData = (data, selectedFilterOptions) => {
     const riskRatingOptions = selectedFilterOptions.riskRating;
     const categoryOptions = selectedFilterOptions.category;
-    console.log(riskRatingOptions)
-    console.log(categoryOptions)
+    const dateOption = selectedFilterOptions.date;
 
-    if (riskRatingOptions.length == 3 && categoryOptions.length == 5) {
+    const dates = processDateOption(dateOption);
+
+    if (
+      riskRatingOptions.length == 3 &&
+      categoryOptions.length == 5 &&
+      dateOption == "all time"
+    ) {
       return data;
     }
-    const filteredArticles = data.newsArticles.filter(
-      (article) =>
-        riskRatingOptions.includes(article.risk_rating.toLowerCase()) &&
-        categoryOptions.includes(article.category.toLowerCase())
-    );
-
+    var filteredArticles = data;
+    if (dateOption == "all time") {
+      filteredArticles = data.newsArticles.filter(
+        (article) =>
+          riskRatingOptions.includes(article.risk_rating.toLowerCase()) &&
+          categoryOptions.includes(article.category.toLowerCase())
+      );
+    } else {
+      filteredArticles = data.newsArticles.filter(
+        (article) =>
+          riskRatingOptions.includes(article.risk_rating.toLowerCase()) &&
+          categoryOptions.includes(article.category.toLowerCase()) &&
+          new Date(article.publishedAt) > dates[0] &&
+          new Date(article.publishedAt) < dates[1]
+      );
+    }
     return {
       ...data,
       newsArticles: filteredArticles,
