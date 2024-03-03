@@ -1,9 +1,9 @@
 import React from 'react';
 
-const RiskRatingFilter = ({
+function RiskRatingFilter({
   selectedFilterOptions,
-  setSelectedFilterOptions
-}) => {
+  setSelectedFilterOptions,
+}) {
   const riskRatingOptions = ['low', 'medium', 'high'];
 
   const handleCheckboxChange = (e) => {
@@ -38,6 +38,6 @@ const RiskRatingFilter = ({
       ))}
     </div>
   );
-};
+}
 
 export default RiskRatingFilter;

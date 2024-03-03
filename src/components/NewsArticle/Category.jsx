@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Category = ({ categoryDetails }) => {
+function Category({ categoryDetails }) {
   const capitaliseWords = (option) => {
     const capitalizedWords = option
       .split(' ')
@@ -15,6 +15,6 @@ const Category = ({ categoryDetails }) => {
       {capitaliseWords(categoryDetails)}
     </div>
   );
-};
+}
 
 export default Category;

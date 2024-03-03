@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ResultHeader from './ResultHeader';
 import ResultsViewer from './ResultsViewer';
 
@@ -29,7 +28,7 @@ function Result({ data }) {
     }
   }, [filterNow]);
 
-  //process date option
+  // process date option
   const processDateOption = (dateOption) => {
     let startDate = new Date();
     let endDate = new Date();

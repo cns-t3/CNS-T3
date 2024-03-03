@@ -1,9 +1,9 @@
 import React from 'react';
 
-const CategoryFilter = ({
+function CategoryFilter({
   selectedFilterOptions,
   setSelectedFilterOptions,
-}) => {
+}) {
   const categoryOptions = [
     'source of wealth',
     'family circumstances',
@@ -49,6 +49,6 @@ const CategoryFilter = ({
       ))}
     </div>
   );
-};
+}
 
 export default CategoryFilter;

@@ -36,8 +36,11 @@ function NewsArticle({ articleDetails, onOpen }) {
           </h2>
         </div>
         <p id="article-summary" className="text-gray-500 text-sm line-clamp-2">
-          <span className="date">{formatDate(articleDetails.publishedAt)}</span> — "
-          {articleDetails.summary}"
+          <span className="date">{formatDate(articleDetails.publishedAt)}</span>
+          {' '}
+          — &quot;
+          {articleDetails.summary}
+          &quot;
         </p>
       </div>
       <div className="flex items-center md:space-x-0 space-x-0 relative md:flex-row flex-col ">

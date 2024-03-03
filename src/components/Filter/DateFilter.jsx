@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { IoChevronDownOutline, IoConstructOutline } from 'react-icons/io5';
 
-const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
+function DateFilter({ selectedFilterOptions, setSelectedFilterOptions }) {
   const dateOptions = [
     'all time',
     'today',
@@ -82,6 +82,6 @@ const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
       )}
     </div>
   );
-};
+}
 
 export default DateFilter;

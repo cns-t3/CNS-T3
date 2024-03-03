@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 const formatDate = (inputDate) => {
   const dateObj = new Date(inputDate);
