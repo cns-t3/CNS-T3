@@ -14,10 +14,11 @@ function NewsArticle({ articleDetails, onOpen }) {
   });
 
   return (
-    <div
+    <button
       id="news-article-container"
-      className="flex justify-between items-center bg-white px-4 pb-5 rounded-lg relative my-2"
+      className="flex justify-between items-center bg-white px-4 pb-5 rounded-lg relative my-2 text-left"
       onClick={() => onOpen(articleDetails)}
+      type="button"
     >
       <div className="flex-1 pr-3">
         <Category categoryDetails={articleDetails.category} />
@@ -46,7 +47,7 @@ function NewsArticle({ articleDetails, onOpen }) {
       <div className="flex items-center md:space-x-0 space-x-0 relative md:flex-row flex-col ">
         <RiskRating riskRating={articleDetails.risk_rating} />
       </div>
-    </div>
+    </button>
   );
 }
 

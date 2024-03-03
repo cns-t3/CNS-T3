@@ -60,22 +60,21 @@ function DateFilter({ selectedFilterOptions, setSelectedFilterOptions }) {
       </button>
       {isDateFilterOpen && (
         <div className=" mb-2 absolute w-[214.67px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ">
-          <div className="" role="none">
+          <div className="flex flex-col" role="none">
             {dateOptions.map((option) => (
-              <div
+              <button
                 id={option}
+                type="button"
                 onClick={() => handleDateChange(option)}
                 name="date"
-                // checked={selectedFilterOptions.date.includes(option)}
-                // onChange={handleCheckboxChange}
-                className={`accent-sky-900 text-sm px-2 py-1.5 rounded-md ${
+                className={`accent-sky-900 text-sm px-2 py-1.5 rounded-md text-left ${
                   selectedFilterOptions.date === option
                     ? 'bg-sky-900 text-white'
                     : 'text-gray-900'
                 }`}
               >
                 {capitaliseWords(option)}
-              </div>
+              </button>
             ))}
           </div>
         </div>

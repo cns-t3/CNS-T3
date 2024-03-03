@@ -18,7 +18,9 @@
     {
       "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
       "rules": {
-        "import/no-unresolved": ["error", { "ignore": ["^@"] }]
+        "import/no-unresolved": ["error", { "ignore": ["^@"] }],
+        "linebreak-style": "off",
+        "react/prop-types": "off"
       }
     }
   ]

@@ -20,14 +20,6 @@ function Result({ data }) {
 
   const [filteredData, setFilteredData] = useState(data);
 
-  useEffect(() => {
-    if (filterNow) {
-      const newFilteredData = filterData(data, selectedFilterOptions);
-      setFilteredData(newFilteredData);
-      setFilterNow(false);
-    }
-  }, [filterNow]);
-
   // process date option
   const processDateOption = (dateOption) => {
     let startDate = new Date();
@@ -58,48 +50,55 @@ function Result({ data }) {
       case 'all time':
         startDate = '';
         endDate = '';
-        return;
+        return [];
       default:
-        console.warn(`Unexpected date filter option: ${value}`);
-        return;
+        return [];
     }
 
     return [startDate, endDate];
   };
 
-  const filterData = (data, selectedFilterOptions) => {
-    const riskRatingOptions = selectedFilterOptions.riskRating;
-    const categoryOptions = selectedFilterOptions.category;
-    const dateOption = selectedFilterOptions.date;
-    const dates = processDateOption(dateOption);
-    let filteredArticles;
+  useEffect(() => {
+    const filterData = (currentData, filterOptions) => {
+      const riskRatingOptions = filterOptions.riskRating;
+      const categoryOptions = filterOptions.category;
+      const dateOption = filterOptions.date;
+      const dates = processDateOption(dateOption);
+      let filteredArticles;
 
-    if (
-      riskRatingOptions.length === 3
-      && categoryOptions.length === 5
-      && dateOption === 'all time'
-    ) {
-      return data;
-    }
-    // var filteredArticles = data;
-    if (dateOption === 'all time') {
-      filteredArticles = data.newsArticles.filter(
-        (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-          && categoryOptions.includes(article.category.toLowerCase()),
-      );
-    } else {
-      filteredArticles = data.newsArticles.filter(
-        (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-          && categoryOptions.includes(article.category.toLowerCase())
-          && new Date(article.publishedAt) > dates[0]
-          && new Date(article.publishedAt) < dates[1],
-      );
-    }
-    return {
-      ...data,
-      newsArticles: filteredArticles,
+      if (
+        riskRatingOptions.length === 3
+        && categoryOptions.length === 5
+        && dateOption === 'all time'
+      ) {
+        return currentData;
+      }
+      // var filteredArticles = data;
+      if (dateOption === 'all time') {
+        filteredArticles = currentData.newsArticles.filter(
+          (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
+            && categoryOptions.includes(article.category.toLowerCase()),
+        );
+      } else {
+        filteredArticles = currentData.newsArticles.filter(
+          (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
+            && categoryOptions.includes(article.category.toLowerCase())
+            && new Date(article.publishedAt) > dates[0]
+            && new Date(article.publishedAt) < dates[1],
+        );
+      }
+      return {
+        ...currentData,
+        newsArticles: filteredArticles,
+      };
     };
-  };
+
+    if (filterNow) {
+      const newFilteredData = filterData(data, selectedFilterOptions);
+      setFilteredData(newFilteredData);
+      setFilterNow(false);
+    }
+  }, [filterNow, data, selectedFilterOptions]);
 
   return (
     <>

@@ -4,8 +4,10 @@ export default function NewsSummary({ article, onClose }) {
   return (
     <div className="flex flex-row p-8">
       <button
+        type="button"
         className="text-red transition duration-300 ease-in-out pr-4"
         onClick={onClose}
+        aria-label="Close"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
