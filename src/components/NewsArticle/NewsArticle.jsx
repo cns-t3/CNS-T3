@@ -1,25 +1,27 @@
-"use client";
-import React, { useRef, useEffect } from "react";
-import RiskRating from "./RiskRating";
+'use client';
 
-const NewsArticle = ({ articleDetails, onOpen }) => {
+import React from 'react';
+import RiskRating from './RiskRating';
+import Category from './Category';
+
+function NewsArticle({ articleDetails, onOpen }) {
   // Format the date
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-SG", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      timeZone: "Asia/Singapore",
-    });
-  };
+  const formatDate = (dateString) => new Date(dateString).toLocaleDateString('en-SG', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'Asia/Singapore',
+  });
 
   return (
-    <div
+    <button
       id="news-article-container"
-      className="flex justify-between items-center bg-white px-4 py-5 rounded-lg relative my-2"
+      className="flex justify-between items-center bg-white px-4 pb-5 rounded-lg relative my-2 text-left"
       onClick={() => onOpen(articleDetails)}
+      type="button"
     >
       <div className="flex-1 pr-3">
+        <Category categoryDetails={articleDetails.category} />
         <p
           id="article-publisher"
           className="text-sky-800 text-xs font-bold uppercase"
@@ -35,14 +37,18 @@ const NewsArticle = ({ articleDetails, onOpen }) => {
           </h2>
         </div>
         <p id="article-summary" className="text-gray-500 text-sm line-clamp-2">
-          {formatDate(articleDetails.publishedAt)} — "{articleDetails.summary}"
+          <span className="date">{formatDate(articleDetails.publishedAt)}</span>
+          {' '}
+          — &quot;
+          {articleDetails.summary}
+          &quot;
         </p>
       </div>
       <div className="flex items-center md:space-x-0 space-x-0 relative md:flex-row flex-col ">
         <RiskRating riskRating={articleDetails.risk_rating} />
       </div>
-    </div>
+    </button>
   );
-};
+}
 
 export default NewsArticle;

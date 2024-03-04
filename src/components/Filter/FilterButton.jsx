@@ -1,13 +1,16 @@
-import { useState, useRef, useEffect } from "react";
-import { IoFilterOutline } from "react-icons/io5";
+import React, { useState, useRef, useEffect } from 'react';
+import { IoFilterOutline } from 'react-icons/io5';
+import CategoryFilter from './CategoryFilter';
+import RiskRatingFilter from './RiskRatingFilter';
+import DateFilter from './DateFilter';
 
-const FilterButton = ({
+function FilterButton({
   selectedFilterOptions,
   setSelectedFilterOptions,
   setFilterNow,
-}) => {
+}) {
   const [isFilterOpen, setFilterOpen] = useState(false);
-  const options = ["low", "medium", "high"];
+
   const dropdownRef = useRef();
 
   useEffect(() => {
@@ -17,24 +20,14 @@ const FilterButton = ({
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   const handleFilterOpen = () => {
     setFilterOpen((isOpen) => !isOpen);
-  };
-
-  const handleCheckboxChange = (e) => {
-    const { name, value, checked } = e.target;
-    setSelectedFilterOptions((prevState) => ({
-      ...prevState,
-      [name]: checked
-        ? [...prevState[name], value]
-        : prevState[name].filter((item) => item !== value),
-    }));
   };
 
   const applyFilters = () => {
@@ -44,8 +37,15 @@ const FilterButton = ({
 
   const removeFilters = () => {
     setSelectedFilterOptions({
-      riskRating: [],
-      categories: [],
+      riskRating: ['low', 'medium', 'high'],
+      category: [
+        'source of wealth',
+        'family circumstances',
+        'sanctioned countries',
+        'sensitive industries',
+        'others',
+      ],
+      date: 'all time',
     });
     setFilterNow(true);
     setFilterOpen(false);
@@ -54,6 +54,7 @@ const FilterButton = ({
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
+        type="button"
         id="filterButton"
         className="flex flex-row text-gray-500 pr-3"
         onClick={handleFilterOpen}
@@ -63,32 +64,27 @@ const FilterButton = ({
       </button>
       {isFilterOpen && (
         <div className="absolute mt-[6px] right-0 bg-white rounded-md border border-gray-200 shadow-lg z-50 w-64 py-2 px-3">
-          <form>
+          <form method="POST">
             <div className="mx-2 my-4 font-semibold">Filter By</div>
-            <div>
-              <p className="text-xs m-2 text-gray-500 font-semibold">
-                Risk Rating
-              </p>
-              {options.map((option) => (
-                <label key={option} className="flex items-center space-x-2 m-2">
-                  <input
-                    type="checkbox"
-                    value={option}
-                    name="riskRating"
-                    checked={selectedFilterOptions.riskRating.includes(option)}
-                    onChange={handleCheckboxChange}
-                    className="h-4 w-4 accent-sky-900 cursor-pointer"
-                  />
-                  <span className="text-sm text-gray-900">
-                    {option.charAt(0).toUpperCase() + option.slice(1)}
-                  </span>
-                </label>
-              ))}
-            </div>
+
+            <DateFilter
+              selectedFilterOptions={selectedFilterOptions}
+              setSelectedFilterOptions={setSelectedFilterOptions}
+            />
 
             <hr className="m-2 my-5" />
 
-            {/* You can add category checkboxes similar to the riskRating ones here */}
+            <RiskRatingFilter
+              selectedFilterOptions={selectedFilterOptions}
+              setSelectedFilterOptions={setSelectedFilterOptions}
+            />
+
+            <hr className="m-2 my-5" />
+
+            <CategoryFilter
+              selectedFilterOptions={selectedFilterOptions}
+              setSelectedFilterOptions={setSelectedFilterOptions}
+            />
 
             <div className="grid grid-cols-2 gap-2 m-2 mt-5">
               <button
@@ -112,6 +108,6 @@ const FilterButton = ({
       )}
     </div>
   );
-};
+}
 
 export default FilterButton;

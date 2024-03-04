@@ -1,11 +1,12 @@
-import FilterButton from "./FilterButton";
-import SortButton from "./SortButton";
+import React from 'react';
+import FilterButton from '../Filter/FilterButton';
+import SortButton from '../Sort/SortButton';
 
-const ResultHeader = ({
+function ResultHeader({
   selectedFilterOptions,
   setSelectedFilterOptions,
   setFilterNow,
-}) => {
+}) {
   return (
     <div className="px-10">
       <div className="flex flex-row justify-between">
@@ -22,9 +23,9 @@ const ResultHeader = ({
           />
         </div>
       </div>
-      <hr className=" mb-5"></hr>
+      <hr className=" mb-5" />
     </div>
   );
-};
+}
 
 export default ResultHeader;
