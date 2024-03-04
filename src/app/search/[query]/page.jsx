@@ -36,7 +36,7 @@ export default async function Search({ params }) {
       </div>
       <div className="flex md:flex-row flex-col m-6 items-center justify-center" />
       {data === null ? (
-        <p>
+        <p className="m-6">
           No Results Found
         </p>
       ) : <Result data={data} />}
