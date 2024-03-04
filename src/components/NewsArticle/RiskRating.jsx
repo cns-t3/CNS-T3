@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -70,7 +69,8 @@ function RiskRating({ riskRating }) {
         <p className="text-center text-gray-900 text-xs">
           <span className="text-sm font-semibold riskRating">
             {riskRating.toUpperCase()}
-          </span>{' '}
+          </span>
+          {' '}
           <span className="block text-xs max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
             RISK
           </span>

@@ -1,6 +1,6 @@
-import React from "react";
-import FilterButton from "../Filter/FilterButton";
-import SortButton from "../Sort/SortButton";
+import React from 'react';
+import FilterButton from '../Filter/FilterButton';
+import SortButton from '../Sort/SortButton';
 
 function ResultHeader({
   selectedFilterOptions,

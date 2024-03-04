@@ -1,13 +1,15 @@
-const CategoryFilter = ({
+import React from 'react';
+
+function CategoryFilter({
   selectedFilterOptions,
   setSelectedFilterOptions,
-}) => {
+}) {
   const categoryOptions = [
-    "source of wealth",
-    "family circumstances",
-    "sanctioned countries",
-    "sensitive industries",
-    "others",
+    'source of wealth',
+    'family circumstances',
+    'sanctioned countries',
+    'sensitive industries',
+    'others',
   ];
 
   const handleCheckboxChange = (e) => {
@@ -21,16 +23,17 @@ const CategoryFilter = ({
   };
 
   const capitaliseWords = (option) => {
-    let capitalizedWords = option
-      .split(" ")
+    const capitalizedWords = option
+      .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
-    return capitalizedWords.join(" ");
+    return capitalizedWords.join(' ');
   };
+
   return (
     <div>
       <p className="text-xs m-2 text-gray-500 font-semibold">Category</p>
       {categoryOptions.map((option) => (
-        <label key={option} className="flex items-center space-x-2 m-2">
+        <label htmlFor={option} key={option} className="flex items-center space-x-2 m-2">
           <input
             type="checkbox"
             value={option}
@@ -46,6 +49,6 @@ const CategoryFilter = ({
       ))}
     </div>
   );
-};
+}
 
 export default CategoryFilter;

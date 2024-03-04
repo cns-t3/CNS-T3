@@ -1,9 +1,11 @@
-const Category = ({ categoryDetails }) => {
+import React from 'react';
+
+function Category({ categoryDetails }) {
   const capitaliseWords = (option) => {
-    let capitalizedWords = option
-      .split(" ")
+    const capitalizedWords = option
+      .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
-    return capitalizedWords.join(" ");
+    return capitalizedWords.join(' ');
   };
   return (
     <div
@@ -13,6 +15,6 @@ const Category = ({ categoryDetails }) => {
       {capitaliseWords(categoryDetails)}
     </div>
   );
-};
+}
 
 export default Category;

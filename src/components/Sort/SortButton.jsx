@@ -1,7 +1,7 @@
 import React from 'react';
 import { BiSortAlt2 } from 'react-icons/bi';
 
-function SortButton({}) {
+function SortButton() {
   return (
     <div className="flex flex-row text-gray-500 pr-5">
       <BiSortAlt2 size={20} />

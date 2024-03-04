@@ -1,16 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
-import { IoChevronDownOutline } from "react-icons/io5";
+import React, { useState, useRef, useEffect } from 'react';
+import { IoChevronDownOutline } from 'react-icons/io5';
 
-const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
+function DateFilter({ selectedFilterOptions, setSelectedFilterOptions }) {
   const dateOptions = [
-    "all time",
-    "today",
-    "past 7 days",
-    "past 30 days",
-    "past 60 days",
-    "past 90 days",
-    "past 180 days",
-    "past year",
+    'all time',
+    'today',
+    'past 7 days',
+    'past 30 days',
+    'past 60 days',
+    'past 90 days',
+    'past 180 days',
+    'past year',
   ];
 
   const [isDateFilterOpen, setIsDateFilterOpen] = useState(false);
@@ -23,19 +23,19 @@ const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   const toggleDropdown = () => setIsDateFilterOpen(!isDateFilterOpen);
 
   const capitaliseWords = (option) => {
-    let capitalizedWords = option
-      .split(" ")
+    const capitalizedWords = option
+      .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
-    return capitalizedWords.join(" ");
+    return capitalizedWords.join(' ');
   };
 
   const handleDateChange = (value) => {
@@ -60,28 +60,27 @@ const DateFilter = ({ selectedFilterOptions, setSelectedFilterOptions }) => {
       </button>
       {isDateFilterOpen && (
         <div className=" mb-2 absolute w-[214.67px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ">
-          <div className="" role="none">
+          <div className="flex flex-col" role="none">
             {dateOptions.map((option) => (
-              <div
+              <button
                 id={option}
+                type="button"
                 onClick={() => handleDateChange(option)}
                 name="date"
-                // checked={selectedFilterOptions.date.includes(option)}
-                // onChange={handleCheckboxChange}
-                className={`accent-sky-900 text-sm px-2 py-1.5 rounded-md ${
+                className={`accent-sky-900 text-sm px-2 py-1.5 rounded-md text-left ${
                   selectedFilterOptions.date === option
-                    ? "bg-sky-900 text-white"
-                    : "text-gray-900"
+                    ? 'bg-sky-900 text-white'
+                    : 'text-gray-900'
                 }`}
               >
                 {capitaliseWords(option)}
-              </div>
+              </button>
             ))}
           </div>
         </div>
       )}
     </div>
   );
-};
+}
 
 export default DateFilter;

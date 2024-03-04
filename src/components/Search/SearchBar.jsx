@@ -16,13 +16,9 @@ export default function SearchBar({
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
         onKeyDown={onSearchSubmit}
-        className="placeholder:text-center block w-full p-4 rounded-md  text-gray-700 bg-gray-100  md:text-2xl sm:text-lg text-sm focus:outline-none caret-red-500"
+        className="placeholder:text-center block w-full p-4 rounded-md text-gray-700 bg-gray-100  md:text-2xl sm:text-lg text-sm focus:outline-none caret-red-500"
       />
-      {loading ? (
-        <Spinner></Spinner>
-      ) : (
-        <></>
-      )}
+      {loading ? <Spinner /> : null}
     </div>
   );
 }

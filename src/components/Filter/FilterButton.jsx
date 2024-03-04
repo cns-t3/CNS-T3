@@ -1,9 +1,8 @@
-import React from "react";
-import { useState, useRef, useEffect } from "react";
-import { IoFilterOutline } from "react-icons/io5";
-import CategoryFilter from "./CategoryFilter";
-import RiskRatingFilter from "./RiskRatingFilter";
-import DateFilter from "./DateFilter";
+import React, { useState, useRef, useEffect } from 'react';
+import { IoFilterOutline } from 'react-icons/io5';
+import CategoryFilter from './CategoryFilter';
+import RiskRatingFilter from './RiskRatingFilter';
+import DateFilter from './DateFilter';
 
 function FilterButton({
   selectedFilterOptions,
@@ -21,9 +20,9 @@ function FilterButton({
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -38,15 +37,15 @@ function FilterButton({
 
   const removeFilters = () => {
     setSelectedFilterOptions({
-      riskRating: ["low", "medium", "high"],
+      riskRating: ['low', 'medium', 'high'],
       category: [
-        "source of wealth",
-        "family circumstances",
-        "sanctioned countries",
-        "sensitive industries",
-        "others",
+        'source of wealth',
+        'family circumstances',
+        'sanctioned countries',
+        'sensitive industries',
+        'others',
       ],
-      date: "all time",
+      date: 'all time',
     });
     setFilterNow(true);
     setFilterOpen(false);
@@ -55,6 +54,7 @@ function FilterButton({
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
+        type="button"
         id="filterButton"
         className="flex flex-row text-gray-500 pr-3"
         onClick={handleFilterOpen}
