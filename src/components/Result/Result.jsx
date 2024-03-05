@@ -16,6 +16,7 @@ function Result({ data }) {
       'others',
     ],
     date: 'all time',
+    identityMatch: 0,
   });
 
   const [filteredData, setFilteredData] = useState(data);
@@ -63,28 +64,34 @@ function Result({ data }) {
       const riskRatingOptions = filterOptions.riskRating;
       const categoryOptions = filterOptions.category;
       const dateOption = filterOptions.date;
+      const identityMatchOption = selectedFilterOptions.identityMatch;
+
       const dates = processDateOption(dateOption);
+
       let filteredArticles;
 
       if (
         riskRatingOptions.length === 3
         && categoryOptions.length === 5
         && dateOption === 'all time'
+        && identityMatchOption === 0
       ) {
         return currentData;
       }
       // var filteredArticles = data;
       if (dateOption === 'all time') {
-        filteredArticles = currentData.newsArticles.filter(
+        filteredArticles = data.newsArticles.filter(
           (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-            && categoryOptions.includes(article.category.toLowerCase()),
+          && categoryOptions.includes(article.category.toLowerCase())
+          && identityMatchOption < article.score,
         );
       } else {
-        filteredArticles = currentData.newsArticles.filter(
+        filteredArticles = data.newsArticles.filter(
           (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
             && categoryOptions.includes(article.category.toLowerCase())
             && new Date(article.publishedAt) > dates[0]
-            && new Date(article.publishedAt) < dates[1],
+            && new Date(article.publishedAt) < dates[1]
+            && identityMatchOption < article.score,
         );
       }
       return {
