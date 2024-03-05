@@ -3,6 +3,7 @@ import { IoFilterOutline } from 'react-icons/io5';
 import CategoryFilter from './CategoryFilter';
 import RiskRatingFilter from './RiskRatingFilter';
 import DateFilter from './DateFilter';
+import IdentityMatchingFilter from './IdentityMatching';
 
 function FilterButton({
   selectedFilterOptions,
@@ -46,6 +47,7 @@ function FilterButton({
         'others',
       ],
       date: 'all time',
+      identityMatch: 0,
     });
     setFilterNow(true);
     setFilterOpen(false);
@@ -68,6 +70,13 @@ function FilterButton({
             <div className="mx-2 my-4 font-semibold">Filter By</div>
 
             <DateFilter
+              selectedFilterOptions={selectedFilterOptions}
+              setSelectedFilterOptions={setSelectedFilterOptions}
+            />
+
+            <hr className="m-2 my-5" />
+
+            <IdentityMatchingFilter
               selectedFilterOptions={selectedFilterOptions}
               setSelectedFilterOptions={setSelectedFilterOptions}
             />
