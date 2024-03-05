@@ -23,6 +23,7 @@ class TestNewsAPI(unittest.TestCase):
                 "summary": "The article discusses Estrella Taño Golingay, a veteran writer in Soccsksargen, who faced challenges in fitting into the local literary community due to her linguistic heritage. Despite struggles with identity and language, Golingay carved her unique linguistic identity and pursued writing in the 'SOX Bicol' style. Her journey included educational influences, personal tragedies, and successes in literary workshops, highlighting the resilience and adaptability of writers in the region.",
                 "score": 0,
                 "category": "Others",
+                "subject_summary": "",
                 "is_related": False
             }
         ]
