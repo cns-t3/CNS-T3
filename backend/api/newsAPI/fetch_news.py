@@ -22,7 +22,7 @@ def get_summarised_news_articles(search_query: str):
         + os.getenv("NEWS_API_KEY")
         + "&keyword="
         + search_query
-        + "&lang=eng&articlesSortBy=rel&articlesCount=1"
+        + "&lang=eng&articlesSortBy=rel&articlesCount=5"
     )
     news_articles = []
     try:
@@ -130,7 +130,6 @@ Return the data in JSON format: {"summary": "", "category": "", "is_related": ""
     )
     try:
         result = json.loads(completion.choices[0].message.content)
-        print(result)
     except Exception as e:
         print("Error: ", e)
         result = {"summary": "", "category": "", "is_related": "", "risk_rating": "", "subject_summary": ""}
@@ -144,4 +143,3 @@ def handle_body(article_body, news_id, summaries, categories, relations, risks, 
     relations[news_id] = result["is_related"]
     risks[news_id] = result["risk_rating"]
     subject_summaries[news_id] = result["subject_summary"]
-    

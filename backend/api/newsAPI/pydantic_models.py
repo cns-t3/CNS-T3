@@ -14,4 +14,3 @@ class NewsArticle(BaseModel):
     category: str
     is_related: bool
     subject_summary: str
-    
