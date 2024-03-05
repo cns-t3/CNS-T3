@@ -43,6 +43,12 @@ try:
         .until(EC.presence_of_element_located((By.ID, "category")))
         .is_displayed()
     ), "Category is not displayed"
+    
+    assert (
+        WebDriverWait(driver, 10)
+        .until(EC.presence_of_element_located((By.ID, "identityMatching")))
+        .is_displayed()
+    ), "Identity Matching is not displayed"
 
     print("Presence of each element in the NewsArticle component is validated.")
 

@@ -35,6 +35,7 @@ def get_summarised_news_articles(search_query: str):
             categories = [""] * len(articles)
             relations = [True] * len(articles)
             risks = [""] * len(articles)
+            subject_summaries = [""] * len(articles)
             # the summaries are not returned in the same order as the articles, so we need to keep track of the order
             for count, article in enumerate(articles):
                 thread = threading.Thread(
@@ -46,6 +47,7 @@ def get_summarised_news_articles(search_query: str):
                         categories,
                         relations,
                         risks,
+                        subject_summaries
                     ),
                 )
                 thread.start()
@@ -63,6 +65,7 @@ def get_summarised_news_articles(search_query: str):
                     score=0,
                     category="",
                     is_related=True,
+                    subject_summary=""
                 )
                 news_articles.append(news)
             for thread in threads:
@@ -72,6 +75,7 @@ def get_summarised_news_articles(search_query: str):
                 news_articles[i].category = categories[i]
                 news_articles[i].is_related = relations[i]
                 news_articles[i].risk_rating = risks[i]
+                news_articles[i].subject_summary = subject_summaries[i]
             return news_articles
     except Exception as e:
         print("Error: ", e)
@@ -117,7 +121,9 @@ Medium-Risk Cases:
 
 If the news does not belong to any of the above cases, return Low for its risk rating.
 
-Return the data in JSON format: {"summary": "", "category": "", "is_related": "", "risk_rating":""}""",
+5. Identify the subject in the article, be it an entity or person. Generate a profile summary of the subject based on the information from the article in less than 100 words.
+
+Return the data in JSON format: {"summary": "", "category": "", "is_related": "", "risk_rating":"", "subject_summary": ""}""",
             },
             {"role": "user", "content": input},
         ],
@@ -126,13 +132,14 @@ Return the data in JSON format: {"summary": "", "category": "", "is_related": ""
         result = json.loads(completion.choices[0].message.content)
     except Exception as e:
         print("Error: ", e)
-        result = {"summary": "", "category": "", "is_related": "", "risk_rating": ""}
+        result = {"summary": "", "category": "", "is_related": "", "risk_rating": "", "subject_summary": ""}
     return result
 
 
-def handle_body(article_body, news_id, summaries, categories, relations, risks):
+def handle_body(article_body, news_id, summaries, categories, relations, risks, subject_summaries):
     result = summarise_article(article_body, openAI_client)
     summaries[news_id] = result["summary"]
     categories[news_id] = result["category"]
     relations[news_id] = result["is_related"]
     risks[news_id] = result["risk_rating"]
+    subject_summaries[news_id] = result["subject_summary"]

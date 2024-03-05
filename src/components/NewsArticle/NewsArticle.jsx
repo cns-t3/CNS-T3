@@ -3,6 +3,7 @@
 import React from 'react';
 import RiskRating from './RiskRating';
 import Category from './Category';
+import IdentityMatching from './IdentityMatching';
 
 function NewsArticle({ articleDetails, onOpen }) {
   // Format the date
@@ -44,8 +45,9 @@ function NewsArticle({ articleDetails, onOpen }) {
           &quot;
         </p>
       </div>
-      <div className="flex items-center md:space-x-0 space-x-0 relative md:flex-row flex-col ">
+      <div className="flex items-center relative md:flex-row flex-col md:space-x-3">
         <RiskRating riskRating={articleDetails.risk_rating} />
+        <IdentityMatching score={articleDetails.score} />
       </div>
     </button>
   );

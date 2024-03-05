@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Query, HTTPException
 import requests
-from backend.api.searchAPI.pydantic_models import SearchResult
+from backend.api.searchAPI.pydantic_models import SearchResult, NewsArticle
+from backend.api.searchAPI.search_service import search_service
 
 app = FastAPI()
 
@@ -17,21 +18,5 @@ async def get_articles_by_query(
         ..., description="Search query of the articles to return"
     ),
 ):
-    # get person data first
-    params = {"name": search_query}
-    person_endpoint = "http://127.0.0.1:8001/persons/search/"
-    response = requests.get(person_endpoint, params=params)
-    if response.status_code == 200:
-        person = response.json()
-        name = person["name"]
-        news_endpoint = "http://127.0.0.1:8002/news/" + name
-        response = requests.get(news_endpoint)
-        if response.status_code == 200:
-            news_articles = response.json()
-            search_result = SearchResult(person=person, newsArticles=news_articles)
-            return search_result
-
-    else:
-        raise HTTPException(
-            status_code=404, detail="No person found with the provided name"
-        )
+    response = search_service(search_query)
+    return response

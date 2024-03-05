@@ -9,7 +9,7 @@ class TestSearchAPI(unittest.TestCase):
     def setUp(self):
         self.client = TestClient(app)
 
-    @patch("backend.api.searchAPI.main.requests.get")
+    @patch("backend.api.searchAPI.main.search_service")
     def test_search_query(self, mock_get):
         person_data = {
             "person_id": 4,
@@ -37,15 +37,15 @@ class TestSearchAPI(unittest.TestCase):
                 "summary": "AC Ventures, based in Jakarta, Indonesia, raised $210 million for its fifth fund, attracting investors from various regions. The firm targets Southeast Asian startups for investment, with a focus on Indonesia's growing economy. Fund V will support startups in fintech, e-commerce, health tech, and climate sectors, prioritizing those with social and environmental impacts. AC Ventures stresses gender parity and inclusive leadership in its portfolio and offers support to startups in business development, partnerships, and fundraising.",
                 "score": 0,
                 "category": "business",
-                "is_related": True
+                "is_related": True,
+                "subject_summary": "",
             }
         ]
-        mock_get.side_effect = [
-            # Response for personAPI
-            unittest.mock.Mock(status_code=200, json=lambda: person_data),
-            # Response for newAPI
-            unittest.mock.Mock(status_code=200, json=lambda: news_data),
-        ]
+
+        mock_get.return_value = {
+            "person": person_data,
+            "newsArticles": news_data,
+        }
         response = self.client.get("search?search_query=helen%20wong")
         expected_response = {
             "person": person_data,
