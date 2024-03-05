@@ -50,7 +50,7 @@ function IdentityMatching({ score }) {
       <canvas ref={identityMatchingChartRef} width="80" height="80" />
       <div className="absolute inset-0 flex items-center justify-center">
         <p className="text-center text-gray-900 text-xs md:pr-3">
-          <span className="text-sm font-semibold">
+          <span className="text-sm font-semibold identityMatching">
             {score.toFixed(0)}
             %
           </span>
