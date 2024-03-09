@@ -1,10 +1,8 @@
 FROM python:3.8-slim
 WORKDIR /app
-ARG NEWS_API_KEY
 ARG OPENAI_API_KEY
-ENV NEWS_API_KEY=${NEWS_API_KEY}
 ENV OPENAI_API_KEY=${OPENAI_API_KEY}
 COPY . /app
 RUN pip install --no-cache-dir -r ./backend/requirements.txt
-EXPOSE 8002
-CMD ["uvicorn", "backend.api.newsAPI.main:app", "--host", "0.0.0.0", "--port", "8002"]
+EXPOSE 8003
+CMD ["uvicorn", "backend.api.identityAPI.main:app", "--host", "0.0.0.0", "--port", "8003"]
