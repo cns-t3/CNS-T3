@@ -1,0 +1,68 @@
+name: FYP CD Pipeline
+
+on:
+  push:
+    branches:
+      - "feature/*"
+#   workflow_run:
+#     workflows: [FYP CI Pipeline]
+#     types:
+#       - completed
+#     branches: [main]
+
+jobs:
+  build_and_push_images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Container Registry
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Build and Push Docker Images for Next.js Frontend
+        run: |
+          docker build -t ${{secrets.DOCKER_USERNAME}}/frontend:${{ github.sha }} .
+          docker push ${{secrets.DOCKER_USERNAME}}/frontend:${{ github.sha }}
+
+      - name: Build and Push Docker Images for NewsAPI
+        run: |
+          docker build -f ./backend/api/newsAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/news:${{ github.sha }} ./backend
+          docker push ${{secrets.DOCKER_USERNAME}}/news:${{ github.sha }}
+
+  # deploy_to_aks:
+  #   needs: build_and_push_images
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Install Azure CLI
+  #       run: |
+  #         curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+  #     - name: Login to Azure
+  #       uses: azure/login@v1
+  #       with:
+  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+  #     - name: Set AKS Context
+  #       run: |
+  #         az aks get-credentials --name CNSt3 --resource-group FYP
+
+  #     - name: Replace COMMIT-HASH placeholder
+  #       run: |
+  #         sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/frontend-deployment.yml  
+  #         sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/news-deployment.yml
+
+  #     - name: Deploy to AKS
+  #       run: |
+  #         kubectl apply -f ./k8s/frontend-deployment.yml
+  #         kubectl apply -f ./k8s/frontend-service.yml
+
+  #         kubectl apply -f ./k8s/news-deployment.yml
+  #         kubectl apply -f ./k8s/news-service.yml
