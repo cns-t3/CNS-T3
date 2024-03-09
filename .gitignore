@@ -26,6 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env*.local
 .env*
 
@@ -36,6 +37,14 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-#
-__pycache__
+# python
+__pycache__/
 *.pyc
+
+# bash 
+npm_install_output.txt
+
+# coverage
+.coverage
+.coverage.xml
+.env

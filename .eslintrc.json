@@ -1,3 +1,27 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "airbnb", "airbnb/hooks"],
+  "rules": {
+    "jsx-a11y/no-static-element-interactions": [
+      "error",
+      {
+        "handlers": ["onClick"],
+        "allowExpressionValues": true,
+        "allowStaticElements": ["div", "span"] // Add any other static elements as needed
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "never"
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+      "rules": {
+        "import/no-unresolved": ["error", { "ignore": ["^@"] }],
+        "linebreak-style": "off",
+        "react/prop-types": "off"
+      }
+    }
+  ]
 }
