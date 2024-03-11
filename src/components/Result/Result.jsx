@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 import ResultHeader from './ResultHeader';
 import ResultsViewer from './ResultsViewer';
 
@@ -19,21 +18,26 @@ function Result({ data }) {
     date: 'all time',
   });
   const [filteredData, setFilteredData] = useState(data);
-  const [selectedSortOption, setSelectedSortOption] =
-    useState('Newest to Oldest');
+  const [selectedSortOption, setSelectedSortOption] = useState('Newest to Oldest');
 
-  useEffect(() => {
-    if (filterNow) {
-      const newFilteredData = filterData(data, selectedFilterOptions);
-      setFilteredData(newFilteredData);
-      sortArticles();
-      setFilterNow(false);
-    }
-  }, [filterNow]);
+  // Sort by descending date
+  const sortArticlesByDescendingDate = () => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort(
+        (a, b) => new Date(a.publishedAt) - new Date(b.publishedAt),
+      );
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
 
-  useEffect(() => {
-    sortArticles();
-  }, [selectedSortOption]);
+  const sortArticlesByAscendingDate = () => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort(
+        (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt),
+      );
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
 
   const sortArticles = () => {
     if (selectedSortOption === 'Newest to Oldest') {
@@ -43,26 +47,7 @@ function Result({ data }) {
     }
   };
 
-  //Sort by descending date
-  const sortArticlesByDescendingDate = () => {
-    setFilteredData((prevData) => {
-      const sortedArticles = [...prevData.newsArticles].sort(
-        (a, b) => new Date(a.publishedAt) - new Date(b.publishedAt)
-      );
-      return { ...prevData, newsArticles: sortedArticles };
-    });
-  };
-
-  const sortArticlesByAscendingDate = () => {
-    setFilteredData((prevData) => {
-      const sortedArticles = [...prevData.newsArticles].sort(
-        (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)
-      );
-      return { ...prevData, newsArticles: sortedArticles };
-    });
-  };
-
-  //process date option
+  // process date option
   const processDateOption = (dateOption) => {
     let startDate = new Date();
     let endDate = new Date();
@@ -92,50 +77,59 @@ function Result({ data }) {
       case 'all time':
         startDate = '';
         endDate = '';
-        return;
+        break;
       default:
-        console.warn(`Unexpected date filter option: ${value}`);
-        return;
     }
 
     return [startDate, endDate];
   };
 
-  const filterData = (data, selectedFilterOptions) => {
-    const riskRatingOptions = selectedFilterOptions.riskRating;
-    const categoryOptions = selectedFilterOptions.category;
-    const dateOption = selectedFilterOptions.date;
+  const filterData = (inputData, inputSelectedFilterOptions) => {
+    const riskRatingOptions = inputSelectedFilterOptions.riskRating;
+    const categoryOptions = inputSelectedFilterOptions.category;
+    const dateOption = inputSelectedFilterOptions.date;
 
     const dates = processDateOption(dateOption);
 
     if (
-      riskRatingOptions.length == 3 &&
-      categoryOptions.length == 5 &&
-      dateOption == 'all time'
+      riskRatingOptions.length === 3
+      && categoryOptions.length === 5
+      && dateOption === 'all time'
     ) {
-      return data;
+      return inputData;
     }
-    var filteredArticles = data;
-    if (dateOption == 'all time') {
+    let filteredArticles = inputData;
+    if (dateOption === 'all time') {
       filteredArticles = data.newsArticles.filter(
-        (article) =>
-          riskRatingOptions.includes(article.risk_rating.toLowerCase()) &&
-          categoryOptions.includes(article.category.toLowerCase())
+        (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
+          && categoryOptions.includes(article.category.toLowerCase()),
       );
     } else {
-      filteredArticles = data.newsArticles.filter(
-        (article) =>
-          riskRatingOptions.includes(article.risk_rating.toLowerCase()) &&
-          categoryOptions.includes(article.category.toLowerCase()) &&
-          new Date(article.publishedAt) > dates[0] &&
-          new Date(article.publishedAt) < dates[1]
+      filteredArticles = inputData.newsArticles.filter(
+        (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
+          && categoryOptions.includes(article.category.toLowerCase())
+          && new Date(article.publishedAt) > dates[0]
+          && new Date(article.publishedAt) < dates[1],
       );
     }
     return {
-      ...data,
+      ...inputData,
       newsArticles: filteredArticles,
     };
   };
+
+  useEffect(() => {
+    if (filterNow) {
+      const newFilteredData = filterData(data, selectedFilterOptions);
+      setFilteredData(newFilteredData);
+      sortArticles();
+      setFilterNow(false);
+    }
+  }, [filterNow]);
+
+  useEffect(() => {
+    sortArticles();
+  }, [selectedSortOption]);
 
   return (
     <>

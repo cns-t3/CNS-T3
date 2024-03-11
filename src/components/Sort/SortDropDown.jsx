@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { IoChevronDownOutline } from 'react-icons/io5';
 
-const SortDropDown = ({ selectedSortOption, setSelectedSortOption }) => {
+function SortDropDown({ selectedSortOption, setSelectedSortOption }) {
   const sortOptions = ['Newest to Oldest', 'Oldest to Newest'];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -27,38 +27,39 @@ const SortDropDown = ({ selectedSortOption, setSelectedSortOption }) => {
   };
 
   return (
-    <div className='my-3 m-2' ref={dropdownRef}>
+    <div className="my-3 m-2" ref={dropdownRef}>
       <button
-        id='dateDropDownButton'
-        type='button'
+        id="dateDropDownButton"
+        type="button"
         onClick={toggleDropdown}
-        className='border rounded-md border-gray-200 p-2 text-sm text-gray-900 flex flex-rows w-full justify-between'
+        className="border rounded-md border-gray-200 p-2 text-sm text-gray-900 flex flex-rows w-full justify-between"
       >
         {selectedSortOption}
-        <IoChevronDownOutline className='mt-1' />
+        <IoChevronDownOutline className="mt-1" />
       </button>
       {isDropdownOpen && (
-        <div className=' mb-2 absolute w-[214.67px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none '>
-          <div className='' role='none'>
+        <div className=" mb-2 absolute w-[214.67px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ">
+          <div className="" role="none">
             {sortOptions.map((option) => (
-              <div
+              <button
+                type="button"
                 id={option}
                 onClick={() => handleSortChange(option)}
-                name='date'
-                className={`accent-sky-900 text-sm px-2 py-1.5 rounded-md ${
+                name="date"
+                className={`accent-sky-900 text-sm px-2 py-1.5 rounded-md w-full text-left ${
                   selectedSortOption === option
-                    ? 'bg-sky-900 text-white'
+                    ? 'text-white bg-sky-900'
                     : 'text-gray-900'
                 }`}
               >
                 {option}
-              </div>
+              </button>
             ))}
           </div>
         </div>
       )}
     </div>
   );
-};
+}
 
 export default SortDropDown;
