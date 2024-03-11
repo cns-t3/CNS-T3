@@ -52,7 +52,7 @@ jobs:
 
       - name: Set AKS Context
         run: |
-          az aks get-credentials --name CNSt3 --resource-group FYP
+          az aks get-credentials --name CNSt3 --resource-group 2024_FYP_MA_G01
 
       - name: Replace COMMIT-HASH placeholder
         run: |
