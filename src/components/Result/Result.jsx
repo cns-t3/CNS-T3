@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 import ResultHeader from './ResultHeader';
 import ResultsViewer from './ResultsViewer';
 
@@ -16,10 +16,36 @@ function Result({ data }) {
       'others',
     ],
     date: 'all time',
-    identityMatch: 0,
   });
-
   const [filteredData, setFilteredData] = useState(data);
+  const [selectedSortOption, setSelectedSortOption] = useState('Newest to Oldest');
+
+  // Sort by descending date
+  const sortArticlesByDescendingDate = () => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort(
+        (a, b) => new Date(a.publishedAt) - new Date(b.publishedAt),
+      );
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
+
+  const sortArticlesByAscendingDate = () => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort(
+        (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt),
+      );
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
+
+  const sortArticles = () => {
+    if (selectedSortOption === 'Newest to Oldest') {
+      sortArticlesByAscendingDate();
+    } else {
+      sortArticlesByDescendingDate();
+    }
+  };
 
   // process date option
   const processDateOption = (dateOption) => {
@@ -51,61 +77,59 @@ function Result({ data }) {
       case 'all time':
         startDate = '';
         endDate = '';
-        return [];
+        break;
       default:
-        return [];
     }
 
     return [startDate, endDate];
   };
 
-  useEffect(() => {
-    const filterData = (currentData, filterOptions) => {
-      const riskRatingOptions = filterOptions.riskRating;
-      const categoryOptions = filterOptions.category;
-      const dateOption = filterOptions.date;
-      const identityMatchOption = selectedFilterOptions.identityMatch;
+  const filterData = (inputData, inputSelectedFilterOptions) => {
+    const riskRatingOptions = inputSelectedFilterOptions.riskRating;
+    const categoryOptions = inputSelectedFilterOptions.category;
+    const dateOption = inputSelectedFilterOptions.date;
 
-      const dates = processDateOption(dateOption);
+    const dates = processDateOption(dateOption);
 
-      let filteredArticles;
-
-      if (
-        riskRatingOptions.length === 3
-        && categoryOptions.length === 5
-        && dateOption === 'all time'
-        && identityMatchOption === 0
-      ) {
-        return currentData;
-      }
-      // var filteredArticles = data;
-      if (dateOption === 'all time') {
-        filteredArticles = data.newsArticles.filter(
-          (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
+    if (
+      riskRatingOptions.length === 3
+      && categoryOptions.length === 5
+      && dateOption === 'all time'
+    ) {
+      return inputData;
+    }
+    let filteredArticles = inputData;
+    if (dateOption === 'all time') {
+      filteredArticles = data.newsArticles.filter(
+        (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
+          && categoryOptions.includes(article.category.toLowerCase()),
+      );
+    } else {
+      filteredArticles = inputData.newsArticles.filter(
+        (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
           && categoryOptions.includes(article.category.toLowerCase())
-          && identityMatchOption < article.score,
-        );
-      } else {
-        filteredArticles = data.newsArticles.filter(
-          (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-            && categoryOptions.includes(article.category.toLowerCase())
-            && new Date(article.publishedAt) > dates[0]
-            && new Date(article.publishedAt) < dates[1]
-            && identityMatchOption < article.score,
-        );
-      }
-      return {
-        ...currentData,
-        newsArticles: filteredArticles,
-      };
+          && new Date(article.publishedAt) > dates[0]
+          && new Date(article.publishedAt) < dates[1],
+      );
+    }
+    return {
+      ...inputData,
+      newsArticles: filteredArticles,
     };
+  };
 
+  useEffect(() => {
     if (filterNow) {
       const newFilteredData = filterData(data, selectedFilterOptions);
       setFilteredData(newFilteredData);
+      sortArticles();
       setFilterNow(false);
     }
-  }, [filterNow, data, selectedFilterOptions]);
+  }, [filterNow]);
+
+  useEffect(() => {
+    sortArticles();
+  }, [selectedSortOption]);
 
   return (
     <>
@@ -113,6 +137,8 @@ function Result({ data }) {
         selectedFilterOptions={selectedFilterOptions}
         setSelectedFilterOptions={setSelectedFilterOptions}
         setFilterNow={setFilterNow}
+        selectedSortOption={selectedSortOption}
+        setSelectedSortOption={setSelectedSortOption}
       />
       <ResultsViewer data={filteredData} />
     </>
