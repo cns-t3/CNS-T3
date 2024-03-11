@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
 import ResultHeader from './ResultHeader';
 import ResultsViewer from './ResultsViewer';
 
@@ -16,12 +17,52 @@ function Result({ data }) {
       'others',
     ],
     date: 'all time',
-    identityMatch: 0,
   });
-
   const [filteredData, setFilteredData] = useState(data);
+  const [selectedSortOption, setSelectedSortOption] =
+    useState('Newest to Oldest');
 
-  // process date option
+  useEffect(() => {
+    if (filterNow) {
+      const newFilteredData = filterData(data, selectedFilterOptions);
+      setFilteredData(newFilteredData);
+      sortArticles();
+      setFilterNow(false);
+    }
+  }, [filterNow]);
+
+  useEffect(() => {
+    sortArticles();
+  }, [selectedSortOption]);
+
+  const sortArticles = () => {
+    if (selectedSortOption === 'Newest to Oldest') {
+      sortArticlesByAscendingDate();
+    } else {
+      sortArticlesByDescendingDate();
+    }
+  };
+
+  //Sort by descending date
+  const sortArticlesByDescendingDate = () => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort(
+        (a, b) => new Date(a.publishedAt) - new Date(b.publishedAt)
+      );
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
+
+  const sortArticlesByAscendingDate = () => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort(
+        (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)
+      );
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
+
+  //process date option
   const processDateOption = (dateOption) => {
     let startDate = new Date();
     let endDate = new Date();
@@ -51,61 +92,50 @@ function Result({ data }) {
       case 'all time':
         startDate = '';
         endDate = '';
-        return [];
+        return;
       default:
-        return [];
+        console.warn(`Unexpected date filter option: ${value}`);
+        return;
     }
 
     return [startDate, endDate];
   };
 
-  useEffect(() => {
-    const filterData = (currentData, filterOptions) => {
-      const riskRatingOptions = filterOptions.riskRating;
-      const categoryOptions = filterOptions.category;
-      const dateOption = filterOptions.date;
-      const identityMatchOption = selectedFilterOptions.identityMatch;
+  const filterData = (data, selectedFilterOptions) => {
+    const riskRatingOptions = selectedFilterOptions.riskRating;
+    const categoryOptions = selectedFilterOptions.category;
+    const dateOption = selectedFilterOptions.date;
 
-      const dates = processDateOption(dateOption);
+    const dates = processDateOption(dateOption);
 
-      let filteredArticles;
-
-      if (
-        riskRatingOptions.length === 3
-        && categoryOptions.length === 5
-        && dateOption === 'all time'
-        && identityMatchOption === 0
-      ) {
-        return currentData;
-      }
-      // var filteredArticles = data;
-      if (dateOption === 'all time') {
-        filteredArticles = data.newsArticles.filter(
-          (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-          && categoryOptions.includes(article.category.toLowerCase())
-          && identityMatchOption < article.score,
-        );
-      } else {
-        filteredArticles = data.newsArticles.filter(
-          (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-            && categoryOptions.includes(article.category.toLowerCase())
-            && new Date(article.publishedAt) > dates[0]
-            && new Date(article.publishedAt) < dates[1]
-            && identityMatchOption < article.score,
-        );
-      }
-      return {
-        ...currentData,
-        newsArticles: filteredArticles,
-      };
-    };
-
-    if (filterNow) {
-      const newFilteredData = filterData(data, selectedFilterOptions);
-      setFilteredData(newFilteredData);
-      setFilterNow(false);
+    if (
+      riskRatingOptions.length == 3 &&
+      categoryOptions.length == 5 &&
+      dateOption == 'all time'
+    ) {
+      return data;
     }
-  }, [filterNow, data, selectedFilterOptions]);
+    var filteredArticles = data;
+    if (dateOption == 'all time') {
+      filteredArticles = data.newsArticles.filter(
+        (article) =>
+          riskRatingOptions.includes(article.risk_rating.toLowerCase()) &&
+          categoryOptions.includes(article.category.toLowerCase())
+      );
+    } else {
+      filteredArticles = data.newsArticles.filter(
+        (article) =>
+          riskRatingOptions.includes(article.risk_rating.toLowerCase()) &&
+          categoryOptions.includes(article.category.toLowerCase()) &&
+          new Date(article.publishedAt) > dates[0] &&
+          new Date(article.publishedAt) < dates[1]
+      );
+    }
+    return {
+      ...data,
+      newsArticles: filteredArticles,
+    };
+  };
 
   return (
     <>
@@ -113,6 +143,8 @@ function Result({ data }) {
         selectedFilterOptions={selectedFilterOptions}
         setSelectedFilterOptions={setSelectedFilterOptions}
         setFilterNow={setFilterNow}
+        selectedSortOption={selectedSortOption}
+        setSelectedSortOption={setSelectedSortOption}
       />
       <ResultsViewer data={filteredData} />
     </>

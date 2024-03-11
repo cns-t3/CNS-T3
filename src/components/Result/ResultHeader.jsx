@@ -1,11 +1,13 @@
-import React from 'react';
-import FilterButton from '../Filter/FilterButton';
-import SortButton from '../Sort/SortButton';
+import React from "react";
+import FilterButton from "../Filter/FilterButton";
+import SortButton from "../Sort/SortButton";
 
 function ResultHeader({
   selectedFilterOptions,
   setSelectedFilterOptions,
   setFilterNow,
+  selectedSortOption,
+  setSelectedSortOption
 }) {
   return (
     <div className="px-10">
@@ -14,8 +16,8 @@ function ResultHeader({
           <p className="px-3 font-semibold text-gray-500">Results</p>
           <hr className="border-red border-t-2" />
         </div>
-        <div className="flex flex-row">
-          <SortButton />
+        <div className="flex flex-row relative">
+          <SortButton selectedSortOption={selectedSortOption} setSelectedSortOption={setSelectedSortOption}/>
           <FilterButton
             selectedFilterOptions={selectedFilterOptions}
             setSelectedFilterOptions={setSelectedFilterOptions}
