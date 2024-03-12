@@ -1,16 +1,18 @@
-import React from 'react';
+'use client';
 
-function CategoryFilter({
-  selectedFilterOptions,
-  setSelectedFilterOptions,
-}) {
-  const categoryOptions = [
-    'source of wealth',
-    'family circumstances',
-    'sanctioned countries',
-    'sensitive industries',
-    'others',
-  ];
+import React, { useEffect, useState } from 'react';
+
+function CategoryFilter({ selectedFilterOptions, setSelectedFilterOptions }) {
+  const [categoryOptions, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch('/categories.json')
+      .then((response) => response.json())
+      .then((data) => {
+        const categoryNames = Object.keys(data.categories).map((cat) => cat.toLowerCase());
+        setCategories(categoryNames);
+      });
+  }, []);
 
   const handleCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
@@ -33,7 +35,11 @@ function CategoryFilter({
     <div>
       <p className="text-xs m-2 text-gray-500 font-semibold">Category</p>
       {categoryOptions.map((option) => (
-        <label htmlFor={option} key={option} className="flex items-center space-x-2 m-2">
+        <label
+          htmlFor={option}
+          key={option}
+          className="flex items-center space-x-2 m-2"
+        >
           <input
             type="checkbox"
             value={option}

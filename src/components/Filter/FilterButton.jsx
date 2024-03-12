@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import { IoFilterOutline } from 'react-icons/io5';
 import CategoryFilter from './CategoryFilter';
@@ -11,6 +13,16 @@ function FilterButton({
   setFilterNow,
 }) {
   const [isFilterOpen, setFilterOpen] = useState(false);
+  const [categoryOptions, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch('/categories.json')
+      .then((response) => response.json())
+      .then((data) => {
+        const categoryNames = Object.keys(data.categories).map((cat) => cat.toLowerCase());
+        setCategories(categoryNames);
+      });
+  }, []);
 
   const dropdownRef = useRef();
 
@@ -39,13 +51,7 @@ function FilterButton({
   const removeFilters = () => {
     setSelectedFilterOptions({
       riskRating: ['low', 'medium', 'high'],
-      category: [
-        'source of wealth',
-        'family circumstances',
-        'sanctioned countries',
-        'sensitive industries',
-        'others',
-      ],
+      category: categoryOptions,
       date: 'all time',
       identityMatch: 0,
     });

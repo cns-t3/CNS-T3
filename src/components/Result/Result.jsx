@@ -6,19 +6,31 @@ import ResultsViewer from './ResultsViewer';
 
 function Result({ data }) {
   const [filterNow, setFilterNow] = useState(false);
+  const [defaultCategoryOptions, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch('/categories.json')
+      .then((response) => response.json())
+      .then((categoryData) => {
+        const categoryNames = Object.keys(categoryData.categories).map((cat) => cat.toLowerCase());
+        setCategories(categoryNames);
+      });
+  }, []);
+
   const [selectedFilterOptions, setSelectedFilterOptions] = useState({
     riskRating: ['low', 'medium', 'high'],
-    category: [
-      'source of wealth',
-      'family circumstances',
-      'sanctioned countries',
-      'sensitive industries',
-      'others',
-    ],
+    category: defaultCategoryOptions,
     date: 'all time',
   });
   const [filteredData, setFilteredData] = useState(data);
   const [selectedSortOption, setSelectedSortOption] = useState('Newest to Oldest');
+
+  useEffect(() => {
+    setSelectedFilterOptions((prevOptions) => ({
+      ...prevOptions,
+      category: defaultCategoryOptions,
+    }));
+  }, [defaultCategoryOptions]);
 
   // Sort by descending date
   const sortArticlesByDescendingDate = () => {
