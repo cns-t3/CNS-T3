@@ -17,6 +17,26 @@ load_dotenv()
 if os.getenv("OPENAI_API_KEY"):
     openAI_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+def get_categories():
+    with open('backend/config/categories.json', 'r') as file:
+        data = json.load(file)
+    formatted_categories = [category.title() for category in data['categories']]
+
+    final_string = ', '.join(formatted_categories)
+    return final_string
+
+def get_prompt():
+    with open("backend/api/newsAPI/prompt.txt", "r") as file:
+        data = file.read()
+    return data
+
+
+def get_search_patterns():
+    with open('backend/config/categories.json', 'r') as file:
+        data = json.load(file)
+    formatted_string = ', '.join([f"{category} - search pattern: {', '.join(patterns)}" for category, patterns in data['categories'].items() if patterns])
+    return formatted_string
+
 
 def get_summarised_news_articles(search_query: str):
     """
@@ -88,6 +108,12 @@ def get_summarised_news_articles(search_query: str):
 @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
 def summarise_article(article_body, client):
     input = "Summarise this article for me: " + article_body
+    prompt = get_prompt()
+    categories = get_categories()
+    search_patterns = get_search_patterns()
+    prompt = prompt.replace("{{ categories }}", categories)
+    prompt = prompt.replace("{{ search_patterns }}", search_patterns)
+
     completion = client.chat.completions.create(
         temperature=0.6,
         model="gpt-3.5-turbo-0125",
