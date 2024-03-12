@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "shx cp ./backend/config/categories.json ./public/categories.json && next dev",
+    "build": "shx cp ./backend/config/categories.json ./public/categories.json && next build",
+    "start": "shx cp ./backend/config/categories.json ./public/categories.json && next start",
     "lint": "next lint",
     "airbnb-lint": "./node_modules/.bin/eslint"
   },
@@ -23,6 +23,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "^14.1.0",
     "postcss": "^8",
+    "shx": "^0.3.4",
     "tailwindcss": "^3.3.0"
   }
 }

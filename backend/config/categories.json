@@ -1,0 +1,70 @@
+{
+  "categories": {
+    "Source of Wealth": [
+      "net worth",
+      "worth",
+      "income",
+      "inherit",
+      "inheritance",
+      "receive",
+      "gifted",
+      "settlement",
+      "sale proceeds",
+      "merger & acquisition",
+      "M&A",
+      "leveraged buyout"
+    ],
+    "Family Circumstances": [
+      "Marry",
+      "marriage",
+      "divorce",
+      "separation",
+      "children",
+      "child"
+    ],
+    "Sanctioned Countries": [
+      "Cuba",
+      "Iran",
+      "North Korea",
+      "Syria",
+      "Crimea",
+      "Russia",
+      "Ukraine",
+      "Afghanistan",
+      "Albania",
+      "Algeria",
+      "Angola",
+      "Bahamas",
+      "Bangladesh",
+      "Barbados",
+      "Belarus",
+      "Belize",
+      "Bolivia",
+      "Botswana",
+      "Burkina Faso",
+      "Burundi",
+      "Cambodia",
+      "Cameroon",
+      "Central African Republic",
+      "Chad",
+      "Cayman Islands",
+      "Comoros",
+      "Congo",
+      "Democratic Republic of Côte d'Ivoire",
+      "Djibouti",
+      "Dominican Republic",
+      "Ecuador",
+      "Egypt"
+    ],
+    "Sensitive Industries": [
+      "Casinos",
+      "Arms Dealer",
+      "Arms Material",
+      "Private Military Service Provider",
+      "Diamond",
+      "Precious stones",
+      "Money Remittance Business"
+    ],
+    "Others": []
+  }
+}
