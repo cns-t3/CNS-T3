@@ -1,8 +1,6 @@
 from typing import List
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, status
-
-# from fetch_news import get_summarised_news_articles
 from backend.api.newsAPI.fetch_news import get_summarised_news_articles
 from backend.api.newsAPI.pydantic_models import NewsArticle
 
