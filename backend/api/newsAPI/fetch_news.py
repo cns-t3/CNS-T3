@@ -10,7 +10,7 @@ load_dotenv()
 
 if os.getenv("OPENAI_API_KEY"):
     openAI_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-    
+
 def get_categories():
     with open('backend/config/categories.json', 'r') as file:
         data = json.load(file)
@@ -24,11 +24,13 @@ def get_prompt():
         data = file.read()
     return data
 
+
 def get_search_patterns():
     with open('backend/config/categories.json', 'r') as file:
         data = json.load(file)
     formatted_string = ', '.join([f"{category} - search pattern: {', '.join(patterns)}" for category, patterns in data['categories'].items() if patterns])
     return formatted_string
+
 
 def get_summarised_news_articles(search_query: str):
     """
