@@ -1,7 +1,6 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 from backend.api.newsAPI.pydantic_models import NewsArticle
-from backend.api.newsAPI.prompt import prompt
 from tenacity import (
     retry,
     stop_after_attempt,
