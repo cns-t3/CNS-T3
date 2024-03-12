@@ -15,7 +15,6 @@ class NewsArticle(BaseModel):
     summary: str
     score: int
     category: str
-    is_related: bool
     subject_summary: str
 
 

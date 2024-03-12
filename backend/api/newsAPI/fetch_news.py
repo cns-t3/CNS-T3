@@ -16,13 +16,15 @@ load_dotenv()
 if os.getenv("OPENAI_API_KEY"):
     openAI_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def get_categories():
-    with open('backend/config/categories.json', 'r') as file:
-        data = json.load(file)
-    formatted_categories = [category.title() for category in data['categories']]
 
-    final_string = ', '.join(formatted_categories)
+def get_categories():
+    with open("backend/config/categories.json", "r") as file:
+        data = json.load(file)
+    formatted_categories = [category.title() for category in data["categories"]]
+
+    final_string = ", ".join(formatted_categories)
     return final_string
+
 
 def get_prompt():
     with open("backend/api/newsAPI/prompt.txt", "r") as file:
@@ -31,9 +33,15 @@ def get_prompt():
 
 
 def get_search_patterns():
-    with open('backend/config/categories.json', 'r') as file:
+    with open("backend/config/categories.json", "r") as file:
         data = json.load(file)
-    formatted_string = ', '.join([f"{category} - search pattern: {', '.join(patterns)}" for category, patterns in data['categories'].items() if patterns])
+    formatted_string = ", ".join(
+        [
+            f"{category} - search pattern: {', '.join(patterns)}"
+            for category, patterns in data["categories"].items()
+            if patterns
+        ]
+    )
     return formatted_string
 
 
@@ -56,7 +64,6 @@ def get_summarised_news_articles(search_query: str):
             threads = []
             summaries = [""] * len(articles)
             categories = [""] * len(articles)
-            relations = [True] * len(articles)
             risks = [""] * len(articles)
             subject_summaries = [""] * len(articles)
             # the summaries are not returned in the same order as the articles, so we need to keep track of the order
@@ -68,7 +75,6 @@ def get_summarised_news_articles(search_query: str):
                         count,
                         summaries,
                         categories,
-                        relations,
                         risks,
                         subject_summaries,
                     ),
@@ -87,7 +93,6 @@ def get_summarised_news_articles(search_query: str):
                     summary="",
                     score=0,
                     category="",
-                    is_related=True,
                     subject_summary="",
                 )
                 news_articles.append(news)
@@ -96,7 +101,6 @@ def get_summarised_news_articles(search_query: str):
             for i in range(len(news_articles)):
                 news_articles[i].summary = summaries[i]
                 news_articles[i].category = categories[i]
-                news_articles[i].is_related = relations[i]
                 news_articles[i].risk_rating = risks[i]
                 news_articles[i].subject_summary = subject_summaries[i]
             return news_articles
@@ -132,19 +136,15 @@ def summarise_article(article_body, client):
         result = {
             "summary": "",
             "category": "",
-            "is_related": "",
             "risk_rating": "",
             "subject_summary": "",
         }
     return result
 
 
-def handle_body(
-    article_body, news_id, summaries, categories, relations, risks, subject_summaries
-):
+def handle_body(article_body, news_id, summaries, categories, risks, subject_summaries):
     result = summarise_article(article_body, openAI_client)
     summaries[news_id] = result["summary"]
     categories[news_id] = result["category"]
-    relations[news_id] = result["is_related"]
     risks[news_id] = result["risk_rating"]
     subject_summaries[news_id] = result["subject_summary"]

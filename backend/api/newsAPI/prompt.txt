@@ -27,4 +27,4 @@ If the news does not belong to any of the above cases, return Low for its risk r
 
 5. Identify the subject in the article, be it an entity or person. Generate a profile summary of the subject based on the information from the article in less than 100 words.
 
-Return the data in JSON format: {"summary": "", "category": "", "is_related": true/false, "risk_rating":"", "subject_summary": ""}"""
+Return the data in JSON format: {"summary": "", "category": "", "risk_rating":"", "subject_summary": ""}"""
