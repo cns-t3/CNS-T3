@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import { BiSortAlt2 } from "react-icons/bi";
-import SortDropDown from "./SortDropDown";
+import React, { useState, useRef, useEffect } from 'react';
+import { BiSortAlt2 } from 'react-icons/bi';
+import SortDropDown from './SortDropDown';
 
 function SortButton({ selectedSortOption, setSelectedSortOption }) {
   const [sortCardOpen, setSortCardOpen] = useState(false);
@@ -13,9 +13,9 @@ function SortButton({ selectedSortOption, setSelectedSortOption }) {
   }
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
