@@ -1,6 +1,6 @@
 'use client';
 
-import { React, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ResultHeader from './ResultHeader';
 import ResultsViewer from './ResultsViewer';
 
@@ -32,7 +32,25 @@ function Result({ data }) {
     }));
   }, [defaultCategoryOptions]);
 
-  // Sort by descending date
+  const riskRankingOrder = ['High', 'Medium', 'Low'];
+
+  const sortArticlesByRiskRating = (asc = true) => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort((a, b) => {
+        if (asc) {
+          return (
+            riskRankingOrder.indexOf(a.risk_rating) - riskRankingOrder.indexOf(b.risk_rating)
+          );
+        }
+        return (
+          riskRankingOrder.indexOf(b.risk_rating) - riskRankingOrder.indexOf(a.risk_rating)
+        );
+      });
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
+
+  // Sort articles by descending date
   const sortArticlesByDescendingDate = () => {
     setFilteredData((prevData) => {
       const sortedArticles = [...prevData.newsArticles].sort(
@@ -54,8 +72,11 @@ function Result({ data }) {
   const sortArticles = () => {
     if (selectedSortOption === 'Newest to Oldest') {
       sortArticlesByAscendingDate();
-    } else {
+    } else if (selectedSortOption === 'Oldest to Newest') {
       sortArticlesByDescendingDate();
+    } else {
+      // Added this line to call the sortArticlesByRiskRating function
+      sortArticlesByRiskRating(selectedSortOption === 'High Risk to Low Risk');
     }
   };
 
@@ -104,9 +125,7 @@ function Result({ data }) {
     const dates = processDateOption(dateOption);
 
     if (
-      riskRatingOptions.length === 3
-      && categoryOptions.length === 5
-      && dateOption === 'all time'
+      riskRatingOptions.length === 3 && categoryOptions.length === 5 && dateOption === 'all time'
     ) {
       return inputData;
     }
@@ -114,14 +133,14 @@ function Result({ data }) {
     if (dateOption === 'all time') {
       filteredArticles = data.newsArticles.filter(
         (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-          && categoryOptions.includes(article.category.toLowerCase()),
+        && categoryOptions.includes(article.category.toLowerCase()),
       );
     } else {
       filteredArticles = inputData.newsArticles.filter(
         (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-          && categoryOptions.includes(article.category.toLowerCase())
-          && new Date(article.publishedAt) > dates[0]
-          && new Date(article.publishedAt) < dates[1],
+        && categoryOptions.includes(article.category.toLowerCase())
+        && new Date(article.publishedAt) > dates[0]
+        && new Date(article.publishedAt) < dates[1],
       );
     }
     return {

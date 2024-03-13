@@ -24,7 +24,7 @@ function SortButton({ selectedSortOption, setSelectedSortOption }) {
   };
 
   return (
-    <div className="inline-block" id="sortByDateButton" ref={dropdownRef}>
+    <div className="inline-block" id="sortByButton" ref={dropdownRef}>
       <button onClick={handleSortCardOpen} type="button">
         <div className="flex flex-row text-gray-500 pr-5">
           <BiSortAlt2 size={20} />

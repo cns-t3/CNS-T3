@@ -10,11 +10,11 @@ def string_to_date(date_str):
     return datetime.strptime(date_str.text.replace(" ", "-"), "%d-%b-%Y")
 
 
-def check_newest_first(arr_date_str):
-    for i in range(len(arr_date_str) - 1):
-        if string_to_date(arr_date_str[i]) < string_to_date(arr_date_str[i + 1]):
-            return False
-    return True
+def check_order(arr_str, asc=True):
+    if asc:
+        return all(arr_str[i] <= arr_str[i+1] for i in range(len(arr_str) - 1))
+    else:
+        return all(arr_str[i] >= arr_str[i+1] for i in range(len(arr_str) - 1))
 
 
 driver = webdriver.Chrome()
@@ -30,41 +30,40 @@ try:
     )
     assert len(news_article_container) > 0, "News articles container is not displayed"
 
-    sort_by_date_button = WebDriverWait(driver, 10).until(
+    # Click on the sort button
+    sort_button = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, "sortByButton"))
     )
-    sort_by_date_button.click()
+    sort_button.click()
 
-    date_drop_down_button = WebDriverWait(driver, 10).until(
+    # Click on the dropdown
+    risk_dropdown_button = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, "dropDownButton"))
     )
+    risk_dropdown_button.click()
 
-    date_drop_down_button.click()
-
-    oldest_to_newest = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.ID, "Oldest to Newest"))
+    # Click on the High to Low option
+    high_to_low = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.ID, "High Risk to Low Risk"))
     )
-
-    oldest_to_newest.click()
+    high_to_low.click()
 
     try:
+        # Check if there are no articles message is displayed
         no_articles_element = driver.find_element(By.ID, "noArticles")
         if no_articles_element:
             assert True
 
     except NoSuchElementException:
-        dates_elements = WebDriverWait(driver, 10).until(
-            EC.presence_of_all_elements_located((By.CLASS_NAME, "date"))
+        # Check if risk ratings are displayed in the correct order (High to Low)
+        risk_elements = WebDriverWait(driver, 10).until(
+            EC.presence_of_all_elements_located((By.CLASS_NAME, "riskRating"))
         )
-
-        # Check if dates are displayed from newest to oldest
-        if not check_newest_first(dates_elements):
-            assert True
-        else:
-            assert False
+        risk_ratings = [elem.text for elem in risk_elements]
+        assert check_order(risk_ratings, asc=False), "Risk ratings are not sorted correctly"
 
 except Exception as e:
-    print("Element presence test failed:", e)
+    print("Test failed:", e)
 
 finally:
     driver.quit()

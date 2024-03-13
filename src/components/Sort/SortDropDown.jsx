@@ -2,7 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { IoChevronDownOutline } from 'react-icons/io5';
 
 function SortDropDown({ selectedSortOption, setSelectedSortOption }) {
-  const sortOptions = ['Newest to Oldest', 'Oldest to Newest'];
+  const sortOptions = [
+    'Newest to Oldest',
+    'Oldest to Newest',
+    'High Risk to Low Risk',
+    'Low Risk to High Risk',
+  ];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -29,7 +34,7 @@ function SortDropDown({ selectedSortOption, setSelectedSortOption }) {
   return (
     <div className="my-3 m-2" ref={dropdownRef}>
       <button
-        id="dateDropDownButton"
+        id="dropDownButton"
         type="button"
         onClick={toggleDropdown}
         className="border rounded-md border-gray-200 p-2 text-sm text-gray-900 flex flex-rows w-full justify-between"
