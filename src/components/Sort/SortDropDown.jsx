@@ -1,8 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { IoChevronDownOutline } from 'react-icons/io5';
+import React, { useState, useRef, useEffect } from "react";
+import { IoChevronDownOutline } from "react-icons/io5";
 
 function SortDropDown({ selectedSortOption, setSelectedSortOption }) {
-  const sortOptions = ['Newest to Oldest', 'Oldest to Newest'];
+  const sortOptions = [
+    "Newest to Oldest",
+    "Oldest to Newest",
+    "High Risk to Low Risk",
+    "Low Risk to High Risk",
+  ];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -13,9 +18,9 @@ function SortDropDown({ selectedSortOption, setSelectedSortOption }) {
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -48,8 +53,8 @@ function SortDropDown({ selectedSortOption, setSelectedSortOption }) {
                 name="date"
                 className={`accent-sky-900 text-sm px-2 py-1.5 rounded-md w-full text-left ${
                   selectedSortOption === option
-                    ? 'text-white bg-sky-900'
-                    : 'text-gray-900'
+                    ? "text-white bg-sky-900"
+                    : "text-gray-900"
                 }`}
               >
                 {option}

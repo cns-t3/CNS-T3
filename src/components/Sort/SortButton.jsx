@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { BiSortAlt2 } from 'react-icons/bi';
-import SortDropDown from './SortDropDown';
+import React, { useState, useRef, useEffect } from "react";
+import { BiSortAlt2 } from "react-icons/bi";
+import SortDropDown from "./SortDropDown";
 
 function SortButton({ selectedSortOption, setSelectedSortOption }) {
   const [sortCardOpen, setSortCardOpen] = useState(false);
@@ -13,9 +13,9 @@ function SortButton({ selectedSortOption, setSelectedSortOption }) {
   }
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -24,7 +24,7 @@ function SortButton({ selectedSortOption, setSelectedSortOption }) {
   };
 
   return (
-    <div className="inline-block" id="sortByDateButton" ref={dropdownRef}>
+    <div className="inline-block" id="sortByButton" ref={dropdownRef}>
       <button onClick={handleSortCardOpen} type="button">
         <div className="flex flex-row text-gray-500 pr-5">
           <BiSortAlt2 size={20} />

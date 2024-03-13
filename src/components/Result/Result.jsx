@@ -1,29 +1,32 @@
-'use client';
+"use client";
 
-import { React, useState, useEffect } from 'react';
-import ResultHeader from './ResultHeader';
-import ResultsViewer from './ResultsViewer';
+import React, { useState, useEffect } from "react";
+import ResultHeader from "./ResultHeader";
+import ResultsViewer from "./ResultsViewer";
 
 function Result({ data }) {
   const [filterNow, setFilterNow] = useState(false);
   const [defaultCategoryOptions, setCategories] = useState([]);
 
   useEffect(() => {
-    fetch('/categories.json')
+    fetch("/categories.json")
       .then((response) => response.json())
       .then((categoryData) => {
-        const categoryNames = Object.keys(categoryData.categories).map((cat) => cat.toLowerCase());
+        const categoryNames = Object.keys(categoryData.categories).map((cat) =>
+          cat.toLowerCase()
+        );
         setCategories(categoryNames);
       });
   }, []);
 
   const [selectedFilterOptions, setSelectedFilterOptions] = useState({
-    riskRating: ['low', 'medium', 'high'],
+    riskRating: ["low", "medium", "high"],
     category: defaultCategoryOptions,
-    date: 'all time',
+    date: "all time",
   });
   const [filteredData, setFilteredData] = useState(data);
-  const [selectedSortOption, setSelectedSortOption] = useState('Newest to Oldest');
+  const [selectedSortOption, setSelectedSortOption] =
+    useState("Newest to Oldest");
 
   useEffect(() => {
     setSelectedFilterOptions((prevOptions) => ({
@@ -32,11 +35,32 @@ function Result({ data }) {
     }));
   }, [defaultCategoryOptions]);
 
-  // Sort by descending date
+  const riskRankingOrder = ["High", "Medium", "Low"];
+
+  const sortArticlesByRiskRating = (asc = true) => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort((a, b) => {
+        if (asc) {
+          return (
+            riskRankingOrder.indexOf(a.risk_rating) -
+            riskRankingOrder.indexOf(b.risk_rating)
+          );
+        } else {
+          return (
+            riskRankingOrder.indexOf(b.risk_rating) -
+            riskRankingOrder.indexOf(a.risk_rating)
+          );
+        }
+      });
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
+
+  // Sort articles by descending date
   const sortArticlesByDescendingDate = () => {
     setFilteredData((prevData) => {
       const sortedArticles = [...prevData.newsArticles].sort(
-        (a, b) => new Date(a.publishedAt) - new Date(b.publishedAt),
+        (a, b) => new Date(a.publishedAt) - new Date(b.publishedAt)
       );
       return { ...prevData, newsArticles: sortedArticles };
     });
@@ -45,17 +69,20 @@ function Result({ data }) {
   const sortArticlesByAscendingDate = () => {
     setFilteredData((prevData) => {
       const sortedArticles = [...prevData.newsArticles].sort(
-        (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt),
+        (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)
       );
       return { ...prevData, newsArticles: sortedArticles };
     });
   };
 
   const sortArticles = () => {
-    if (selectedSortOption === 'Newest to Oldest') {
+    if (selectedSortOption === "Newest to Oldest") {
       sortArticlesByAscendingDate();
-    } else {
+    } else if (selectedSortOption === "Oldest to Newest") {
       sortArticlesByDescendingDate();
+    } else {
+      // Added this line to call the sortArticlesByRiskRating function
+      sortArticlesByRiskRating(selectedSortOption === "High Risk to Low Risk");
     }
   };
 
@@ -65,30 +92,30 @@ function Result({ data }) {
     let endDate = new Date();
 
     switch (dateOption) {
-      case 'today':
+      case "today":
         // No change needed; start and end date are both today.
         break;
-      case 'past 7 days':
+      case "past 7 days":
         startDate.setDate(startDate.getDate() - 7);
         break;
-      case 'past 30 days':
+      case "past 30 days":
         startDate.setDate(startDate.getDate() - 30);
         break;
-      case 'past 60 days':
+      case "past 60 days":
         startDate.setDate(startDate.getDate() - 60);
         break;
-      case 'past 90 days':
+      case "past 90 days":
         startDate.setDate(startDate.getDate() - 90);
         break;
-      case 'past 180 days':
+      case "past 180 days":
         startDate.setDate(startDate.getDate() - 180);
         break;
-      case 'past year':
+      case "past year":
         startDate.setFullYear(startDate.getFullYear() - 1);
         break;
-      case 'all time':
-        startDate = '';
-        endDate = '';
+      case "all time":
+        startDate = "";
+        endDate = "";
         break;
       default:
     }
@@ -104,24 +131,26 @@ function Result({ data }) {
     const dates = processDateOption(dateOption);
 
     if (
-      riskRatingOptions.length === 3
-      && categoryOptions.length === 5
-      && dateOption === 'all time'
+      riskRatingOptions.length === 3 &&
+      categoryOptions.length === 5 &&
+      dateOption === "all time"
     ) {
       return inputData;
     }
     let filteredArticles = inputData;
-    if (dateOption === 'all time') {
+    if (dateOption === "all time") {
       filteredArticles = data.newsArticles.filter(
-        (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-          && categoryOptions.includes(article.category.toLowerCase()),
+        (article) =>
+          riskRatingOptions.includes(article.risk_rating.toLowerCase()) &&
+          categoryOptions.includes(article.category.toLowerCase())
       );
     } else {
       filteredArticles = inputData.newsArticles.filter(
-        (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-          && categoryOptions.includes(article.category.toLowerCase())
-          && new Date(article.publishedAt) > dates[0]
-          && new Date(article.publishedAt) < dates[1],
+        (article) =>
+          riskRatingOptions.includes(article.risk_rating.toLowerCase()) &&
+          categoryOptions.includes(article.category.toLowerCase()) &&
+          new Date(article.publishedAt) > dates[0] &&
+          new Date(article.publishedAt) < dates[1]
       );
     }
     return {
