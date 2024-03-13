@@ -34,7 +34,7 @@ function SortDropDown({ selectedSortOption, setSelectedSortOption }) {
   return (
     <div className="my-3 m-2" ref={dropdownRef}>
       <button
-        id="dateDropDownButton"
+        id="dropDownButton"
         type="button"
         onClick={toggleDropdown}
         className="border rounded-md border-gray-200 p-2 text-sm text-gray-900 flex flex-rows w-full justify-between"
