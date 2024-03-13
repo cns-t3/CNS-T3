@@ -37,7 +37,6 @@ class TestSearchAPI(unittest.TestCase):
                 "summary": "AC Ventures, based in Jakarta, Indonesia, raised $210 million for its fifth fund, attracting investors from various regions. The firm targets Southeast Asian startups for investment, with a focus on Indonesia's growing economy. Fund V will support startups in fintech, e-commerce, health tech, and climate sectors, prioritizing those with social and environmental impacts. AC Ventures stresses gender parity and inclusive leadership in its portfolio and offers support to startups in business development, partnerships, and fundraising.",
                 "score": 0,
                 "category": "business",
-                "is_related": True,
                 "subject_summary": "",
             }
         ]

@@ -56,7 +56,7 @@ function Profile({ profileDetails }) {
             {profileDetails.name}
           </h2>
           <p id="profile-occupation" className="text-sm mb-5">
-            {`${profileDetails.occupation}, at ${profileDetails.company}`}
+            {profileDetails.role && profileDetails.company && `${profileDetails.role}, at ${profileDetails.company}`}
           </p>
           {profileDetails.dob !== '' && (
             <p id="profile-dob" className="text-gray-500 text-sm">
