@@ -14,6 +14,7 @@ class TestSearchAPI(unittest.TestCase):
         person_data = {
             "person_id": 4,
             "name": "Helen Wong",
+            "role":"CEO",
             "occupation": "CEO",
             "dob": "1961-06-01",
             "nationality": None,
