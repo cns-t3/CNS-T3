@@ -1,13 +1,13 @@
 name: FYP CD Pipeline
 
 on:
-  # push:
-  #   branches:
-  #     - "feature/*"
-  workflow_run:
-    workflows: [FYP CI Pipeline]
-    types:
-      - completed
+  push:
+    branches:
+      - "feature/*"
+  # workflow_run:
+  #   workflows: [FYP CI Pipeline]
+  #   types:
+  #     - completed
     # branches: ["feature/*"]
 
 jobs:
