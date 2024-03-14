@@ -4,7 +4,6 @@ ARG NEWS_API_KEY
 ARG OPENAI_API_KEY
 ENV NEWS_API_KEY=${NEWS_API_KEY}
 ENV OPENAI_API_KEY=${OPENAI_API_KEY}
-ENV AZURE_SQL_URL=${AZURE_SQL_URL}
 COPY . /app
 RUN pip install --no-cache-dir -r ./backend/requirements.txt
 EXPOSE 8002
