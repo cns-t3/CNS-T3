@@ -4,7 +4,8 @@ import Result from '@/components/Result/Result';
 import SmallSearchBar from '@/components/Search/SmallSearchBar';
 
 async function getData(query) {
-  const url = `http://127.0.0.1:8000/search?search_query=${query}`;
+  const searchDNS = process.env.SEARCH_DNS || '127.0.0.1';
+  const url = `http://${searchDNS}:8000/search?search_query=${query}`;
   try {
     const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) {

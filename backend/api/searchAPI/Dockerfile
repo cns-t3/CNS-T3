@@ -1,5 +1,11 @@
 FROM python:3.8-slim
 WORKDIR /app
+ARG PERSON_DNS
+ARG NEWS_DNS
+ARG IDENTITY_DNS
+ENV PERSON_DNS=${PERSON_DNS}
+ENV NEWS_DNS=${NEWS_DNS}
+ENV IDENTITY_DNS=${IDENTITY_DNS}
 COPY . /app
 RUN pip install --no-cache-dir -r ./backend/requirements.txt
 EXPOSE 8000
