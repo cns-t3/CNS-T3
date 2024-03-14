@@ -7,14 +7,14 @@ from backend.api.personAPI.person_service import search_person_by_name
 app = FastAPI()
 
 
-@app.get("/persons/search/")
+@app.get("/persons/search/", response_model=PersonSchema)
 async def search_persons_by_name(
     name: str = Query(None, min_length=1), db: Session = Depends(get_db)
 ):
     if not name:
         raise HTTPException(status_code=400, detail="Name parameter is required")
 
-    person, company_name = search_person_by_name(db, name)
+    person, company_name, role_name = search_person_by_name(db, name)
 
     if not person:
         raise HTTPException(
@@ -26,6 +26,7 @@ async def search_persons_by_name(
         person_id=person.PersonID,
         name=person.Name,
         occupation=person.Occupation,
+        role=role_name,
         dob=person.DoB.strftime("%Y-%m-%d") if person.DoB else None,
         nationality=person.Nationality,
         description=person.Description,

@@ -2,7 +2,8 @@ import numpy as np
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
-from backend.api.identityAPI.embedding import get_embedding
+from backend.api.identityAPI.embedding import get_embeddings
+import threading
 
 load_dotenv()
 
@@ -33,17 +34,24 @@ def get_cosine_similarity(vector_a, vector_b):
     return dot_product / (norm_a * norm_b)
 
 
+def process_news_article(newsArticle, profile_vector):
+    subject_vector = get_embeddings(newsArticle["subject_summary"])
+    similarity = get_cosine_similarity(profile_vector, subject_vector)
+    newsArticle["score"] = round(similarity * 100, 0)
+
+
 def identity_matching(searchData: dict):
     # get profile summary
     profile_summary = get_profile_summary(searchData["person"])
-
     # get profile summary embedding
-    profile_vector = get_embedding(profile_summary)
+    profile_vector = get_embeddings(profile_summary)
+    threads = []
+    # create multi threading operation
     for newsArticle in searchData["newsArticles"]:
-        # get subject summary embedding
-        subject_vector = get_embedding(newsArticle["subject_summary"])
-
-        # cosine similarity
-        similarity = get_cosine_similarity(profile_vector, subject_vector)
-        # update searchData dict
-        newsArticle["score"] = round(similarity * 100, 0)
+        thread = threading.Thread(
+            target=process_news_article, args=(newsArticle, profile_vector)
+        )
+        thread.start()
+        threads.append(thread)
+    for thread in threads:
+        thread.join()

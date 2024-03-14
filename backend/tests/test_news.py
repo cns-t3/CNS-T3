@@ -24,7 +24,6 @@ class TestNewsAPI(unittest.TestCase):
                 "score": 0,
                 "category": "Others",
                 "subject_summary": "",
-                "is_related": False
             }
         ]
         mock_get.side_effect = [mock_news_data]

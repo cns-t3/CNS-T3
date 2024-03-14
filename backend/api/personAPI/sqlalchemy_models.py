@@ -11,7 +11,7 @@ class Person(Base):
     Occupation = Column(String(25))
     DoB = Column(Date)
     Nationality = Column(String(25))
-    Description = Column(String(255))
+    Description = Column(String(1024))
     CountryOfResidency = Column(String(50))
     PEPStatus = Column(Boolean)
     SourceOfWealth = Column(String(25))
