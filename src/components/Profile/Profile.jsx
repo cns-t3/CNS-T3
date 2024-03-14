@@ -60,8 +60,7 @@ function Profile({ profileDetails }) {
           </p>
           {profileDetails.dob !== '' && (
             <p id="profile-dob" className="text-gray-500 text-sm">
-              Born:
-              {formattedDate}
+              Born: <span>{formattedDate}</span>
             </p>
           )}
           {profileDetails.nationality !== '' && (
