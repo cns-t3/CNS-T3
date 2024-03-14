@@ -1,8 +1,8 @@
 import React from 'react';
 
 async function getData() {
-  const newsDNS = process.env.NEWS_DNS || '127.0.0.1';
-  const url = `http://${newsDNS}:8002/news/anthony%20tan`;
+  const searchDNS = process.env.SEARCH_DNS || '127.0.0.1';
+  const url = `http://${searchDNS}:8000/search?search_query=anthony%20tan`;
   try {
     const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) {
