@@ -31,7 +31,7 @@ jobs:
 
       - name: Build and Push Docker Images for NewsAPI
         run: |
-          docker build --build-arg NEWS_API_KEY=${{secrets.NEWS_API_KEY}} --build-arg OPENAI_API_KEY=${{secrets.OPENAI_API_KEY}} -f ./backend/api/newsAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/news:${{ github.sha }} .
+          docker build --build-arg NEWS_API_KEY=${{secrets.NEWS_API_KEY}} --build-arg OPENAI_API_KEY=${{secrets.OPENAI_API_KEY}} --build-arg AZURE_SQL_URL=${{secrets.AZURE_SQL_URL}} -f ./backend/api/newsAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/news:${{ github.sha }} .
           docker push ${{secrets.DOCKER_USERNAME}}/news:${{ github.sha }}
 
   deploy_to_aks:
