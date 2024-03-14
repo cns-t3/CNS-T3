@@ -8,7 +8,7 @@ on:
     workflows: [FYP CI Pipeline]
     types:
       - completed
-    branches: ["feature/*"]
+    # branches: ["feature/*"]
 
 jobs:
   build-and-push-images:
