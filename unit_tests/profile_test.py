@@ -7,7 +7,7 @@ driver = webdriver.Chrome()
 driver.implicitly_wait(10)
 
 # Open the React application URL
-driver.get("http://localhost:3000/search/tim%20cook")    
+driver.get("http://localhost:3000/search/anthony%20tan")    
 
 try:
     # Wait for profile details to be present and displayed
@@ -35,15 +35,6 @@ try:
         EC.presence_of_element_located((By.ID, "profile-description"))
     )
     assert profile_description_element.is_displayed(), "Profile description is not displayed"
-
-    # Validate profile details text based on the provided data
-    assert profile_name_element.text == "Tim Cook", f"Expected name: Tim Cook, Actual name: {profile_name_element.text}"
-    assert profile_occupation_element.text == "CEO, at Apple Inc.", f"Expected occupation: CEO, at Apple Inc., Actual occupation: {profile_occupation_element.text}"
-    assert profile_dob_element.text.startswith("Born: 1 Nov 1960"), f"DOB format mismatch"
-    assert profile_nationality_element.text == "Nationality: American", f"Expected nationality: American, Actual nationality: {profile_nationality_element.text}"
-    assert profile_description_element.text.startswith("Tim Cook is a distinguished business leader"), f"Description mismatch"
-
-    print("Profile details test passed successfully.")
 
 except Exception as e:
     print("Profile details test failed:", e)

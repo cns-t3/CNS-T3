@@ -16,11 +16,11 @@ try:
     logo_link.click()
 
     # Wait for the navigation to complete
-    WebDriverWait(driver, 10).until(EC.url_to_be("http://localhost:3000/home"))
+    WebDriverWait(driver, 10).until(EC.url_to_be("http://localhost:3000"))
 
     # Verify that the current URL is the homepage
     current_url = driver.current_url
-    assert current_url == "http://localhost:3000/home", "Navigation to homepage failed"
+    assert current_url == "http://localhost:3000", "Navigation to homepage failed"
     print("Logo navigation test passed successfully.")
 
 except Exception as e:
