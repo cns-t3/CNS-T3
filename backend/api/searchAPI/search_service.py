@@ -10,7 +10,7 @@ if os.getenv("PERSON_DNS"):
     person_hostname = os.getenv("PERSON_DNS")
 else:
     person_hostname = "127.0.0.1"
-    
+
 if os.getenv("NEWS_DNS"):
     news_hostname = os.getenv("NEWS_DNS")
 else:
