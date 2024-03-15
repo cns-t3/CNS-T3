@@ -1,7 +1,10 @@
+import threading
+import schedule
+import time
 from fastapi import FastAPI, Query, HTTPException
-import requests
-from backend.api.searchAPI.pydantic_models import SearchResult, NewsArticle
-from backend.api.searchAPI.search_service import search_service
+from backend.api.searchAPI.pydantic_models import SearchResult
+from backend.api.searchAPI.search_service import search_person_service
+from backend.api.searchAPI.caching_service import get_daily_data
 
 app = FastAPI()
 
@@ -18,5 +21,17 @@ async def get_articles_by_query(
         ..., description="Search query of the articles to return"
     ),
 ):
-    response = search_service(search_query)
+    response = search_person_service(search_query)
     return response
+
+
+# Scheduler to get data everyday at 00:00
+def run_scheduler():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
+schedule.every().day.at("00:00").do(get_daily_data)
+scheduler_thread = threading.Thread(target=run_scheduler)
+scheduler_thread.start()
