@@ -20,6 +20,7 @@ def search_person_service(search_query: str):
     return get_search_result_from_person(person)
 
 
+# To get all persons in the database
 def search_persons_service():
     person_all_endpoint = "http://127.0.0.1:8001/persons/"
     response = requests.get(person_all_endpoint)
