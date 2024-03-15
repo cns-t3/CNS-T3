@@ -25,13 +25,13 @@ async def get_articles_by_query(
     return response
 
 
-# Scheduler to get data everyday at 00:00
-def run_scheduler():
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+if __name__ == "__main__":
+    # Scheduler to get data everyday at 00:00
+    def run_scheduler():
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
 
-
-schedule.every().day.at("00:00").do(get_daily_data)
-scheduler_thread = threading.Thread(target=run_scheduler)
-scheduler_thread.start()
+    schedule.every().day.at("00:00").do(get_daily_data)
+    scheduler_thread = threading.Thread(target=run_scheduler)
+    scheduler_thread.start()
