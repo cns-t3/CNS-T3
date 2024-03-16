@@ -14,7 +14,7 @@ async function getData() {
   }
 }
 async function getPerson(name) {
-  const personHostname = '0.0.0.0'; // Assuming you want to use a specific hostname
+  const personHostname = '10.0.36.137'; // Assuming you want to use a specific hostname
   const url = `http://${personHostname}:8001/persons/search`;
 
   try {
