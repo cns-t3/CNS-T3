@@ -1,11 +1,14 @@
 import threading
 import schedule
 import time
+import os
+from dotenv import load_dotenv
 from fastapi import FastAPI, Query, HTTPException
 from backend.api.searchAPI.pydantic_models import SearchResult
 from backend.api.searchAPI.search_service import search_person_service
 from backend.api.searchAPI.caching_service import get_daily_data
 
+load_dotenv()
 app = FastAPI()
 
 
@@ -25,8 +28,8 @@ async def get_articles_by_query(
     return response
 
 
-if __name__ == "__main__":
-    # Scheduler to get data everyday at 00:00
+if os.getenv("PROD"):
+
     def run_scheduler():
         while True:
             schedule.run_pending()

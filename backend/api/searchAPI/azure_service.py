@@ -15,7 +15,6 @@ def upload_to_azure(blob_name, blob_file):
 
 
 def download_from_azure(blob_name):
-    print(blob_name)
     connect_str = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
     blob_service_client = BlobServiceClient.from_connection_string(connect_str)
     try:
