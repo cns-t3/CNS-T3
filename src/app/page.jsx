@@ -1,6 +1,8 @@
 import React from 'react';
+import { unstable_noStore as noStore } from 'next/cache';
 
 async function getData() {
+  noStore();
   const searchDNS = process.env.SEARCH_DNS || '127.0.0.1';
   const url = `http://${searchDNS}:8000/search?search_query=anthony%20tan`;
   try {
