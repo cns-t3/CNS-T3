@@ -44,6 +44,11 @@ def get_search_patterns():
     )
     return formatted_string
 
+# New function to get reputable news sources from JSON
+def get_reputable_news_sources():
+    with open('backend/config/news_sources.json', 'r') as file:
+        data = json.load(file)
+    return data['sources']
 
 def get_summarised_news_articles(search_query: str):
     """
@@ -56,11 +61,15 @@ def get_summarised_news_articles(search_query: str):
         + search_query
         + "&lang=eng&articlesSortBy=rel&articlesCount=5&isDuplicateFilter=skipDuplicates"
     )
+    reputable_sources = get_reputable_news_sources()  # Get reputable sources
+
     news_articles = []
     try:
         response = requests.get(url)
         if response.status_code == 200:
             articles = response.json()["articles"]["results"]
+            # Filter articles by reputable sources
+            articles = [article for article in articles if article["source"]["title"] in reputable_sources]
             threads = []
             summaries = [""] * len(articles)
             categories = [""] * len(articles)
