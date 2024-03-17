@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "shx cp ./backend/config/categories.json ./public/categories.json && next dev",
-    "build": "shx cp ./backend/config/categories.json ./public/categories.json && next build",
-    "start": "shx cp ./backend/config/categories.json ./public/categories.json && next start",
+    "dev": "shx cp ./backend/config/categories.json ./public/categories.json && shx cp ./backend/config/newssources.json ./public/newssources.json && next dev",
+    "build": "shx cp ./backend/config/categories.json ./public/categories.json && shx cp ./backend/config/newssources.json ./public/newssources.json && next build",
+    "start": "shx cp ./backend/config/categories.json ./public/categories.json && shx cp ./backend/config/newssources.json ./public/newssources.json && next start",
     "lint": "next lint",
     "airbnb-lint": "./node_modules/.bin/eslint"
-  },
+},
   "dependencies": {
     "chart.js": "^4.4.1",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "i": "^0.3.7",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
