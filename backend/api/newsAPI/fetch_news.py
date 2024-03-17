@@ -1,6 +1,11 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 from backend.api.newsAPI.pydantic_models import NewsArticle
+from tenacity import (
+    retry,
+    stop_after_attempt,
+    wait_random_exponential,
+)
 import os
 import requests
 import threading
@@ -11,13 +16,15 @@ load_dotenv()
 if os.getenv("OPENAI_API_KEY"):
     openAI_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def get_categories():
-    with open('backend/config/categories.json', 'r') as file:
-        data = json.load(file)
-    formatted_categories = [category.title() for category in data['categories']]
 
-    final_string = ', '.join(formatted_categories)
+def get_categories():
+    with open("backend/config/categories.json", "r") as file:
+        data = json.load(file)
+    formatted_categories = [category.title() for category in data["categories"]]
+
+    final_string = ", ".join(formatted_categories)
     return final_string
+
 
 def get_prompt():
     with open("backend/api/newsAPI/prompt.txt", "r") as file:
@@ -26,9 +33,15 @@ def get_prompt():
 
 
 def get_search_patterns():
-    with open('backend/config/categories.json', 'r') as file:
+    with open("backend/config/categories.json", "r") as file:
         data = json.load(file)
-    formatted_string = ', '.join([f"{category} - search pattern: {', '.join(patterns)}" for category, patterns in data['categories'].items() if patterns])
+    formatted_string = ", ".join(
+        [
+            f"{category} - search pattern: {', '.join(patterns)}"
+            for category, patterns in data["categories"].items()
+            if patterns
+        ]
+    )
     return formatted_string
 
 # New function to get reputable news sources from JSON
@@ -39,15 +52,14 @@ def get_reputable_news_sources():
 
 def get_summarised_news_articles(search_query: str):
     """
-    Get news articles from the Event Registry API and summarise them using the
-    OpenAI GPT-3.5 API
+    Retrieves and summarises news articles using NewsAI API and GPT-3.5 API.
     """
     url = (
         "http://eventregistry.org/api/v1/article/getArticles?apiKey="
         + os.getenv("NEWS_API_KEY")
         + "&keyword="
         + search_query
-        + "&lang=eng&articlesSortBy=rel&articlesCount=5"
+        + "&lang=eng&articlesSortBy=rel&articlesCount=5&isDuplicateFilter=skipDuplicates"
     )
     reputable_sources = get_reputable_news_sources()  # Get reputable sources
 
@@ -55,14 +67,12 @@ def get_summarised_news_articles(search_query: str):
     try:
         response = requests.get(url)
         if response.status_code == 200:
-            data = response.json()
-            articles = data["articles"]["results"]
+            articles = response.json()["articles"]["results"]
             # Filter articles by reputable sources
             articles = [article for article in articles if article["source"]["title"] in reputable_sources]
             threads = []
             summaries = [""] * len(articles)
             categories = [""] * len(articles)
-            relations = [True] * len(articles)
             risks = [""] * len(articles)
             subject_summaries = [""] * len(articles)
             # the summaries are not returned in the same order as the articles, so we need to keep track of the order
@@ -74,9 +84,8 @@ def get_summarised_news_articles(search_query: str):
                         count,
                         summaries,
                         categories,
-                        relations,
                         risks,
-                        subject_summaries
+                        subject_summaries,
                     ),
                 )
                 thread.start()
@@ -93,8 +102,7 @@ def get_summarised_news_articles(search_query: str):
                     summary="",
                     score=0,
                     category="",
-                    is_related=True,
-                    subject_summary=""
+                    subject_summary="",
                 )
                 news_articles.append(news)
             for thread in threads:
@@ -102,7 +110,6 @@ def get_summarised_news_articles(search_query: str):
             for i in range(len(news_articles)):
                 news_articles[i].summary = summaries[i]
                 news_articles[i].category = categories[i]
-                news_articles[i].is_related = relations[i]
                 news_articles[i].risk_rating = risks[i]
                 news_articles[i].subject_summary = subject_summaries[i]
             return news_articles
@@ -110,6 +117,7 @@ def get_summarised_news_articles(search_query: str):
         print("Error: ", e)
 
 
+@retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
 def summarise_article(article_body, client):
     input = "Summarise this article for me: " + article_body
     prompt = get_prompt()
@@ -119,6 +127,7 @@ def summarise_article(article_body, client):
     prompt = prompt.replace("{{ search_patterns }}", search_patterns)
 
     completion = client.chat.completions.create(
+        temperature=0.6,
         model="gpt-3.5-turbo-0125",
         response_format={"type": "json_object"},
         messages=[
@@ -133,14 +142,18 @@ def summarise_article(article_body, client):
         result = json.loads(completion.choices[0].message.content)
     except Exception as e:
         print("Error: ", e)
-        result = {"summary": "", "category": "", "is_related": "", "risk_rating": "", "subject_summary": ""}
+        result = {
+            "summary": "",
+            "category": "",
+            "risk_rating": "",
+            "subject_summary": "",
+        }
     return result
 
 
-def handle_body(article_body, news_id, summaries, categories, relations, risks, subject_summaries):
+def handle_body(article_body, news_id, summaries, categories, risks, subject_summaries):
     result = summarise_article(article_body, openAI_client)
     summaries[news_id] = result["summary"]
     categories[news_id] = result["category"]
-    relations[news_id] = result["is_related"]
     risks[news_id] = result["risk_rating"]
     subject_summaries[news_id] = result["subject_summary"]

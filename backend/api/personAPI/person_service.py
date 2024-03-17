@@ -16,6 +16,11 @@ def search_person_by_name(db: Session, name: str):
         .filter(PersonCompany.PersonID == person.PersonID)
         .all()
     )
-    company_name = companies[0].Name if companies else None
+    person_companies = (
+        db.query(PersonCompany).filter(PersonCompany.PersonID == person.PersonID).all()
+    )
 
-    return person, company_name
+    company_name = companies[0].Name if companies else None
+    role_name = person_companies[0].Role if person_companies else None
+
+    return person, company_name, role_name

@@ -14,7 +14,6 @@ class NewsArticle(BaseModel):
     summary: str
     score: int
     category: str
-    is_related: bool
     subject_summary: str
 
 
@@ -22,6 +21,7 @@ class Person(BaseModel):
     person_id: int | None
     name: str | None
     occupation: str | None
+    role: str | None
     dob: str | None
     nationality: str | None
     description: str | None

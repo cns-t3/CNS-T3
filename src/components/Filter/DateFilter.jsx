@@ -53,7 +53,7 @@ function DateFilter({ selectedFilterOptions, setSelectedFilterOptions }) {
         id="dateFilterButton"
         type="button"
         onClick={toggleDropdown}
-        className="block text-sm text-gray-700 border rounded-md border-gray-200 p-2 text-sm text-gray-900 flex flex-rows w-full justify-between"
+        className="border rounded-md border-gray-200 p-2 text-sm text-gray-900 flex flex-rows w-full justify-between"
       >
         {capitaliseWords(selectedFilterOptions.date)}
         <IoChevronDownOutline className="mt-1" />
