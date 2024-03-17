@@ -1,15 +1,14 @@
 name: FYP CD Pipeline
 
 on:
-  push:
-    branches:
-      - "feature/*"
-  # workflow_run:
-  #   workflows: [FYP CI Pipeline]
-  #   types:
-  #     - completed
-    # branches: ["feature/*"]
-
+  workflow_run:
+    workflows: [FYP CI Pipeline]
+    types:
+      - completed
+    branches: ["feature/*"]
+  # push:
+  #   branches:
+  #     - "feature/*"
 jobs:
   build-and-push-images:
     runs-on: ubuntu-latest
@@ -26,7 +25,7 @@ jobs:
 
       - name: Build and Push Docker Images for Next.js Frontend
         run: |
-          docker build --build-arg NEXT_PUBLIC_PERSON_DNS=${{secrets.PERSON_DNS}} --build-arg NEXT_PUBLIC_SEARCH_DNS=${{secrets.SEARCH_DNS}} -t ${{secrets.DOCKER_USERNAME}}/frontend:${{ github.sha }} .
+          docker build --build-arg NEXT_PUBLIC_SEARCH_DNS=${{secrets.SEARCH_DNS}} -t ${{secrets.DOCKER_USERNAME}}/frontend:${{ github.sha }} .
           docker push ${{secrets.DOCKER_USERNAME}}/frontend:${{ github.sha }}
 
       - name: Build and Push Docker Images for PersonAPI
