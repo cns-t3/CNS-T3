@@ -3,7 +3,7 @@ import schedule
 import time
 import os
 from dotenv import load_dotenv
-from fastapi import FastAPI, Query, HTTPException
+from fastapi import FastAPI, Query
 from backend.api.searchAPI.pydantic_models import SearchResult
 from backend.api.searchAPI.search_service import search_person_service
 from backend.api.searchAPI.caching_service import get_daily_data

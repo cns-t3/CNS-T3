@@ -11,7 +11,7 @@ def upload_to_azure(blob_name, blob_file):
     blob_client = blob_service_client.get_blob_client(
         container="fyp2024g01cns", blob=blob_name
     )
-    blob_client.upload_blob(blob_file)
+    blob_client.upload_blob(blob_file, overwrite=True)
 
 
 def download_from_azure(blob_name):

@@ -1,7 +1,6 @@
 import requests
 import json
 from fastapi import HTTPException
-from datetime import datetime
 from backend.api.searchAPI.pydantic_models import SearchResult
 from backend.api.searchAPI.azure_service import download_from_azure
 
@@ -25,23 +24,22 @@ def search_persons_service():
     person_all_endpoint = "http://127.0.0.1:8001/persons/"
     response = requests.get(person_all_endpoint)
     if response.status_code != 200:
-        raise HTTPException(
-            status_code=404, detail="No person found with the provided name"
-        )
+        raise HTTPException(status_code=404, detail="No persons found")
     persons = response.json()
     search_result_arr = []
     for person in persons:
-        search_result_arr.append(get_search_result_from_person(person))
+        search_result_arr.append(get_search_result_from_person(person, True))
     return search_result_arr
 
 
-def get_search_result_from_person(person):
+def get_search_result_from_person(person, daily_job=False):
     # get data from azure
-    try:
-        return get_search_result_azure(person)
-    except Exception as e:
-        print("Not found in cache")
-        print(e)
+    if not daily_job:
+        try:
+            return get_search_result_azure(person)
+        except Exception as e:
+            print("Not found in cache")
+            print(e)
 
     news_endpoint = "http://127.0.0.1:8002/news/" + person["name"]
     response = requests.get(news_endpoint)
@@ -68,7 +66,7 @@ def get_search_result_from_person(person):
 
 
 def get_search_result_azure(person):
-    blob_name = str(person["person_id"]) + "_" + datetime.now().strftime("%Y-%m-%d")
+    blob_name = str(person["person_id"])
     json_data = json.loads(download_from_azure(blob_name))
     result = SearchResult(**json_data)
     return result

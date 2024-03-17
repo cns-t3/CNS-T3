@@ -54,7 +54,7 @@ def get_summarised_news_articles(search_query: str):
         + os.getenv("NEWS_API_KEY")
         + "&keyword="
         + search_query
-        + "&lang=eng&articlesSortBy=rel&articlesCount=2&isDuplicateFilter=skipDuplicates"
+        + "&lang=eng&articlesSortBy=rel&articlesCount=10&isDuplicateFilter=skipDuplicates"
     )
     news_articles = []
     try:
