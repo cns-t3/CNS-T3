@@ -1,8 +1,8 @@
 import React from 'react';
 
 async function getData() {
-  // const searchDNS = process.env.NEXT_PUBLIC_SEARCH_DNS || '127.0.0.1';
-  const searchDNS = '10.0.70.117';
+  const searchDNS = process.env.NEXT_PUBLIC_SEARCH_DNS || '127.0.0.1';
+  // const searchDNS = '10.0.70.117';
   // const searchDNS = 'localhost';
   const url = `http://${searchDNS}:8000/search?search_query=anthony%20tan`;
   try {
