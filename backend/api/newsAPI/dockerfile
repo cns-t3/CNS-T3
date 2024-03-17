@@ -1,4 +1,4 @@
-FROM python:3.8-slim
+FROM python:3.10-slim
 WORKDIR /app
 ARG NEWS_API_KEY
 ARG OPENAI_API_KEY
