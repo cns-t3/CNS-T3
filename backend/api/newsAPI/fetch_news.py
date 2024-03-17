@@ -46,7 +46,7 @@ def get_search_patterns():
 
 # New function to get reputable news sources from JSON
 def get_reputable_news_sources():
-    with open('backend/config/newssources.json', 'r') as file:
+    with open('backend/config/news_sources.json', 'r') as file:
         data = json.load(file)
     return data['sources']
 
