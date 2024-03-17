@@ -2,8 +2,8 @@ import React from 'react';
 
 async function getData() {
   // const searchDNS = process.env.NEXT_PUBLIC_SEARCH_DNS || '127.0.0.1';
-  // const searchDNS = '10.0.70.117';
-  const searchDNS = 'localhost';
+  const searchDNS = '10.0.70.117';
+  // const searchDNS = 'localhost';
   const url = `http://${searchDNS}:8000/search?search_query=anthony%20tan`;
   try {
     const res = await fetch(url, { cache: 'no-store' });
@@ -16,8 +16,8 @@ async function getData() {
   }
 }
 async function getPerson(name) {
-  // const personHostname = '10.0.36.137';
-  const personHostname = 'localhost';
+  const personHostname = '10.0.36.137';
+  // const personHostname = 'localhost';
   const url = `http://${personHostname}:8001/persons/search`;
 
   try {
@@ -37,7 +37,8 @@ async function getPerson(name) {
 }
 
 async function postIdentity(searchResultModelJson) {
-  const identityHostname = 'localhost';
+  // const identityHostname = 'localhost';
+  const identityHostname = '10.0.39.227';
   const url = `http://${identityHostname}:8003/identity`;
 
   try {
@@ -61,8 +62,8 @@ async function postIdentity(searchResultModelJson) {
 }
 
 async function getNews() {
-  // const searchDNS = '10.0.114.249';
-  const searchDNS = 'localhost';
+  const searchDNS = '10.0.114.249';
+  // const searchDNS = 'localhost';
   const url = `http://${searchDNS}:8002/news/anthony%20tan`;
   try {
     const res = await fetch(url, { cache: 'no-store' });
