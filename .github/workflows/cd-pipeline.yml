@@ -1,9 +1,12 @@
+---
 name: FYP CD Pipeline
+
 on:
   workflow_run:
     workflows: ["FYP CI Pipeline"]
     types:
       - completed
+    branches: ["feature/*"]
 
 jobs:
   build-and-push-images:
@@ -38,7 +41,7 @@ jobs:
         run: |
           docker build --build-arg OPENAI_API_KEY=${{secrets.OPENAI_API_KEY}} -f ./backend/api/identityAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/identity:${{ github.sha }} .
           docker push ${{secrets.DOCKER_USERNAME}}/identity:${{ github.sha }}
-      
+
       - name: Build and Push Docker Images for SearchAPI
         run: |
           docker build --build-arg PERSON_DNS=${{secrets.PERSON_DNS}} --build-arg NEWS_DNS=${{secrets.NEWS_DNS}} --build-arg IDENTITY_DNS=${{secrets.IDENTITY_DNS}} -f ./backend/api/searchAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/search:${{ github.sha }} .
@@ -67,7 +70,7 @@ jobs:
 
       - name: Replace COMMIT-HASH placeholder
         run: |
-          sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/frontend-deployment.yml  
+          sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/frontend-deployment.yml
           sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/person-deployment.yml
           sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/news-deployment.yml
           sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/identity-deployment.yml
