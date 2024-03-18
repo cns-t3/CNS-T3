@@ -5,25 +5,20 @@ from backend.api.personAPI.pydantic_models import PersonSchema
 
 def search_person_by_name(db: Session, name: str):
     # Search database for persons with search query
-    persons = db.query(Person).filter(Person.Name.ilike(f"%{name}%")).all()
-    if not persons:
-        return None, None, None
-
-    # Get company information
-    person = persons[0]
-    companies = (
-        db.query(Company)
-        .join(PersonCompany, Company.CompanyID == PersonCompany.CompanyID)
-        .filter(PersonCompany.PersonID == person.PersonID)
+    persons = (
+        db.query(Person, PersonCompany, Company)
+        .filter(
+            Person.Name.ilike(f"%{name}%"),
+            Person.PersonID == PersonCompany.PersonID,
+            PersonCompany.CompanyID == Company.CompanyID,
+        )
         .all()
     )
-    person_companies = (
-        db.query(PersonCompany).filter(PersonCompany.PersonID == person.PersonID).all()
-    )
-
-    company_name = companies[0].Name if companies else None
-    role_name = person_companies[0].Role if person_companies else None
-
+    if not persons:
+        return None, None, None
+    person = persons[0][0]
+    company_name = persons[0][2].Name
+    role_name = persons[0][1].Role
     return person, company_name, role_name
 
 
