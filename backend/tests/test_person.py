@@ -23,6 +23,7 @@ def override_get_db():
     finally:
         db.close()
 
+
 class TestPersonAPI(unittest.TestCase):
     def setUp(self):
         Base.metadata.create_all(bind=engine)
@@ -80,6 +81,7 @@ class TestPersonAPI(unittest.TestCase):
                 ImgURL="test.jpg",
             ),
             "Test Company",
+            "Developer",
         )
 
         # Make a request to the endpoint
@@ -95,6 +97,7 @@ class TestPersonAPI(unittest.TestCase):
                 "person_id": 1,
                 "name": "John Doe",
                 "occupation": "Developer",
+                "role": "Developer",
                 "dob": "1990-01-01",
                 "nationality": "American",
                 "description": "Test Description",
@@ -115,7 +118,7 @@ class TestPersonAPI(unittest.TestCase):
     # Test when no persons found with the provided name
     @mock.patch("backend.api.personAPI.main.search_person_by_name")
     def test_search_persons_by_name_no_person_found(self, mock_search_person_by_name):
-        mock_search_person_by_name.return_value = (None, None)
+        mock_search_person_by_name.return_value = (None, None, None)
         response = self.client.get("/persons/search/?name=Unknown")
         self.assertEqual(response.status_code, 404)
         self.assertEqual(

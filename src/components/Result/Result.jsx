@@ -6,20 +6,79 @@ import ResultsViewer from './ResultsViewer';
 
 function Result({ data }) {
   const [filterNow, setFilterNow] = useState(false);
+  const [defaultCategoryOptions, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch('/categories.json')
+      .then((response) => response.json())
+      .then((categoryData) => {
+        const categoryNames = Object.keys(categoryData.categories).map((cat) => cat.toLowerCase());
+        setCategories(categoryNames);
+      });
+  }, []);
+
   const [selectedFilterOptions, setSelectedFilterOptions] = useState({
     riskRating: ['low', 'medium', 'high'],
-    category: [
-      'source of wealth',
-      'family circumstances',
-      'sanctioned countries',
-      'sensitive industries',
-      'others',
-    ],
+    category: defaultCategoryOptions,
     date: 'all time',
-    identityMatch: 0,
   });
-
   const [filteredData, setFilteredData] = useState(data);
+  const [selectedSortOption, setSelectedSortOption] = useState('Newest to Oldest');
+
+  useEffect(() => {
+    setSelectedFilterOptions((prevOptions) => ({
+      ...prevOptions,
+      category: defaultCategoryOptions,
+    }));
+  }, [defaultCategoryOptions]);
+
+  const riskRankingOrder = ['High', 'Medium', 'Low'];
+
+  const sortArticlesByRiskRating = (asc = true) => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort((a, b) => {
+        if (asc) {
+          return (
+            riskRankingOrder.indexOf(a.risk_rating) - riskRankingOrder.indexOf(b.risk_rating)
+          );
+        }
+        return (
+          riskRankingOrder.indexOf(b.risk_rating) - riskRankingOrder.indexOf(a.risk_rating)
+        );
+      });
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
+
+  // Sort articles by descending date
+  const sortArticlesByDescendingDate = () => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort(
+        (a, b) => new Date(a.publishedAt) - new Date(b.publishedAt),
+      );
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
+
+  const sortArticlesByAscendingDate = () => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort(
+        (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt),
+      );
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
+
+  const sortArticles = () => {
+    if (selectedSortOption === 'Newest to Oldest') {
+      sortArticlesByAscendingDate();
+    } else if (selectedSortOption === 'Oldest to Newest') {
+      sortArticlesByDescendingDate();
+    } else {
+      // Added this line to call the sortArticlesByRiskRating function
+      sortArticlesByRiskRating(selectedSortOption === 'High Risk to Low Risk');
+    }
+  };
 
   // process date option
   const processDateOption = (dateOption) => {
@@ -51,61 +110,57 @@ function Result({ data }) {
       case 'all time':
         startDate = '';
         endDate = '';
-        return [];
+        break;
       default:
-        return [];
     }
 
     return [startDate, endDate];
   };
 
-  useEffect(() => {
-    const filterData = (currentData, filterOptions) => {
-      const riskRatingOptions = filterOptions.riskRating;
-      const categoryOptions = filterOptions.category;
-      const dateOption = filterOptions.date;
-      const identityMatchOption = selectedFilterOptions.identityMatch;
+  const filterData = (inputData, inputSelectedFilterOptions) => {
+    const riskRatingOptions = inputSelectedFilterOptions.riskRating;
+    const categoryOptions = inputSelectedFilterOptions.category;
+    const dateOption = inputSelectedFilterOptions.date;
 
-      const dates = processDateOption(dateOption);
+    const dates = processDateOption(dateOption);
 
-      let filteredArticles;
-
-      if (
-        riskRatingOptions.length === 3
-        && categoryOptions.length === 5
-        && dateOption === 'all time'
-        && identityMatchOption === 0
-      ) {
-        return currentData;
-      }
-      // var filteredArticles = data;
-      if (dateOption === 'all time') {
-        filteredArticles = data.newsArticles.filter(
-          (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-          && categoryOptions.includes(article.category.toLowerCase())
-          && identityMatchOption < article.score,
-        );
-      } else {
-        filteredArticles = data.newsArticles.filter(
-          (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-            && categoryOptions.includes(article.category.toLowerCase())
-            && new Date(article.publishedAt) > dates[0]
-            && new Date(article.publishedAt) < dates[1]
-            && identityMatchOption < article.score,
-        );
-      }
-      return {
-        ...currentData,
-        newsArticles: filteredArticles,
-      };
+    if (
+      riskRatingOptions.length === 3 && categoryOptions.length === 5 && dateOption === 'all time'
+    ) {
+      return inputData;
+    }
+    let filteredArticles = inputData;
+    if (dateOption === 'all time') {
+      filteredArticles = data.newsArticles.filter(
+        (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
+        && categoryOptions.includes(article.category.toLowerCase()),
+      );
+    } else {
+      filteredArticles = inputData.newsArticles.filter(
+        (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
+        && categoryOptions.includes(article.category.toLowerCase())
+        && new Date(article.publishedAt) > dates[0]
+        && new Date(article.publishedAt) < dates[1],
+      );
+    }
+    return {
+      ...inputData,
+      newsArticles: filteredArticles,
     };
+  };
 
+  useEffect(() => {
     if (filterNow) {
       const newFilteredData = filterData(data, selectedFilterOptions);
       setFilteredData(newFilteredData);
+      sortArticles();
       setFilterNow(false);
     }
-  }, [filterNow, data, selectedFilterOptions]);
+  }, [filterNow]);
+
+  useEffect(() => {
+    sortArticles();
+  }, [selectedSortOption]);
 
   return (
     <>
@@ -113,6 +168,8 @@ function Result({ data }) {
         selectedFilterOptions={selectedFilterOptions}
         setSelectedFilterOptions={setSelectedFilterOptions}
         setFilterNow={setFilterNow}
+        selectedSortOption={selectedSortOption}
+        setSelectedSortOption={setSelectedSortOption}
       />
       <ResultsViewer data={filteredData} />
     </>

@@ -9,6 +9,8 @@ function IdentityMatching({ score }) {
 
   useEffect(() => {
     const identityMatchingCtx = identityMatchingChartRef.current.getContext('2d');
+    const scorePercentage = score;
+    const remainder = 100 - scorePercentage;
 
     // Match chart configuration
     const matchConfig = {
@@ -16,7 +18,7 @@ function IdentityMatching({ score }) {
       data: {
         datasets: [
           {
-            data: [score, 1 - score],
+            data: [scorePercentage, remainder],
             backgroundColor: ['#5B5D5C', 'transparent'],
             borderWidth: 0,
           },
@@ -24,8 +26,8 @@ function IdentityMatching({ score }) {
       },
       options: {
         cutout: '90%',
-        rotation: 270,
-        circumference: 270,
+        rotation: 360,
+        circumference: 360,
         plugins: {
           datalabels: {
             display: false, // Hide the labels in the chart
@@ -46,7 +48,10 @@ function IdentityMatching({ score }) {
   }, [score]);
 
   return (
-    <div className="relative flex flex-col md:pr-3 py-2 md:py-0" id="identityMatching">
+    <div
+      className="relative flex flex-col md:pr-3 py-2 md:py-0"
+      id="identityMatching"
+    >
       <canvas ref={identityMatchingChartRef} width="80" height="80" />
       <div className="absolute inset-0 flex items-center justify-center">
         <p className="text-center text-gray-900 text-xs md:pr-3">
