@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: person-deployment
+  labels:
+    app: person
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: person
+  template:
+    metadata:
+      labels:
+        app: person
+    spec:
+      containers:
+      - name: person-container
+        image: fyp2024/person:${COMMIT-HASH}
+        ports:
+        - containerPort: 8001
