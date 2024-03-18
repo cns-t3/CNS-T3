@@ -1,11 +1,14 @@
 ---
 name: FYP CD Pipeline
 on:
-  workflow_run:
-    workflows: [FYP CI Pipeline]
-    branches: ["*"]
-    types:
-      - completed
+  push:
+    branches:
+      - "feature/*"
+  # workflow_run:
+  #   workflows: [FYP CI Pipeline]
+  #   branches: [main]
+  #   types:
+  #     - completed
 
 jobs:
   build-and-push-images:
