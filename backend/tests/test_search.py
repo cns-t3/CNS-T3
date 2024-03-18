@@ -9,7 +9,7 @@ class TestSearchAPI(unittest.TestCase):
     def setUp(self):
         self.client = TestClient(app)
 
-    @patch("backend.api.searchAPI.main.search_service")
+    @patch("backend.api.searchAPI.main.search_person_service")
     def test_search_query(self, mock_get):
         person_data = {
             "person_id": 4,

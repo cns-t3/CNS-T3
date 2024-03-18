@@ -59,7 +59,7 @@ def get_summarised_news_articles(search_query: str):
         + os.getenv("NEWS_API_KEY")
         + "&keyword="
         + search_query
-        + "&lang=eng&articlesSortBy=rel&articlesCount=5&isDuplicateFilter=skipDuplicates"
+        + "&lang=eng&articlesSortBy=rel&articlesCount=10&isDuplicateFilter=skipDuplicates"
     )
     reputable_sources = get_reputable_news_sources()  # Get reputable sources
 
