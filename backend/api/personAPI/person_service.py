@@ -50,3 +50,19 @@ def get_all_persons(db: Session):
         )
         person_return_arr.append(person_return)
     return person_return_arr
+
+
+def get_similar_names(db: Session, name: str):
+    persons = (
+        db.query(Person.Name, PersonCompany.Role, Company.Name)
+        .join(PersonCompany, Person.PersonID == PersonCompany.PersonID)
+        .join(Company, PersonCompany.CompanyID == Company.CompanyID)
+        .filter(Person.Name.ilike(f"%{name}%"))
+        .limit(5)
+        .all()
+    )
+
+    if not persons:
+        return []
+    
+    return [f"{person_name}, {role_name} of {company_name}" for person_name, role_name, company_name in persons]

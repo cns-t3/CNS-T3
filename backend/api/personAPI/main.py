@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, Query, Depends
 from sqlalchemy.orm import Session
 from backend.api.personAPI.pydantic_models import PersonSchema
 from backend.api.personAPI.database import get_db
-from backend.api.personAPI.person_service import search_person_by_name, get_all_persons
+from backend.api.personAPI.person_service import search_person_by_name, get_all_persons, get_similar_names
 
 app = FastAPI()
 
@@ -41,3 +41,13 @@ async def search_persons_by_name(
 @app.get("/persons/")
 async def get_persons(db: Session = Depends(get_db)):
     return get_all_persons(db)
+
+
+@app.get("/person/similar_search/")
+async def search_similar_names(
+    name: str = Query(None, min_length=1), db: Session = Depends(get_db)
+):
+    if not name:
+        raise HTTPException(status_code=400, detail="Name parameter is required")
+        
+    return get_similar_names(db, name)
