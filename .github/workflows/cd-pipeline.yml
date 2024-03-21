@@ -1,0 +1,92 @@
+---
+name: FYP CD Pipeline
+on:
+  workflow_run:
+    workflows: [FYP CI Pipeline]
+    branches: [main]
+    types:
+      - completed
+
+jobs:
+  build-and-push-images:
+    runs-on: ubuntu-latest
+    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Container Registry
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Build and Push Docker Images for Next.js Frontend
+        run: |
+          docker build --build-arg NEXT_PUBLIC_SEARCH_DNS=${{secrets.SEARCH_DNS}} -t ${{secrets.DOCKER_USERNAME}}/frontend:${{ github.sha }} .
+          docker push ${{secrets.DOCKER_USERNAME}}/frontend:${{ github.sha }}
+
+      - name: Build and Push Docker Images for PersonAPI
+        run: |
+          docker build --build-arg AZURE_SQL_URL=${{secrets.AZURE_SQL_URL}} -f ./backend/api/personAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/person:${{ github.sha }} .
+          docker push ${{secrets.DOCKER_USERNAME}}/person:${{ github.sha }}
+
+      - name: Build and Push Docker Images for NewsAPI
+        run: |
+          docker build --build-arg NEWS_API_KEY=${{secrets.NEWS_API_KEY}} --build-arg OPENAI_API_KEY=${{secrets.OPENAI_API_KEY}} -f ./backend/api/newsAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/news:${{ github.sha }} .
+          docker push ${{secrets.DOCKER_USERNAME}}/news:${{ github.sha }}
+
+      - name: Build and Push Docker Images for IdentityAPI
+        run: |
+          docker build --build-arg OPENAI_API_KEY=${{secrets.OPENAI_API_KEY}} -f ./backend/api/identityAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/identity:${{ github.sha }} .
+          docker push ${{secrets.DOCKER_USERNAME}}/identity:${{ github.sha }}
+
+      - name: Build and Push Docker Images for SearchAPI
+        run: |
+          docker build --build-arg PERSON_DNS=${{secrets.PERSON_DNS}} --build-arg NEWS_DNS=${{secrets.NEWS_DNS}} --build-arg IDENTITY_DNS=${{secrets.IDENTITY_DNS}} --build-arg AZURE_STORAGE_CONNECTION_STRING=${{secrets.AZURE_STORAGE_CONNECTION_STRING}} --build-arg PROD=${{secrets.PROD}} -f ./backend/api/searchAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/search:${{ github.sha }} .
+          docker push ${{secrets.DOCKER_USERNAME}}/search:${{ github.sha }}
+
+  deploy-to-aks:
+    needs: build-and-push-images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Azure CLI
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set AKS Context
+        run: |
+          az aks get-credentials --name CNSt3 --resource-group 2024_FYP_MA_G01
+
+      - name: Replace COMMIT-HASH placeholder
+        run: |
+          sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/frontend-deployment.yml
+          sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/person-deployment.yml
+          sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/news-deployment.yml
+          sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/identity-deployment.yml
+          sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/search-deployment.yml
+
+      - name: Deploy to AKS
+        run: |
+          kubectl apply -f ./k8s/frontend-deployment.yml
+          kubectl apply -f ./k8s/frontend-service.yml
+
+          kubectl apply -f ./k8s/person-deployment.yml
+          kubectl apply -f ./k8s/person-service.yml
+
+          kubectl apply -f ./k8s/news-deployment.yml
+          kubectl apply -f ./k8s/news-service.yml
+
+          kubectl apply -f ./k8s/identity-deployment.yml
+          kubectl apply -f ./k8s/identity-service.yml
+
+          kubectl apply -f ./k8s/search-deployment.yml
+          kubectl apply -f ./k8s/search-service.yml

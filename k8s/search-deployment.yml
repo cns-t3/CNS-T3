@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search-deployment
+  labels:
+    app: search
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: search
+  template:
+    metadata:
+      labels:
+        app: search
+    spec:
+      containers:
+      - name: search-container
+        image: fyp2024/search:${COMMIT-HASH}
+        ports:
+        - containerPort: 8000

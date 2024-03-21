@@ -12,3 +12,5 @@ httpx==0.25.2
 SQLAlchemy==2.0.21
 tenacity==8.2.3
 numpy==1.26.3
+azure-storage-blob==12.19.1
+schedule==1.2.1
