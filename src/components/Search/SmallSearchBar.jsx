@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { MdOutlineSearch } from 'react-icons/md';
-// import Image from 'next/image';
 
 import Spinner from './Spinner';
 
@@ -24,8 +23,8 @@ export default function SmallSearchBar({ initialValue }) {
   };
 
   return (
-    <div className="w-full md:mx-6 pl-4 border-l-4 border-red flex justify-end items-center">
-      <div className="block w-full p-4 rounded-md text-gray-700 bg-beige flex flex-cols justify-between">
+    <div className="w-full md:mx-6 pl-4 border-l-4 border-red">
+      <div className="w-full p-4 rounded-md text-gray-700 bg-beige flex justify-between">
         <input
           type="text"
           id="small-input"
@@ -35,11 +34,13 @@ export default function SmallSearchBar({ initialValue }) {
           onKeyDown={onSearchSubmit}
           className="md:text-base text-sm bg-transparent w-4/5 focus:outline-none caret-red-500"
         />
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          <MdOutlineSearch size={30} />
-        )}
+        <div className="w-1/5 flex justify-end items-center">
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <MdOutlineSearch size={25} />
+          )}
+        </div>
       </div>
     </div>
   );

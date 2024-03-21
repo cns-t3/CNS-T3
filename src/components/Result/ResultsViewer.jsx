@@ -28,11 +28,11 @@ function ResultsViewer({ data }) {
   };
 
   return (
-    <div>
+    <div className="lg:fixed lg:top-[160px]">
       <div className="px-10">
         <div className="flex flex-col lg:flex-row w-full">
           <div
-            className={`flex bg-beige rounded-md h-min lg:order-last ${
+            className={`flex bg-beige rounded-md h-min lg:order-last lg:overflow-y-auto lg:h-[calc(100vh-180px)] ${
               articleDetails == null ? 'lg:w-1/3' : 'lg:w-1/2'
             }`}
           >
@@ -46,7 +46,7 @@ function ResultsViewer({ data }) {
           </div>
           <div
             id="news-articles-container"
-            className={`flex flex-col pt-5 lg:pt-0 ${
+            className={`flex flex-col pt-5 lg:pt-0 lg:overflow-y-auto lg:h-[calc(100vh-180px)] ${
               articleDetails == null
                 ? 'lg:w-2/3 pr-4'
                 : 'lg:w-1/2 lg:pr-4 hidden lg:flex'

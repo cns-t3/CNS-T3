@@ -1,42 +1,25 @@
-'use client';
-
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React from 'react';
 import Image from 'next/image';
 import SearchBar from '@/components/Search/SearchBar';
+import SimilarPeople from '@/components/Search/SimilarPeople';
 
+// function getSimilarPeople(name) {
+//   const personDNS = process.env.NEXT_PUBLIC_PERSON_DNS || '127.0.0.1';
+//   const url = `http://${personDNS}:8001/person/similar_search?name=${name}`;
+//   fetch(url)
+//     .then((response) => {
+//       if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//       }
+//       return response.json(); // Correctly return the promise from response.json()
+//     })
+//     .then(data => {
+//       console.log(data); // Now you can log the actual data
+//       return data; // If you need to use the data outside, you need to handle this promise
+//     })
+//     .catch(() => null);
+// }
 export default function Home() {
-  const [search, setSearch] = useState('');
-  const [similarPeople, setSimilarPeople] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-
-  async function getSimilarPeople(input) {
-    const personDNS = process.env.NEXT_PUBLIC_PERSON_DNS || '127.0.0.1';
-    const url = `http://${personDNS}:8001/person/similar_search/?name=${input}`;
-    try {
-      const res = await fetch(url, { cache: 'no-store' });
-      if (!res.ok) {
-        throw new Error('Failed to fetch data');
-      }
-      return res.json();
-    } catch {
-      return [];
-    }
-  }
-
-  const handleSearchChange = (value) => {
-    setSearch(value);
-    setSimilarPeople(getSimilarPeople(value));
-  };
-  const handleSearchSubmit = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      setIsLoading(true);
-      router.push(`/search/${search}`);
-    }
-  };
-
   return (
     <div className="flex h-screen justify-center items-center">
       <div className="w-full flex-col flex justify-center items-center">
@@ -46,13 +29,12 @@ export default function Home() {
           className="md:w-1/4 sm:w-1/3 w-1/2 m-3"
           src="/logo.png"
         />
-        <SearchBar
-          searchQuery={search}
-          onSearchChange={handleSearchChange}
-          onSearchSubmit={handleSearchSubmit}
-          similarPeople={similarPeople}
-          loading={isLoading}
-        />
+        <SearchBar />
+        {/* {similarPeople.length !== 0 && (
+          <SimilarPeople
+            similarPeople={similarPeople}
+          />
+        )} */}
       </div>
     </div>
   );

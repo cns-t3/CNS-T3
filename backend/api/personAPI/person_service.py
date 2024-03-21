@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from backend.api.personAPI.sqlalchemy_models import Person, Company, PersonCompany
 from backend.api.personAPI.pydantic_models import PersonSchema
+import Levenshtein
 
 
 def search_person_by_name(db: Session, name: str):
@@ -52,17 +53,40 @@ def get_all_persons(db: Session):
     return person_return_arr
 
 
-def get_similar_names(db: Session, name: str):
+def get_similar_names(db: Session, name: str, similarity_threshold: float = 0.7):
+
+    # Case 1 - Exact matches
     persons = (
         db.query(Person.Name, PersonCompany.Role, Company.Name)
         .join(PersonCompany, Person.PersonID == PersonCompany.PersonID)
         .join(Company, PersonCompany.CompanyID == Company.CompanyID)
-        .filter(Person.Name.ilike(f"%{name}%"))
-        .limit(5)
+        .filter(Person.Name.ilike(name))
         .all()
     )
+    if len(persons) >= 1:
+        return [
+            {"name": person_name, "role": role_name, "company": company_name}
+            for person_name, role_name, company_name in persons
+        ]
 
-    if not persons:
-        return []
-    
-    return [f"{person_name}, {role_name} of {company_name}" for person_name, role_name, company_name in persons]
+    # Case 2: Partial matches and typos
+    else:  
+        persons = (
+            db.query(Person.Name, PersonCompany.Role, Company.Name)
+            .join(PersonCompany, Person.PersonID == PersonCompany.PersonID)
+            .join(Company, PersonCompany.CompanyID == Company.CompanyID)
+            .all()
+        )
+
+        if not persons:
+            return []
+
+        similar_names = []
+        for person_name, role_name, company_name in persons:
+            similarity = Levenshtein.ratio(name.lower(), person_name.lower())
+            if similarity >= similarity_threshold:
+                similar_names.append(
+                    {"name": person_name, "role": role_name, "company": company_name}
+                )
+
+        return similar_names

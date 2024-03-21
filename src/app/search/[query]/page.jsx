@@ -23,7 +23,7 @@ export default async function Search({ params }) {
 
   return (
     <div>
-      <div className="flex md:flex-row flex-col m-6 items-center justify-center">
+      <div className="flex md:flex-row flex-col p-6 pb-3 items-center justify-center top-0 left-0 right-0 fixed">
         <a href="/" className="w-1/6" id="logoLink" aria-label="Home">
           <Image
             layout="responsive"
@@ -35,7 +35,7 @@ export default async function Search({ params }) {
         </a>
         <SmallSearchBar initialValue={query} />
       </div>
-      <div className="flex md:flex-row flex-col m-6 items-center justify-center" />
+      <div className="flex md:flex-row flex-col p-6 pt-0 items-center justify-center" />
       {data === null ? (
         <p className="m-6">
           No Results Found
