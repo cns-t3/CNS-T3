@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, Query
 from backend.api.searchAPI.pydantic_models import SearchResult
-from backend.api.searchAPI.search_service import search_person_service
+from backend.api.searchAPI.search_service import get_person_by_id
 from backend.api.searchAPI.caching_service import get_daily_data
 
 load_dotenv()
@@ -20,11 +20,11 @@ app = FastAPI()
     response_model=SearchResult,
 )
 async def get_articles_by_query(
-    search_query: str = Query(
+    person_id: int = Query(
         ..., description="Search query of the articles to return"
     ),
 ):
-    response = search_person_service(search_query)
+    response = get_person_by_id(person_id)
     return response
 
 

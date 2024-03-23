@@ -1,9 +1,31 @@
 from sqlalchemy.orm import Session
 from backend.api.personAPI.sqlalchemy_models import Person, Company, PersonCompany
 from backend.api.personAPI.pydantic_models import PersonSchema
+import Levenshtein
+from typing import List, Tuple, Optional
+
+def get_person_by_id(db: Session, person_id: int) -> Tuple[Person, str, str]:
+
+    result = (
+        db.query(Person, PersonCompany, Company)
+        .filter(
+            Person.PersonID.ilike(person_id),
+            Person.PersonID == PersonCompany.PersonID,
+            PersonCompany.CompanyID == Company.CompanyID,
+        )
+        .all()
+    )
+
+    if not result:
+        return None, None, None
+
+    person = result[0][0]
+    company_name = result[0][2].Name
+    role_name = result[0][1].Role
+    return person, company_name, role_name
 
 
-def search_person_by_name(db: Session, name: str):
+def search_person_by_name(db: Session, name: str) -> List[Tuple[Person, str, str]]:
     # Search database for persons with search query
     persons = (
         db.query(Person, PersonCompany, Company)
@@ -14,13 +36,17 @@ def search_person_by_name(db: Session, name: str):
         )
         .all()
     )
-    if not persons:
-        return None, None, None
-    person = persons[0][0]
-    company_name = persons[0][2].Name
-    role_name = persons[0][1].Role
-    return person, company_name, role_name
+    if len(persons) == 0:
+        return []
 
+    results = []
+
+    for person, person_company, company in persons:
+        company_name = company.Name
+        role_name = person_company.Role
+        results.append((person, company_name, role_name))
+
+    return results
 
 def get_all_persons(db: Session):
     persons = (
@@ -50,3 +76,23 @@ def get_all_persons(db: Session):
         )
         person_return_arr.append(person_return)
     return person_return_arr
+
+
+def get_similar_names(db: Session, name: str, similarity_threshold: float = 0.7) -> List[Tuple[Person, str, str]]:
+
+    persons = (
+        db.query(Person, PersonCompany, Company)
+        .join(PersonCompany, Person.PersonID == PersonCompany.PersonID)
+        .join(Company, PersonCompany.CompanyID == Company.CompanyID)
+        .all()
+    )
+
+    similar_names = []
+    for person, person_company, company in persons:
+        similarity = Levenshtein.ratio(name.lower(), person.Name.lower())
+        if similarity >= similarity_threshold:
+            company_name = company.Name
+            role_name = person_company.Role
+            similar_names.append((person, company_name, role_name))
+
+    return similar_names

@@ -23,7 +23,7 @@ jobs:
 
       - name: Build and Push Docker Images for Next.js Frontend
         run: |
-          docker build --build-arg NEXT_PUBLIC_SEARCH_DNS=${{secrets.SEARCH_DNS}} -t ${{secrets.DOCKER_USERNAME}}/frontend:${{ github.sha }} .
+          docker build --build-arg NEXT_PUBLIC_SEARCH_DNS=${{secrets.SEARCH_DNS}} NEXT_PUBLIC_PERSON_DNS=${{secrets.PERSON_DNS}}-t ${{secrets.DOCKER_USERNAME}}/frontend:${{ github.sha }} .
           docker push ${{secrets.DOCKER_USERNAME}}/frontend:${{ github.sha }}
 
       - name: Build and Push Docker Images for PersonAPI

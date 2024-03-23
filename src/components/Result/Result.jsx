@@ -20,6 +20,7 @@ function Result({ data }) {
   const [selectedFilterOptions, setSelectedFilterOptions] = useState({
     riskRating: ['low', 'medium', 'high'],
     category: defaultCategoryOptions,
+    identityMatch: 0,
     date: 'all time',
   });
   const [filteredData, setFilteredData] = useState(data);
@@ -121,11 +122,12 @@ function Result({ data }) {
     const riskRatingOptions = inputSelectedFilterOptions.riskRating;
     const categoryOptions = inputSelectedFilterOptions.category;
     const dateOption = inputSelectedFilterOptions.date;
+    const identityMatchScore = inputSelectedFilterOptions.identityMatch;
 
     const dates = processDateOption(dateOption);
 
     if (
-      riskRatingOptions.length === 3 && categoryOptions.length === 5 && dateOption === 'all time'
+      riskRatingOptions.length === 3 && categoryOptions.length === 5 && dateOption === 'all time' && identityMatchScore === 0
     ) {
       return inputData;
     }
@@ -133,14 +135,16 @@ function Result({ data }) {
     if (dateOption === 'all time') {
       filteredArticles = data.newsArticles.filter(
         (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-        && categoryOptions.includes(article.category.toLowerCase()),
+        && categoryOptions.includes(article.category.toLowerCase())
+        && article.score >= identityMatchScore,
       );
     } else {
       filteredArticles = inputData.newsArticles.filter(
         (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
         && categoryOptions.includes(article.category.toLowerCase())
         && new Date(article.publishedAt) > dates[0]
-        && new Date(article.publishedAt) < dates[1],
+        && new Date(article.publishedAt) < dates[1]
+        && article.score >= identityMatchScore,
       );
     }
     return {
@@ -170,6 +174,7 @@ function Result({ data }) {
         setFilterNow={setFilterNow}
         selectedSortOption={selectedSortOption}
         setSelectedSortOption={setSelectedSortOption}
+        categoryOptions={defaultCategoryOptions}
       />
       <ResultsViewer data={filteredData} />
     </>

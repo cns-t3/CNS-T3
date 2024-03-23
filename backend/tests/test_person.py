@@ -67,7 +67,7 @@ class TestPersonAPI(unittest.TestCase):
     def test_search_persons_by_name(self, mock_search_person_by_name):
         # Define the mock behavior
         date = datetime(1990, 1, 1).date()
-        mock_search_person_by_name.return_value = (
+        mock_search_person_by_name.return_value = [(
             Person(
                 PersonID=1,
                 Name="John Doe",
@@ -82,17 +82,17 @@ class TestPersonAPI(unittest.TestCase):
             ),
             "Test Company",
             "Developer",
-        )
+        )]
 
         # Make a request to the endpoint
-        response = self.client.get("/persons/search/?name=John")
+        response = self.client.get("/persons/search?name=John")
 
         # Assert the response status code
         self.assertEqual(response.status_code, 200)
 
         # Assert the response content
         self.assertEqual(
-            response.json(),
+            response.json()[0],
             {
                 "person_id": 1,
                 "name": "John Doe",
@@ -118,12 +118,12 @@ class TestPersonAPI(unittest.TestCase):
     # Test when no persons found with the provided name
     @mock.patch("backend.api.personAPI.main.search_person_by_name")
     def test_search_persons_by_name_no_person_found(self, mock_search_person_by_name):
-        mock_search_person_by_name.return_value = (None, None, None)
-        response = self.client.get("/persons/search/?name=Unknown")
-        self.assertEqual(response.status_code, 404)
+        mock_search_person_by_name.return_value = []
+        response = self.client.get("/persons/search?name=Unknown")
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(
             response.json(),
-            {"detail": "No persons found with the provided name"},
+            [],
         )
 
 
