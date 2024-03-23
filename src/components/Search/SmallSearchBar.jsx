@@ -28,7 +28,7 @@ export default function SmallSearchBar({ initialValue }) {
 
   useEffect(() => {
     if (doSearch) {
-      const updatedRouterPath = '/search/' + routerStr.replace(/ /g, '%20');
+      const updatedRouterPath = `/search/${routerStr.replace(/ /g, '%20')}`;
       if (window.location.pathname === updatedRouterPath) {
         window.location.reload();
       } else {
