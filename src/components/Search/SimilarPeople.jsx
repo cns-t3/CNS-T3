@@ -10,6 +10,7 @@ export default function SimilarPeople({
   setFindPeople,
   setDoSearch,
   setIsLoading,
+  isSmall,
 }) {
   const [similarPeopleArr, setSimilarPeopleArr] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
@@ -60,11 +61,11 @@ export default function SimilarPeople({
   }, [findPeople]);
 
   return (
-    <div className="p-5">
+    <div className={isSmall ? 'px-1' : 'p-5'}>
       {similarPeopleArr.length > 0 ? (
-        <div className="flex flex-row space-x-2">
-          <div className="text-sm">Did you mean: </div>
-          <div className="flex flex-col space-y-2">
+        <div id="similarPeople" className="flex flex-row space-x-2 text-sm text-gray-700">
+          <div className="italic">Did you mean: </div>
+          <div className={isSmall ? 'p-0' : 'flex flex-col space-y-2'}>
             {similarPeopleArr.map((person) => (
               <SearchTag
                 key={person.person_id}
@@ -76,7 +77,7 @@ export default function SimilarPeople({
           </div>
         </div>
       ) : (
-        <div className="text-red text-sm">
+        <div id="noSimilarPeople" className="text-red text-sm">
           { errorMsg }
         </div>
       )}

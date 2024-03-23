@@ -11,7 +11,7 @@ function ResultHeader({
   categoryOptions,
 }) {
   return (
-    <div className="px-10 fixed top-[110px] right-0 left-0 z-10">
+    <div className="px-10 fixed top-[160px] md:top-[110px] right-0 left-0 z-10">
       <div className="flex flex-row justify-between">
         <div>
           <p className="px-3 font-semibold text-gray-500">Results</p>

@@ -28,7 +28,7 @@ function ResultsViewer({ data }) {
   };
 
   return (
-    <div className="fixed top-[160px] z-0">
+    <div className="fixed top-[210px] md:top-[160px] z-0">
       <div className="px-10">
         <div className="flex flex-col lg:flex-row w-full">
           <div

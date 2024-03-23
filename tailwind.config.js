@@ -18,7 +18,7 @@ module.exports = {
         cream: '#F4F3ED',
         grey: '#CDCDCC',
         darkgrey: '#ABABAB',
-        textgrey: '#5B5D5C'
+        textgrey: '#5B5D5C',
       },
     },
   },

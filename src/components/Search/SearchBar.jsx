@@ -58,6 +58,7 @@ export default function SearchBar() {
           setFindPeople={setFindPeople}
           setDoSearch={setDoSearch}
           setIsLoading={setIsLoading}
+          isSmall={false}
         />
       </div>
     </div>

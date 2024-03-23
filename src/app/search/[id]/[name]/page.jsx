@@ -24,12 +24,12 @@ export default async function Search({ params }) {
 
   return (
     <div>
-      <div className="flex md:flex-row flex-col p-6 pb-3 items-center justify-center top-0 left-0 right-0 fixed">
-        <a href="/" className="w-1/6" id="logoLink" aria-label="Home">
+      <div className=" w-full flex md:flex-row flex-col p-6 pb-3 items-center md:items-start justify-center top-0 left-0 right-0 fixed">
+        <a href="/" className="w-1/3 lg:w-1/6 justify-self-center" id="logoLink" aria-label="Home">
           <Image
             layout="responsive"
-            width={800}
-            height={800}
+            width={700}
+            height={700}
             className="m-3"
             src="/logo.png"
           />
@@ -38,7 +38,7 @@ export default async function Search({ params }) {
       </div>
       <div className="flex md:flex-row flex-col p-6 pt-0 items-center justify-center" />
       {data === null ? (
-        <p className="m-6 fixed top-[110px] right-0 left-0">
+        <p className="m-6 fixed top-[160px] md:top-[110px] right-0 left-0">
           No Results Found
         </p>
       ) : <Result data={data} />}

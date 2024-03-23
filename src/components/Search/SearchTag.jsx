@@ -19,7 +19,7 @@ function SearchTag({
   };
 
   return (
-    <button type="button" className="text-sm text-sky-800 cursor-pointer underline" onClick={handleClick}>
+    <button type="button" className="similarPeople text-sm text-sky-800 cursor-pointer underline" onClick={handleClick}>
       {formatString()}
     </button>
   );
