@@ -28,7 +28,7 @@ function ResultsViewer({ data }) {
   };
 
   return (
-    <div className="lg:fixed lg:top-[160px]">
+    <div className="fixed top-[160px] z-0">
       <div className="px-10">
         <div className="flex flex-col lg:flex-row w-full">
           <div
@@ -53,7 +53,7 @@ function ResultsViewer({ data }) {
             }`}
           >
             {data.newsArticles.length === 0 && (
-              <div id="noArticles">No articles match your filter criteria.</div>
+              <div id="noArticles">No articles found.</div>
             )}
             {data.newsArticles.map((article) => (
               <NewsArticle

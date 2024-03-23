@@ -4,6 +4,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from backend.api.identityAPI.embedding import get_embeddings
 import threading
+import json
 
 load_dotenv()
 
@@ -12,12 +13,16 @@ if os.getenv("OPENAI_API_KEY"):
 
 
 def get_profile_summary(profile: dict):
+    data = (
+        "Provide a concise 100-word summary using the provided JSON data, excluding the photo and LinkedIn link. Focus on text only and aim for simplicity and clarity in communication."
+        + json.dumps(profile)
+    )
     response = openAI_client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {
                 "role": "system",
-                "content": "Provide a concise 100-word summary using the provided JSON data, excluding the photo and LinkedIn link. Focus on text only and aim for simplicity and clarity in communication.",
+                "content": data,
             },
         ],
     )
