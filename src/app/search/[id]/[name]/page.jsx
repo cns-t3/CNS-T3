@@ -20,8 +20,6 @@ async function getData(id) {
 export default async function Search({ params }) {
   const id = decodeURIComponent(params.id);
   const name = decodeURIComponent(params.name);
-  console.log(id);
-  console.log(name);
   const data = await getData(id);
 
   return (

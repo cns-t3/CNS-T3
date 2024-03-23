@@ -5,7 +5,7 @@ import Levenshtein
 from typing import List, Tuple, Optional
 
 def get_person_by_id(db: Session, person_id: int) -> Tuple[Person, str, str]:
-    
+
     result = (
         db.query(Person, PersonCompany, Company)
         .filter(
@@ -15,15 +15,15 @@ def get_person_by_id(db: Session, person_id: int) -> Tuple[Person, str, str]:
         )
         .all()
     )
-    
+
     if not result:
         return None, None, None
-    
+
     person = result[0][0]
     company_name = result[0][2].Name
     role_name = result[0][1].Role
     return person, company_name, role_name
-    
+
 
 def search_person_by_name(db: Session, name: str) -> List[Tuple[Person, str, str]]:
     # Search database for persons with search query

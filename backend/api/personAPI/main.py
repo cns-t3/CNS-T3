@@ -31,26 +31,26 @@ async def get_persons_by_id(
 ):
     if not person_id:
         raise HTTPException(status_code=400, detail="Person_id parameter is required")
-    
+
     person, company_name, role_name = get_person_by_id(db, person_id)
-    
+
     if not person:
         raise HTTPException(status_code=400, detail="Person not found")
-    
+
     return PersonSchema(
-            person_id=person.PersonID,
-            name=person.Name,
-            occupation=person.Occupation,
-            role=role_name,
-            dob=person.DoB.strftime("%Y-%m-%d") if person.DoB else None,
-            nationality=person.Nationality,
-            description=person.Description,
-            company=company_name,
-            country_of_residency=person.CountryOfResidency,
-            pep_status=person.PEPStatus,
-            source_of_wealth=person.SourceOfWealth,
-            img_url=person.ImgURL,
-        )
+        person_id=person.PersonID,
+        name=person.Name,
+        occupation=person.Occupation,
+        role=role_name,
+        dob=person.DoB.strftime("%Y-%m-%d") if person.DoB else None,
+        nationality=person.Nationality,
+        description=person.Description,
+        company=company_name,
+        country_of_residency=person.CountryOfResidency,
+        pep_status=person.PEPStatus,
+        source_of_wealth=person.SourceOfWealth,
+        img_url=person.ImgURL,
+    )
 
 
 @app.get("/persons/search", response_model=List[PersonSchema])

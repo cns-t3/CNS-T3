@@ -46,7 +46,7 @@ class TestSearchAPI(unittest.TestCase):
             "person": person_data,
             "newsArticles": news_data,
         }
-        response = self.client.get("search?search_query=helen%20wong")
+        response = self.client.get("search?person_id=4")
         expected_response = {
             "person": person_data,
             "newsArticles": news_data,

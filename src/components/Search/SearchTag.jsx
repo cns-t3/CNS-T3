@@ -5,15 +5,15 @@ function SearchTag({
   person,
   setDoSearch,
 }) {
+  const personId = person.person_id;
   const {
-    person_id,
     name,
     role,
     company,
   } = person;
   const formatString = () => `${name}, ${role} of ${company}`;
   const handleClick = () => {
-    const routerStr = `${person_id}/${name}`;
+    const routerStr = `${personId}/${name}`;
     setRouterStr(routerStr);
     setDoSearch(true);
   };
