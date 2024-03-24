@@ -63,7 +63,7 @@ async function postIdentity(searchResultModelJson) {
 
 export default async function test() {
   const searchData = await getData();
-  const personData = await getPerson('Anthony Tan');
+  const personData = await getPerson('asdfgh');
   const json = {
     person: {
       person_id: 1,
