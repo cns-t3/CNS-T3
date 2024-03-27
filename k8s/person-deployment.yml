@@ -21,7 +21,8 @@ spec:
         - containerPort: 8001
         volumeMounts:
         - name: cors-config-volume
-          mountPath: ./cors-config.yml
+          mountPath: /app/k8s/cors-config.yml
+          subPath: cors-config.yml
       volumes:
       - name: cors-config-volume
         configMap:
