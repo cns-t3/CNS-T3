@@ -19,11 +19,3 @@ spec:
         image: fyp2024/person:${COMMIT-HASH}
         ports:
         - containerPort: 8001
-        volumeMounts:
-        - name: cors-config-volume
-          mountPath: /app/k8s/cors-config.yml
-          subPath: cors-config.yml
-      volumes:
-      - name: cors-config-volume
-        configMap:
-          name: cors-config
