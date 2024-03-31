@@ -20,8 +20,9 @@ export default function SimilarPeople({
       setFindPeople(false);
       setIsLoading(false);
       try {
-        const personDNS = process.env.NEXT_PUBLIC_PERSON_DNS || '127.0.0.1';
-        const response = await fetch(`http://${personDNS}:8001/persons/similar_search?name=${param}`);
+        // const personDNS = process.env.NEXT_PUBLIC_PERSON_DNS || '127.0.0.1';
+        // const response = await fetch(`http://${personDNS}:8001/persons/similar_search?name=${param}`);
+        const response = await fetch(`/api/similar-person-search?name=${encodeURIComponent(param)}`);
         const data = await response.json();
         if (data.length > 0) {
           setSimilarPeopleArr(data);
@@ -38,8 +39,9 @@ export default function SimilarPeople({
     const getPersonData = async (param) => {
       setErrorMsg('');
       try {
-        const personDNS = process.env.NEXT_PUBLIC_PERSON_DNS || '127.0.0.1';
-        const response = await fetch(`http://${personDNS}:8001/persons/search?name=${param}`);
+        // const personDNS = process.env.NEXT_PUBLIC_PERSON_DNS || '127.0.0.1';
+        // const response = await fetch(`http://${personDNS}:8001/persons/search?name=${param}`);
+        const response = await fetch(`/api/person?name=${encodeURIComponent(param)}`);
         const data = await response.json();
         if (data.length === 1) {
           setRouterStr(`${data[0].person_id}/${data[0].name}`);

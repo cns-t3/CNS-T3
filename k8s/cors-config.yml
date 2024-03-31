@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cors-config
+data:
+  cors-config.json: |
+    {
+      "allowedOrigins": ["http://localhost:3000", "http://4.209.224.122:3000"],
+      "allowedMethods": ["GET", "POST", "OPTIONS"],
+      "allowedHeaders": ["Content-Type"]
+    }
