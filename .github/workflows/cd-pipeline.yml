@@ -1,13 +1,11 @@
 ---
 name: FYP CD Pipeline
 on:
-  push:
-    branches: ["hotfix/*"]
-  # workflow_run:
-  #   workflows: [FYP CI Pipeline]
-  #   branches: [main]
-  #   types:
-  #     - completed
+  workflow_run:
+    workflows: [FYP CI Pipeline]
+    branches: [main]
+    types:
+      - completed
 
 jobs:
   build-and-push-images:
