@@ -5,8 +5,10 @@ function SortDropDown({ selectedSortOption, setSelectedSortOption }) {
   const sortOptions = [
     'Newest to Oldest',
     'Oldest to Newest',
-    'High Risk to Low Risk',
-    'Low Risk to High Risk',
+    'High to Low Risk',
+    'Low to High Risk',
+    'High to Low Identity Match',
+    'Low to High Identity Match',
   ];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);

@@ -5,7 +5,7 @@ import time
 
 driver = webdriver.Chrome()
 driver.implicitly_wait(10)
-driver.get("http://localhost:3000/home")
+driver.get("http://localhost:3000/")
 
 try:
     # Find search input element make a search

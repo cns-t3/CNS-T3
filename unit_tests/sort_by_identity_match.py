@@ -5,17 +5,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from datetime import datetime
 
-
-def string_to_date(date_str):
-    return datetime.strptime(date_str.text.replace(" ", "-"), "%d-%b-%Y")
-
-
-def check_order(arr_str, asc=True):
-    if asc:
-        return all(arr_str[i] <= arr_str[i+1] for i in range(len(arr_str) - 1))
-    else:
-        return all(arr_str[i] >= arr_str[i+1] for i in range(len(arr_str) - 1))
-
+def check_order(scores, asc=False):
+    numerical_scores = [int(score.rstrip('%')) for score in scores]
+    return all(numerical_scores[i] >= numerical_scores[i + 1] for i in range(len(numerical_scores) - 1)) if not asc else \
+        all(numerical_scores[i] <= numerical_scores[i + 1] for i in range(len(numerical_scores) - 1))
 
 driver = webdriver.Chrome()
 driver.implicitly_wait(10)
@@ -44,7 +37,7 @@ try:
 
     # Click on the High to Low option
     high_to_low = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.ID, "High to Low Risk"))
+        EC.element_to_be_clickable((By.ID, "High to Low Identity Match"))
     )
     high_to_low.click()
 
@@ -55,12 +48,12 @@ try:
             assert True
 
     except NoSuchElementException:
-        # Check if risk ratings are displayed in the correct order (High to Low)
-        risk_elements = WebDriverWait(driver, 10).until(
-            EC.presence_of_all_elements_located((By.CLASS_NAME, "riskRating"))
+        # Check if identity are displayed in the correct order (High to Low)
+        identity_elements = WebDriverWait(driver, 10).until(
+            EC.presence_of_all_elements_located((By.CLASS_NAME, "identityMatching"))
         )
-        risk_ratings = [elem.text for elem in risk_elements]
-        assert check_order(risk_ratings, asc=False), "Risk ratings are not sorted correctly"
+        identity_scores = [elem.text for elem in identity_elements]
+        assert check_order(identity_scores, asc=False), "Identity match are not sorted correctly"
 
 except Exception as e:
     print("Test failed:", e)

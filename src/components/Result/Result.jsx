@@ -61,6 +61,7 @@ function Result({ data }) {
     });
   };
 
+  // Sort articles by ascending date
   const sortArticlesByAscendingDate = () => {
     setFilteredData((prevData) => {
       const sortedArticles = [...prevData.newsArticles].sort(
@@ -70,14 +71,30 @@ function Result({ data }) {
     });
   };
 
+  // Sort articles by identity match
+  const sortArticlesByIdentityMatch = (asc = true) => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort((a, b) => {
+        if (asc) {
+          return a.score - b.score;
+        }
+
+        return b.score - a.score;
+      });
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
+
   const sortArticles = () => {
     if (selectedSortOption === 'Newest to Oldest') {
       sortArticlesByAscendingDate();
     } else if (selectedSortOption === 'Oldest to Newest') {
       sortArticlesByDescendingDate();
+    } else if (selectedSortOption.includes('Identity Match')) {
+      sortArticlesByIdentityMatch(selectedSortOption === 'Low to High Identity Match');
     } else {
       // Added this line to call the sortArticlesByRiskRating function
-      sortArticlesByRiskRating(selectedSortOption === 'High Risk to Low Risk');
+      sortArticlesByRiskRating(selectedSortOption === 'High to Low Risk');
     }
   };
 
