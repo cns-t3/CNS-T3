@@ -9,7 +9,7 @@ driver.implicitly_wait(10)
 
 try:
     # Open the search page
-    driver.get("http://localhost:3000/search/anthony%20tan")
+    driver.get("http://localhost:3000/search/1/Anthony%20Tan")
 
     # Click the logo link using its ID
     logo_link = driver.find_element(By.ID, "logoLink")

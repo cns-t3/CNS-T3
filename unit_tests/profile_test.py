@@ -7,7 +7,7 @@ driver = webdriver.Chrome()
 driver.implicitly_wait(10)
 
 # Open the React application URL
-driver.get("http://localhost:3000/search/tim%20cook")    
+driver.get("http://localhost:3000/search/1/Anthony%20Tan")    
 
 try:
     # Wait for profile details to be present and displayed
