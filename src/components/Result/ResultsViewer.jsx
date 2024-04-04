@@ -2,8 +2,8 @@
 
 import { React, useState } from 'react';
 import NewsArticle from '../NewsArticle/NewsArticle';
-import Profile from '../Profile/Profile';
 import NewsSummary from '../NewsArticleDetails/NewsSummary';
+import PersonOverview from './PersonOverview'
 
 function ResultsViewer({ data }) {
   const [articleDetails, setArticleDetails] = useState(null);
@@ -36,7 +36,7 @@ function ResultsViewer({ data }) {
               articleDetails == null ? 'lg:w-1/3' : 'lg:w-1/2'
             }`}
           >
-            {articleDetails == null && <Profile profileDetails={data.person} />}
+            {articleDetails == null && <PersonOverview personData={data.person} />}
             {articleDetails != null && (
               <NewsSummary
                 article={articleDetails}

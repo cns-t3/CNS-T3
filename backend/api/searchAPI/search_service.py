@@ -3,6 +3,7 @@ import json
 from fastapi import HTTPException
 from backend.api.searchAPI.pydantic_models import SearchResult
 from backend.api.searchAPI.azure_service import download_from_azure
+from backend.api.searchAPI.analytics import get_analytics
 
 from dotenv import load_dotenv
 import os
@@ -92,8 +93,11 @@ def get_search_result_from_person(person, daily_job=False):
         raise HTTPException(
             status_code=500, detail="Error occurred during identity verification"
         )
-
-    return_object = SearchResult(**response.json())
+    print("1111")
+    # Get analytics
+    analytics = get_analytics(news_articles)
+    print("2222")
+    return_object = SearchResult(person=person, newsArticles=news_articles, analytics=analytics)
     return return_object
 
 

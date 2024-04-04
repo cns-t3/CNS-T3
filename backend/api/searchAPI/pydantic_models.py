@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 
 class NewsArticle(BaseModel):
@@ -32,6 +32,28 @@ class Person(BaseModel):
     img_url: str | None
 
 
+class Risks(BaseModel):
+    low: float
+    medium: float
+    high: float
+
+
+class IdentityScores(BaseModel):
+    identity_0_20: int
+    identity_21_40: int
+    identity_41_60: int
+    identity_61_80: int
+    identity_81_100: int
+
+
+class AnalyticsResult(BaseModel):
+    risks: Risks
+    categories: dict
+    identityScores: IdentityScores
+    summary: str
+
+
 class SearchResult(BaseModel):
     person: Person
     newsArticles: List[NewsArticle]
+    analytics: Optional[AnalyticsResult] = None
