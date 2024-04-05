@@ -24,6 +24,9 @@ def get_analytics(newsArticles: List[NewsArticle]) -> AnalyticsResult:
             summary_articles.append(newsArticle.summary)
 
     analytics_summary = get_analytics_summary(summary_articles)
+    
+    # convert risks count to percentage
+    risk_dict = get_risk_percentage(risk_dict)
 
     return AnalyticsResult(
         risks=Risks(**risk_dict),
@@ -54,3 +57,11 @@ def get_identity_group(identityScore: int) -> str:
             return "identity_60_79"
         case _:
             return "identity_80_100"
+
+
+def get_risk_percentage(risk_dict: dict) -> dict:
+    total = risk_dict["low"] + risk_dict["medium"] + risk_dict["high"]
+    risk_dict["low"] = round(risk_dict["low"] / total * 100, 1)
+    risk_dict["medium"] = round(risk_dict["medium"] / total * 100, 1)
+    risk_dict["high"] = round(risk_dict["high"] / total * 100, 1)
+    return risk_dict

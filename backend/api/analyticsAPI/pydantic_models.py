@@ -22,9 +22,9 @@ class AnalyticsRequest(BaseModel):
     
 
 class Risks(BaseModel):
-    low: int
-    medium: int
-    high: int
+    low: float
+    medium: float
+    high: float
 
 
 class IdentityScores(BaseModel):

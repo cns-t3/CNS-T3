@@ -2,8 +2,8 @@
 
 import { React, useState } from 'react';
 import NewsArticle from '../NewsArticle/NewsArticle';
-import Profile from '../Profile/Profile';
 import NewsSummary from '../NewsArticleDetails/NewsSummary';
+import PersonOverview from './PersonOverview';
 
 function ResultsViewer({ data }) {
   const [articleDetails, setArticleDetails] = useState(null);
@@ -27,6 +27,27 @@ function ResultsViewer({ data }) {
     });
   };
 
+  const analyticsData = {
+    risks: {
+      low: 63.2,
+      medium: 36.8,
+      high: 0,
+    },
+    categories: {
+      'Source Of Wealth': 7,
+      Others: 12,
+      'Sensitive Industries': 1,
+    },
+    identityScores: {
+      identity_0_19: 1,
+      identity_20_39: 2,
+      identity_40_59: 7,
+      identity_60_79: 7,
+      identity_80_100: 3,
+    },
+    summary: 'Grab Holdings Limited, a tech giant in Southeast Asia, went from an overpriced IPO to becoming profitable. The CEO and Co-Founder, Anthony Tan, discussed safety with Cambodia\'s Prime Minister at a forum. Co-founder Tan Hooi Ling is stepping down by year-end due to market challenges. Tan, with a background in Malaysia, focuses on social impact and aims for Grab to be triple bottom line. The company\'s innovative services like motorbike rides set it apart. Tan Hooi Ling is transitioning to an advisory role supported by Anthony Tan, recognizing her role in Grab\'s success.',
+  };
+
   return (
     <div className="fixed top-[210px] md:top-[160px] z-0">
       <div className="px-10">
@@ -36,7 +57,12 @@ function ResultsViewer({ data }) {
               articleDetails == null ? 'lg:w-1/3' : 'lg:w-1/2'
             }`}
           >
-            {articleDetails == null && <Profile profileDetails={data.person} />}
+            {articleDetails == null  
+              && (<PersonOverview 
+                  personData={data.person}
+                  analyticsData={analyticsData}
+                />)
+            }
             {articleDetails != null && (
               <NewsSummary
                 article={articleDetails}

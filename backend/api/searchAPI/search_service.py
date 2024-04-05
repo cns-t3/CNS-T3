@@ -71,12 +71,12 @@ def get_person_by_id(person_id):
 
 def get_search_result_from_person(person, daily_job=False):
     # get data from azure
-    # if not daily_job:
-    #     try:
-    #         return get_search_result_azure(person)
-    #     except Exception as e:
-    #         print("Not found in cache")
-    #         print(e)
+    if not daily_job:
+        try:
+            return get_search_result_azure(person)
+        except Exception as e:
+            print("Not found in cache")
+            print(e)
 
     news_endpoint = f"http://{news_hostname}:8002/news/" + person["name"]
     response = requests.get(news_endpoint)
