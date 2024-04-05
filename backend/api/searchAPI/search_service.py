@@ -24,6 +24,11 @@ if os.getenv("IDENTITY_DNS"):
 else:
     identity_hostname = "127.0.0.1"
 
+if os.getenv("ANALYTICS_DNS"):
+    analytics_hostname = os.getenv("ANALYTICS_DNS")
+else:
+    analytics_hostname = "127.0.0.1"
+
 def search_person_service(search_query: str):
     params = {"name": search_query}
 
@@ -66,12 +71,12 @@ def get_person_by_id(person_id):
 
 def get_search_result_from_person(person, daily_job=False):
     # get data from azure
-    if not daily_job:
-        try:
-            return get_search_result_azure(person)
-        except Exception as e:
-            print("Not found in cache")
-            print(e)
+    # if not daily_job:
+    #     try:
+    #         return get_search_result_azure(person)
+    #     except Exception as e:
+    #         print("Not found in cache")
+    #         print(e)
 
     news_endpoint = f"http://{news_hostname}:8002/news/" + person["name"]
     response = requests.get(news_endpoint)
@@ -92,8 +97,19 @@ def get_search_result_from_person(person, daily_job=False):
         raise HTTPException(
             status_code=500, detail="Error occurred during identity verification"
         )
-
-    return_object = SearchResult(**response.json())
+    response = response.json()
+    
+    # analytics
+    encapsulated_dict = {"newsArticles": news_articles}
+    analytics_endpoint = f"http://{analytics_hostname}:8004/analytics"
+    analytics_res = requests.post(
+        analytics_endpoint, data=json.dumps(encapsulated_dict)
+    )
+    if analytics_res.status_code != 200:
+        raise HTTPException(
+            status_code=500, detail="Error occurred during analytics retrieval"
+        )
+    return_object = SearchResult(person=response['person'], newsArticles=response['newsArticles'], analytics=analytics_res.json())
     return return_object
 
 
