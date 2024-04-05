@@ -9,7 +9,13 @@ function IdentityMatchChart({
   identityData,
 }) {
   const identityChartRef = useRef(null);
-  const labels = ["0 - 19%", "20 - 39%", "40 - 59%", "60 - 79%", "80 - 100%"]
+  const labels = [
+    '0 - 19%',
+    '20 - 39%',
+    '40 - 59%',
+    '60 - 79%',
+    '80 - 100%',
+  ];
   const rgbColours = [
     'rgb(252 165 165)',
     'rgb(248 113 113)',

@@ -24,7 +24,7 @@ def get_analytics(newsArticles: List[NewsArticle]) -> AnalyticsResult:
             summary_articles.append(newsArticle.summary)
 
     analytics_summary = get_analytics_summary(summary_articles)
-    
+
     # convert risks count to percentage
     risk_dict = get_risk_percentage(risk_dict)
 

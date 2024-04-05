@@ -19,7 +19,7 @@ if os.getenv("OPENAI_API_KEY"):
 def get_analytics_summary(summaries: List[str]):
     input = "Summarise the following articles in less than 150 words in a clear and concise manner without mentioning the numbers. The summary should be written to show what had happened./n"
     count = 1
-    
+
     for summary in summaries:
         input += f"{count}: {summary}\n"
         count += 1

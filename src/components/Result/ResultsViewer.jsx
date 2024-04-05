@@ -57,12 +57,12 @@ function ResultsViewer({ data }) {
               articleDetails == null ? 'lg:w-1/3' : 'lg:w-1/2'
             }`}
           >
-            {articleDetails == null  
-              && (<PersonOverview 
-                  personData={data.person}
-                  analyticsData={analyticsData}
-                />)
-            }
+            {articleDetails == null && (
+              <PersonOverview
+                personData={data.person}
+                analyticsData={analyticsData}
+              />
+            )}
             {articleDetails != null && (
               <NewsSummary
                 article={articleDetails}

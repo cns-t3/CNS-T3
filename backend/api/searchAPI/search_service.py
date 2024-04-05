@@ -98,7 +98,7 @@ def get_search_result_from_person(person, daily_job=False):
             status_code=500, detail="Error occurred during identity verification"
         )
     response = response.json()
-    
+
     # analytics
     encapsulated_dict = {"newsArticles": news_articles}
     analytics_endpoint = f"http://{analytics_hostname}:8004/analytics"

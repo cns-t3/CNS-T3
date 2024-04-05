@@ -15,11 +15,11 @@ class NewsArticle(BaseModel):
     score: int
     category: str
     subject_summary: str
-    
+
 
 class AnalyticsRequest(BaseModel):
     newsArticles: List[NewsArticle]
-    
+
 
 class Risks(BaseModel):
     low: float
