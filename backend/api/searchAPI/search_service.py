@@ -3,7 +3,6 @@ import json
 from fastapi import HTTPException
 from backend.api.searchAPI.pydantic_models import SearchResult
 from backend.api.searchAPI.azure_service import download_from_azure
-from backend.api.searchAPI.analytics import get_analytics
 
 from dotenv import load_dotenv
 import os
@@ -67,12 +66,12 @@ def get_person_by_id(person_id):
 
 def get_search_result_from_person(person, daily_job=False):
     # get data from azure
-    if not daily_job:
-        try:
-            return get_search_result_azure(person)
-        except Exception as e:
-            print("Not found in cache")
-            print(e)
+    # if not daily_job:
+    #     try:
+    #         return get_search_result_azure(person)
+    #     except Exception as e:
+    #         print("Not found in cache")
+    #         print(e)
 
     news_endpoint = f"http://{news_hostname}:8002/news/" + person["name"]
     response = requests.get(news_endpoint)
@@ -93,11 +92,8 @@ def get_search_result_from_person(person, daily_job=False):
         raise HTTPException(
             status_code=500, detail="Error occurred during identity verification"
         )
-    print("1111")
-    # Get analytics
-    analytics = get_analytics(news_articles)
-    print("2222")
-    return_object = SearchResult(person=person, newsArticles=news_articles, analytics=analytics)
+
+    return_object = SearchResult(**response.json())
     return return_object
 
 

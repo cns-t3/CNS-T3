@@ -1,30 +1,39 @@
-from backend.api.searchAPI.pydantic_models import NewsArticle, AnalyticsResult, IdentityScores, Risks
-from backend.api.searchAPI.summary import get_analytics_summary
+from backend.api.analyticsAPI.pydantic_models import NewsArticle, AnalyticsResult, IdentityScores, Risks
+from backend.api.analyticsAPI.summary import get_analytics_summary
 from typing import List
-
+import logging
+logging.basicConfig(level=logging.INFO)
 
 def get_analytics(newsArticles: List[NewsArticle]) -> AnalyticsResult:
+    logging.info("in analytics")
     risk_dict = {}
     categories_dict = {}
-    identity_dict = {"identity_0_19": int, "identity_20_39": int, "identity_40_59": int, "identity_60_79": int, "identity_80_100": int}
+    identity_dict = {"identity_0_19": 0, "identity_20_39": 0, "identity_40_59": 0, "identity_60_79": 0, "identity_80_100": 0}
     summary_articles = []
+    logging.info("after dict")
     
     for newsArticle in newsArticles:
         # calculations for risk, categories
+        logging.info("------")
         risk = newsArticle.risk_rating.lower()
         category = newsArticle.category
         identity = newsArticle.score
+        logging.info("------")
+        logging.info(risk)
+        logging.info(category)
+        logging.info(identity)
 
         add_to_dict(risk_dict, risk)
         add_to_dict(categories_dict, category)
         add_to_dict(identity_dict, get_identity_group(identity))
-        print("3333")
+        logging.info("3333")
         # summary
         if (identity > 75):
             summary_articles.append(newsArticle.summary)
 
         analytics_summary = get_analytics_summary(summary_articles)
-        print("4444")
+        logging.info(analytics_summary)
+        logging.info("4444")
         return AnalyticsResult(
             risks=Risks(**risk_dict),
             categories= categories_dict,
