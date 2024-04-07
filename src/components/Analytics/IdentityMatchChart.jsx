@@ -17,22 +17,18 @@ function IdentityMatchChart({
     '80 - 100%',
   ];
   const rgbColours = [
-    'rgba(252 165 165)',
-    'rgba(248 113 113)',
-    'rgba(239 68 68)',
-    'rgba(220 38 38)',
-    'rgba(185 28 28)',
-    'rgba(153, 27, 27, 1)',
-    'rgba(127, 29, 29, 1)',
+    'rgb(107 114 128)',
+    'rgb(75 85 99)',
+    'rgb(55 65 81)',
+    'rgb(31 41 55)',
+    'rgb(17 24 39)',
   ];
   const twColours = [
-    'bg-darkestRed',
-    'bg-darkerRed',
-    'bg-darkRed',
-    'bg-mediumRed',
-    'bg-lightRed',
-    'bg-lighterRed',
-    'bg-lightestRed',
+    'bg-lightestGrey',
+    'bg-lighterGrey',
+    'bg-midGrey',
+    'bg-darkerGrey',
+    'bg-darkestGrey',
   ];
 
   useEffect(() => {
@@ -43,10 +39,12 @@ function IdentityMatchChart({
     const identityConfig = {
       type: 'bar',
       data: {
+        labels : labels,
         datasets: [
           {
             data: values,
             backgroundColor: colours,
+            hoverBackgroundColor: 'RGB(230, 0, 0)',
           },
         ],
       },
