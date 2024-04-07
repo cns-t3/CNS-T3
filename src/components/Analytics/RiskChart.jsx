@@ -45,7 +45,7 @@ function RiskChart({ riskRatingPercentages }) {
       <div className="text-sm text-textgrey font-semibold py-2">
         Risk
       </div>
-      <div className="h-5 flex flex-row">
+      <div className="h-2.5 flex flex-row">
         <div
           style={{ width: `${riskRatingPercentages.low}%` }}
           className={`${getTailwindWidthClass(riskRatingPercentages.low, 'low')} ${getColorClass('low')}`}
@@ -60,9 +60,9 @@ function RiskChart({ riskRatingPercentages }) {
         />
       </div>
       <div className="flex mt-2 ">
-        <LegendLabel label="Low" colour="green" />
-        <LegendLabel label="Medium" colour="orange" />
-        <LegendLabel label="High" colour="red" />
+        <LegendLabel label="Low" colour="bg-green" />
+        <LegendLabel label="Medium" colour="bg-orange" />
+        <LegendLabel label="High" colour="bg-red" />
       </div>
     </div>
   );

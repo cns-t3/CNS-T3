@@ -17,22 +17,22 @@ function IdentityMatchChart({
     '80 - 100%',
   ];
   const rgbColours = [
-    'rgb(252 165 165)',
-    'rgb(248 113 113)',
-    'rgb(239 68 68)',
-    'rgb(220 38 38)',
-    'rgb(185 28 28)',
-    'rgb(153 27 27)',
-    'rgb(127 29 29)',
+    'rgba(252 165 165)',
+    'rgba(248 113 113)',
+    'rgba(239 68 68)',
+    'rgba(220 38 38)',
+    'rgba(185 28 28)',
+    'rgba(153, 27, 27, 1)',
+    'rgba(127, 29, 29, 1)',
   ];
   const twColours = [
-    'darkestRed',
-    'darkerRed',
-    'darkRed',
-    'mediumRed',
-    'lightRed',
-    'lighterRed',
-    'lightestRed',
+    'bg-darkestRed',
+    'bg-darkerRed',
+    'bg-darkRed',
+    'bg-mediumRed',
+    'bg-lightRed',
+    'bg-lighterRed',
+    'bg-lightestRed',
   ];
 
   useEffect(() => {
@@ -47,10 +47,6 @@ function IdentityMatchChart({
           {
             data: values,
             backgroundColor: colours,
-            borderColor: colours,
-            barThickness: 6,
-            borderWidth: 0,
-            minBarLength: 1,
           },
         ],
       },

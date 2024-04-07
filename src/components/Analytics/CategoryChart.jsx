@@ -19,13 +19,13 @@ function CategoryChart({
     'rgb(127 29 29)',
   ];
   const twColours = [
-    'darkestRed',
-    'darkerRed',
-    'darkRed',
-    'mediumRed',
-    'lightRed',
-    'lighterRed',
-    'lightestRed',
+    'bg-darkestRed',
+    'bg-darkerRed',
+    'bg-darkRed',
+    'bg-mediumRed',
+    'bg-lightRed',
+    'bg-lighterRed',
+    'bg-lightestRed',
   ];
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function CategoryChart({
         ],
       },
       options: {
-        cutout: '50%',
+        cutout: '55%',
         rotation: 270,
         circumference: 360,
         plugins: {
@@ -73,7 +73,7 @@ function CategoryChart({
       <div className="text-sm text-textgrey font-semibold py-3">
         Category
       </div>
-      <div className="grid grid-cols-2 space-x-2">
+      <div className="grid grid-cols-2 space-x-5">
         <div>
           <canvas ref={categoryChartRef} />
         </div>
