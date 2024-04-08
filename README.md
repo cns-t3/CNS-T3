@@ -42,7 +42,7 @@ On localhost, the rewrite will be made to the 127.0.0.1:8000 port, which is wher
 ## System Architecture
 
 <div align="center">
-	<img src="./public/readme/microservice_diagram.jpg" alt="microservice" width="800" height="600">
+	<img src="./public/readme/microservice_diagram.jpg" alt="microservice" style="width:auto; max-height:600px">
 </div>
 
 <p align="right">(<a href="#table-of-contents">back to top</a>)</p>
@@ -50,7 +50,7 @@ On localhost, the rewrite will be made to the 127.0.0.1:8000 port, which is wher
 ## Microservice Architecture
 
 <div align="center">
-	<img src="./public/readme/system_archi.jpg" alt="system" width="600" height="400">
+	<img src="./public/readme/system_archi.jpg" alt="system" max-height="400">
 </div>
 
 <p align="right">(<a href="#table-of-contents">back to top</a>)</p>
