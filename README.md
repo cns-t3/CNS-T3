@@ -7,12 +7,29 @@
 
 ## Table of Contents
 
-1. [Introduction] (#introduction)
-2. [System Architecture] (#system-architecture)
-3. [Microservice Architecture] (#microservice-architecture)
-4. [Getting Started] (#getting-started)
-5. [CI/CD] (#ci/cd)
-6. [Styling] (#styling)
+<details id="table-of-contents">
+    <summary>Content Page</summary>
+    <ol>
+        <li>
+            <a href="#introduction">Introduction</a>
+        </li>
+        <li>
+            <a href="#system-architecture">System Architecture</a>
+        </li>
+        <li>
+            <a href="#microservice-architecture">Microservice Architecture</a>
+        </li>
+        <li>
+            <a href="#getting-started">Getting Started</a>
+        </li>
+        <li>
+            <a href="#ci-cd">CI/CD</a>
+        </li>
+        <li>
+            <a href="#styling">Styling</a>
+        </li>
+    </ol>
+</details>
 
 ## Introduction
 
@@ -25,7 +42,7 @@ On localhost, the rewrite will be made to the 127.0.0.1:8000 port, which is wher
 ## System Architecture
 
 <div align="center">
-	<img src="./public/readme/microservice_diagram.jpg" alt="microservice" width="500" height="600">
+	<img src="./public/readme/microservice_diagram.jpg" alt="microservice" width="800" height="600">
 </div>
 
 <p align="right">(<a href="#table-of-contents">back to top</a>)</p>
