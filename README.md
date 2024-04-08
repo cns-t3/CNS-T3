@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+  <img src="./public/logo.png" alt="Logo" width="30%">
+  <p>
+    Client News Screening - Insightify
+  </p>
+</div>
+
+<summary> 
+    <h2> Table of Contents </h2>
+    1. [Introduction] (#introduction)
+    2. [System Architecture] (#system-architecture)
+    3. [Microservice Architecture] (#microservice-architecture)
+    4. [Getting Started] (#getting-started)
+    5. [CI/CD] (#ci/cd)
+    6. [Styling] (#styling)
+
+</summary>
+
+## Introduction
+
+<p style="text-align: justify;">
+    The objective of our application is to smoothen and automate the KYC process for banks. Our application uses `Next.js` for the frontend, `Python FastAPI` as the API backend, `Tailwind` for the CSS styling library and is deployed on `Azure Cloud` via k8s and Docker containers. Automated Docs with Swagger UI has been set up under the `/docs` route.
+
+    On localhost, the rewrite will be made to the 127.0.0.1:8000 port, which is where the FastAPI server is running. The frontend NextJs app is routed by default to the 127.0.0.1:3000 port.
+</p>
+
+<p align="right">(<a href="#table-of-contents">back to top</a>)</p>
+
+## System Architecture
+
+<div align="center">
+	<img src="./public/readme/microservice_diagram.jpg" alt="microservice" width="300" height="600">
+</div>
+
+<p align="right">(<a href="#table-of-contents">back to top</a>)</p>
+
+## Microservice Architecture
+
+<div align="center">
+	<img src="./public/readme/system_archi.jpg" alt="system" width="600" height="400">
+</div>
+
+<p align="right">(<a href="#table-of-contents">back to top</a>)</p>
 
 ## Getting Started
 
-First, run the development server:
+Prerequisites: Node.js > v18.17 , Python > v3.8 to run application on local server.
 
+#### Setting up frontend
+First, install the dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm i
+or
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Setting up backend
+##### if using pip as package manager
+Then, install backend packages
+```bash
+cd backend
+pip install requirements.txt
+or
+pip3 install requirements.txt
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+#### Setting up Environment Variables
+Following the `.env.example` file create a `.env` file with the same fields and populate it with the appropriate fields. `Please contact us for our API Keys and credentials`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Then, run the development server:
+```bash
+npm run dev
+&& 
+uvicorn backend.api.personAPI.main:app --port 8001 & uvicorn backend.api.newsAPI.main:app --port 8002 & uvicorn backend.api.searchAPI.main:app --port 8000
+```
 
-## Learn More
+The FastApi server (searchAPI Complex Microservice) will be running on http://127.0.0.1:8000, while the NextJs frontend will be running on http://127.0.0.1:3000.
 
-To learn more about Next.js, take a look at the following resources:
+#### Running Unit and Integration Tests
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run the command below to run all backend unit and integration tests:
+```bash
+coverage run -m unittest discover backend/tests
+```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### Fixing Typescript Linting error 
 
-## Deploy on Vercel
+1. Install ESLint extension for VSCode, other helpful extensions are Prettier, Tailwind CSS, and Error Lens.
+2. Run `npm run airbnb-lint:fix` or `npm run lint:fix` to check for and fix linting errors.
+3. If there are errors that cannot be fixed automatically, you will have to check the cli for the errors and fix them manually.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Database Migrations
+
+With Alembic, revisions to models via sqlalchemy can be used to automatically migrate the database, reducing the hassle of manual database reconfiguration 
+
+View current db version
+```bash
+alembic current
+```
+
+After modifying ORM code / models
+```bash
+alembic revision --autogenerate -m "YOUR MIGRATION MESSAGE"
+```
+
+After checking the generated revisions are okay
+```bash
+alembic upgrade HEAD 
+# alternatively specify the revision hash initials to upgrade to a specific version
+```
+
+To downgrade to the previous version
+```bash
+alembic downgrade -1
+# alternatively specify the revision hash initials to downgrade to a specific version 
+# or alembic downgrade base to reset to initial state
+```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## CI/CD 
+
+We have one CI workflow: `pipeline.yml` and one CD workflow: `cd-pipeline.yaml` that runs after the CI pipeline is completed. These integrations are run on every push to main - CI piepline is run on every branch while CD pipeline is only run on push to main.
+
+Within each workflow, we run an assortment of checks and tests to ensure that the code is up to standard. These include:
+- npm-vulnerabilities-check
+- SAST-scan
+- lint-nextjs
+- lint-fastapi
+- unit-test-fastapi
+- sonarqube-scans
+
+We have CD which deploys to production (Azure Kubernetes Service) on every push to main. This is done via the yaml configuration files under the `k8s` folder. There are Dockerfiles for the frontend-service and for each backend API endpoint, and our `cd-pipeline.yaml` builds the Docker images and pushes them to the Docker Registry.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Styling
+
+Refer to tailwind.config.ts for list of classes (under theme.extend.colors) that can be used to style the components. 
+
+Do not use the default tailwind classes.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
