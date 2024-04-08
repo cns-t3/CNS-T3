@@ -35,14 +35,14 @@
 
 The objective of our application is to smoothen and automate the KYC process for banks. Our application uses `Next.js` for the frontend, `Python FastAPI` as the API backend, `Tailwind` for the CSS styling library and is deployed on `Azure Cloud` via k8s and Docker containers. Automated Docs with Swagger UI has been set up under the /docs route.
 
-On localhost, the rewrite will be made to the 127.0.0.1:8000 port, which is where the FastAPI server is running. The frontend NextJs app is routed by default to the 127.0.0.1:3000 port.
+On localhost, the rewrite will be made to the `127.0.0.1:8000` port, which is where the FastAPI server is running. The frontend NextJs app is routed by default to the `127.0.0.1:3000` port.
 
 <p align="right">(<a href="#table-of-contents">back to top</a>)</p>
 
 ## System Architecture
 
 <div align="center">
-	<img src="./public/readme/microservice_diagram.jpg" alt="microservice" style="width:auto; max-height:400px">
+	<img src="./public/readme/microservice_diagram.jpg" alt="microservice" max-height="400">
 </div>
 
 <p align="right">(<a href="#table-of-contents">back to top</a>)</p>
@@ -50,7 +50,7 @@ On localhost, the rewrite will be made to the 127.0.0.1:8000 port, which is wher
 ## Microservice Architecture
 
 <div align="center">
-	<img src="./public/readme/system_archi.jpg" alt="system" max-height="400">
+	<img src="./public/readme/system_archi.jpg" alt="system" height="400">
 </div>
 
 <p align="right">(<a href="#table-of-contents">back to top</a>)</p>
