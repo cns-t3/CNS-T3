@@ -39,7 +39,7 @@ function IdentityMatchChart({
     const identityConfig = {
       type: 'bar',
       data: {
-        labels : labels,
+        labels,
         datasets: [
           {
             data: values,
