@@ -5,31 +5,27 @@
   </p>
 </div>
 
-<summary> 
-    <h2> Table of Contents </h2>
-    1. [Introduction] (#introduction)
-    2. [System Architecture] (#system-architecture)
-    3. [Microservice Architecture] (#microservice-architecture)
-    4. [Getting Started] (#getting-started)
-    5. [CI/CD] (#ci/cd)
-    6. [Styling] (#styling)
+## Table of Contents
 
-</summary>
+1. [Introduction] (#introduction)
+2. [System Architecture] (#system-architecture)
+3. [Microservice Architecture] (#microservice-architecture)
+4. [Getting Started] (#getting-started)
+5. [CI/CD] (#ci/cd)
+6. [Styling] (#styling)
 
 ## Introduction
 
-<p style="text-align: justify;">
-    The objective of our application is to smoothen and automate the KYC process for banks. Our application uses `Next.js` for the frontend, `Python FastAPI` as the API backend, `Tailwind` for the CSS styling library and is deployed on `Azure Cloud` via k8s and Docker containers. Automated Docs with Swagger UI has been set up under the `/docs` route.
+The objective of our application is to smoothen and automate the KYC process for banks. Our application uses `Next.js` for the frontend, `Python FastAPI` as the API backend, `Tailwind` for the CSS styling library and is deployed on `Azure Cloud` via k8s and Docker containers. Automated Docs with Swagger UI has been set up under the /docs route.
 
-    On localhost, the rewrite will be made to the 127.0.0.1:8000 port, which is where the FastAPI server is running. The frontend NextJs app is routed by default to the 127.0.0.1:3000 port.
-</p>
+On localhost, the rewrite will be made to the 127.0.0.1:8000 port, which is where the FastAPI server is running. The frontend NextJs app is routed by default to the 127.0.0.1:3000 port.
 
 <p align="right">(<a href="#table-of-contents">back to top</a>)</p>
 
 ## System Architecture
 
 <div align="center">
-	<img src="./public/readme/microservice_diagram.jpg" alt="microservice" width="300" height="600">
+	<img src="./public/readme/microservice_diagram.jpg" alt="microservice" width="500" height="600">
 </div>
 
 <p align="right">(<a href="#table-of-contents">back to top</a>)</p>
@@ -44,7 +40,7 @@
 
 ## Getting Started
 
-Prerequisites: Node.js > v18.17 , Python > v3.8 to run application on local server.
+<b>Prerequisites</b>: Node.js > v18.17 , Python > v3.8 to run application on local server.
 
 #### Setting up frontend
 First, install the dependencies
@@ -55,7 +51,6 @@ npm install
 ```
 
 #### Setting up backend
-##### if using pip as package manager
 Then, install backend packages
 ```bash
 cd backend
@@ -82,7 +77,6 @@ Run the command below to run all backend unit and integration tests:
 ```bash
 coverage run -m unittest discover backend/tests
 ```
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 #### Fixing Typescript Linting error 
 
@@ -96,7 +90,7 @@ coverage run -m unittest discover backend/tests
 
 With Alembic, revisions to models via sqlalchemy can be used to automatically migrate the database, reducing the hassle of manual database reconfiguration 
 
-View current db version
+View current DB version
 ```bash
 alembic current
 ```
@@ -140,6 +134,6 @@ We have CD which deploys to production (Azure Kubernetes Service) on every push 
 
 Refer to tailwind.config.ts for list of classes (under theme.extend.colors) that can be used to style the components. 
 
-Do not use the default tailwind classes.
+<strong>Do not</strong> use the default tailwind classes.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
