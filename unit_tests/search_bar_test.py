@@ -7,7 +7,7 @@ driver = webdriver.Chrome()
 driver.implicitly_wait(10)
 
 # Open the React application URL
-driver.get("http://localhost:3000/home")
+driver.get("http://localhost:3000/")
 
 try:
     search_input = driver.find_element(By.ID, "large-input")

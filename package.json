@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "shx cp ./backend/config/categories.json ./public/categories.json && shx cp ./backend/config/news_sources.json ./public/news_sources.json && next dev",
-    "build": "shx cp ./backend/config/categories.json ./public/categories.json && shx cp ./backend/config/news_sources.json ./public/news_sources.json && next build",
-    "start": "shx cp ./backend/config/categories.json ./public/categories.json && shx cp ./backend/config/news_sources.json ./public/news_sources.json && next start",
+    "dev": "shx cp ./backend/api/newsAPI/categories.json ./public/categories.json && shx cp ./backend/api/newsAPI/news_sources.json ./public/news_sources.json && next dev",
+    "build": "shx cp ./backend/api/newsAPI/categories.json ./public/categories.json && shx cp ./backend/api/newsAPI/news_sources.json ./public/news_sources.json && next build",
+    "start": "shx cp ./backend/api/newsAPI/categories.json ./public/categories.json && shx cp ./backend/api/newsAPI/news_sources.json ./public/news_sources.json && next start",
     "lint": "next lint",
     "airbnb-lint": "./node_modules/.bin/eslint"
 },

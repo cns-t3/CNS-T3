@@ -50,6 +50,19 @@ def search_persons_service():
         search_result_arr.append(get_search_result_from_person(person, True))
     return search_result_arr
 
+def get_person_by_id(person_id):
+    params = {"person_id": person_id}
+
+    # Get person's profile
+    person_endpoint = f"http://{person_hostname}:8001/persons/id"
+    response = requests.get(person_endpoint, params=params)
+    if response.status_code != 200:
+        raise HTTPException(
+            status_code=404, detail="No person found with the provided name"
+        )
+    person = response.json()
+    return get_search_result_from_person(person)
+
 
 def get_search_result_from_person(person, daily_job=False):
     # get data from azure
@@ -60,7 +73,7 @@ def get_search_result_from_person(person, daily_job=False):
             print("Not found in cache")
             print(e)
 
-    news_endpoint = "http://{news_hostname}:8002/news/" + person["name"]
+    news_endpoint = f"http://{news_hostname}:8002/news/" + person["name"]
     response = requests.get(news_endpoint)
     if response.status_code != 200:
         raise HTTPException(

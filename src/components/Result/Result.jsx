@@ -20,6 +20,7 @@ function Result({ data }) {
   const [selectedFilterOptions, setSelectedFilterOptions] = useState({
     riskRating: ['low', 'medium', 'high'],
     category: defaultCategoryOptions,
+    identityMatch: 0,
     date: 'all time',
   });
   const [filteredData, setFilteredData] = useState(data);
@@ -60,6 +61,7 @@ function Result({ data }) {
     });
   };
 
+  // Sort articles by ascending date
   const sortArticlesByAscendingDate = () => {
     setFilteredData((prevData) => {
       const sortedArticles = [...prevData.newsArticles].sort(
@@ -69,14 +71,30 @@ function Result({ data }) {
     });
   };
 
+  // Sort articles by identity match
+  const sortArticlesByIdentityMatch = (asc = true) => {
+    setFilteredData((prevData) => {
+      const sortedArticles = [...prevData.newsArticles].sort((a, b) => {
+        if (asc) {
+          return a.score - b.score;
+        }
+
+        return b.score - a.score;
+      });
+      return { ...prevData, newsArticles: sortedArticles };
+    });
+  };
+
   const sortArticles = () => {
     if (selectedSortOption === 'Newest to Oldest') {
       sortArticlesByAscendingDate();
     } else if (selectedSortOption === 'Oldest to Newest') {
       sortArticlesByDescendingDate();
+    } else if (selectedSortOption.includes('Identity Match')) {
+      sortArticlesByIdentityMatch(selectedSortOption === 'Low to High Identity Match');
     } else {
       // Added this line to call the sortArticlesByRiskRating function
-      sortArticlesByRiskRating(selectedSortOption === 'High Risk to Low Risk');
+      sortArticlesByRiskRating(selectedSortOption === 'High to Low Risk');
     }
   };
 
@@ -121,11 +139,12 @@ function Result({ data }) {
     const riskRatingOptions = inputSelectedFilterOptions.riskRating;
     const categoryOptions = inputSelectedFilterOptions.category;
     const dateOption = inputSelectedFilterOptions.date;
+    const identityMatchScore = inputSelectedFilterOptions.identityMatch;
 
     const dates = processDateOption(dateOption);
 
     if (
-      riskRatingOptions.length === 3 && categoryOptions.length === 5 && dateOption === 'all time'
+      riskRatingOptions.length === 3 && categoryOptions.length === 5 && dateOption === 'all time' && identityMatchScore === 0
     ) {
       return inputData;
     }
@@ -133,14 +152,16 @@ function Result({ data }) {
     if (dateOption === 'all time') {
       filteredArticles = data.newsArticles.filter(
         (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
-        && categoryOptions.includes(article.category.toLowerCase()),
+        && categoryOptions.includes(article.category.toLowerCase())
+        && article.score >= identityMatchScore,
       );
     } else {
       filteredArticles = inputData.newsArticles.filter(
         (article) => riskRatingOptions.includes(article.risk_rating.toLowerCase())
         && categoryOptions.includes(article.category.toLowerCase())
         && new Date(article.publishedAt) > dates[0]
-        && new Date(article.publishedAt) < dates[1],
+        && new Date(article.publishedAt) < dates[1]
+        && article.score >= identityMatchScore,
       );
     }
     return {
@@ -170,6 +191,7 @@ function Result({ data }) {
         setFilterNow={setFilterNow}
         selectedSortOption={selectedSortOption}
         setSelectedSortOption={setSelectedSortOption}
+        categoryOptions={defaultCategoryOptions}
       />
       <ResultsViewer data={filteredData} />
     </>

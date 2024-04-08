@@ -1,19 +1,10 @@
-'use client';
+import React from 'react';
 
-import React, { useEffect, useState } from 'react';
-
-function CategoryFilter({ selectedFilterOptions, setSelectedFilterOptions }) {
-  const [categoryOptions, setCategories] = useState([]);
-
-  useEffect(() => {
-    fetch('/categories.json')
-      .then((response) => response.json())
-      .then((data) => {
-        const categoryNames = Object.keys(data.categories).map((cat) => cat.toLowerCase());
-        setCategories(categoryNames);
-      });
-  }, []);
-
+function CategoryFilter({
+  selectedFilterOptions,
+  setSelectedFilterOptions,
+  categoryOptions,
+}) {
   const handleCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
     setSelectedFilterOptions((prevState) => ({

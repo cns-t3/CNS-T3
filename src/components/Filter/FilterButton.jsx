@@ -11,19 +11,9 @@ function FilterButton({
   selectedFilterOptions,
   setSelectedFilterOptions,
   setFilterNow,
+  categoryOptions,
 }) {
   const [isFilterOpen, setFilterOpen] = useState(false);
-  const [categoryOptions, setCategories] = useState([]);
-
-  useEffect(() => {
-    fetch('/categories.json')
-      .then((response) => response.json())
-      .then((data) => {
-        const categoryNames = Object.keys(data.categories).map((cat) => cat.toLowerCase());
-        setCategories(categoryNames);
-      });
-  }, []);
-
   const dropdownRef = useRef();
 
   useEffect(() => {
@@ -71,7 +61,7 @@ function FilterButton({
         <span className="text-sm pl-2">Filter</span>
       </button>
       {isFilterOpen && (
-        <div className="absolute mt-[6px] right-0 bg-white rounded-md border border-gray-200 shadow-lg z-50 w-64 py-2 px-3">
+        <div className="absolute mt-[6px] right-0 bg-white rounded-md border border-gray-200 shadow-lg z-50 w-64 py-2 px-3 lg:overflow-y-auto lg:h-[calc(100vh-160px)]">
           <form method="POST">
             <div className="mx-2 my-4 font-semibold">Filter By</div>
 
@@ -99,6 +89,7 @@ function FilterButton({
             <CategoryFilter
               selectedFilterOptions={selectedFilterOptions}
               setSelectedFilterOptions={setSelectedFilterOptions}
+              categoryOptions={categoryOptions}
             />
 
             <div className="grid grid-cols-2 gap-2 m-2 mt-5">
