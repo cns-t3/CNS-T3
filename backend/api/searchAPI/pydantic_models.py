@@ -32,9 +32,9 @@ class Person(BaseModel):
     img_url: str | None
 
 class Risks(BaseModel):
-    low: int
-    medium: int
-    high: int
+    low: float
+    medium: float
+    high: float
 
 
 class IdentityScores(BaseModel):

@@ -18,4 +18,4 @@ spec:
       - name: frontend-container
         image: fyp2024/frontend:${COMMIT-HASH}
         ports:
-        - containerPort: 3000
+        - containerPort: 80

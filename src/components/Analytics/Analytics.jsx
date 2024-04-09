@@ -17,7 +17,7 @@ function Analytics({
         <IdentityMatchChart identityData={analyticsData.identityScores} />
         <CategoryChart categoryData={analyticsData.categories} />
       </div>
-      <Summary summary={analyticsData.summary} />
+      {analyticsData.summary!== "" && <Summary summary={analyticsData.summary} />}
     </div>
   );
 }

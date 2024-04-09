@@ -64,7 +64,7 @@ def get_summarised_news_articles(search_query: str):
         + os.getenv("NEWS_API_KEY")
         + "&keyword="
         + search_query
-        + "&lang=eng&articlesSortBy=rel&articlesCount=20&isDuplicateFilter=skipDuplicates&dateStart=2023-01-01&dateEnd="
+        + "&lang=eng&articlesSortBy=rel&articlesCount=20&isDuplicateFilter=skipDuplicates&dateStart=2024-01-01&dateEnd="
         + today
     )
 

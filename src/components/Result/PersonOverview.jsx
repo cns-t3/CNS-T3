@@ -5,11 +5,13 @@ import Analytics from '../Analytics/Analytics';
 function PersonOverview({
   personData,
   analyticsData,
+  showAnalytics,
 }) {
   return (
     <div className="flex flex-col">
       <Profile profileDetails={personData} />
-      <Analytics analyticsData={analyticsData} />
+      {showAnalytics}
+      {showAnalytics && <Analytics analyticsData={analyticsData} />}
     </div>
   );
 }
