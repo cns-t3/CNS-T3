@@ -3,7 +3,6 @@
 import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import LegendLabel from './LegendLabel';
 
 function IdentityMatchChart({
   identityData,
@@ -22,13 +21,6 @@ function IdentityMatchChart({
     'rgb(55 65 81)',
     'rgb(31 41 55)',
     'rgb(17 24 39)',
-  ];
-  const twColours = [
-    'bg-lightestGrey',
-    'bg-lighterGrey',
-    'bg-midGrey',
-    'bg-darkerGrey',
-    'bg-darkestGrey',
   ];
 
   useEffect(() => {
@@ -75,23 +67,12 @@ function IdentityMatchChart({
   }, [identityData]);
 
   return (
-    <div className="py-2">
+    <div className="py-2 w-full sm:w-[50%] lg:w-full sm:pr-7 lg:pr-0">
       <div className="text-sm text-textgrey font-semibold py-3">
         Identity Score
       </div>
       <div className="w-full">
-        <canvas ref={identityChartRef} />
-      </div>
-      <div>
-        <div className="flex flex-row">
-          <LegendLabel label={labels[0]} colour={twColours[0]} />
-          <LegendLabel label={labels[1]} colour={twColours[1]} />
-          <LegendLabel label={labels[2]} colour={twColours[2]} />
-        </div>
-        <div className="flex flex-row">
-          <LegendLabel label={labels[3]} colour={twColours[3]} />
-          <LegendLabel label={labels[4]} colour={twColours[4]} />
-        </div>
+        <canvas ref={identityChartRef} className="w-full h-auto" />
       </div>
     </div>
   );

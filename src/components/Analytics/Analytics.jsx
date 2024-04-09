@@ -13,8 +13,10 @@ function Analytics({
         Overview
       </div>
       <RiskChart riskRatingPercentages={analyticsData.risks} />
-      <IdentityMatchChart identityData={analyticsData.identityScores} />
-      <CategoryChart categoryData={analyticsData.categories} />
+      <div className=" w-full flex sm:flex-row lg:flex-col flex-col">
+        <IdentityMatchChart identityData={analyticsData.identityScores} />
+        <CategoryChart categoryData={analyticsData.categories} />
+      </div>
       <Summary summary={analyticsData.summary} />
     </div>
   );

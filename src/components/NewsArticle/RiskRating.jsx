@@ -14,10 +14,10 @@ function RiskRating({ riskRating }) {
     let chartColor;
     switch (riskRating) {
       case 'Low':
-        chartColor = '#2ecc71'; // Green for low risk
+        chartColor = '#30a400'; // Green for low risk
         break;
       case 'Medium':
-        chartColor = '#f39c12'; // Orange for medium risk
+        chartColor = '#fec300'; // Orange for medium risk
         break;
       case 'High':
         chartColor = '#E60000'; // Red for high risk

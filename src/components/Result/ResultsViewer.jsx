@@ -29,9 +29,9 @@ function ResultsViewer({ data }) {
 
   const analyticsData = {
     risks: {
-      low: 63.2,
-      medium: 36.8,
-      high: 0,
+      low: 60,
+      medium: 30,
+      high: 10,
     },
     categories: {
       'Source Of Wealth': 7,
@@ -49,7 +49,7 @@ function ResultsViewer({ data }) {
   };
 
   return (
-    <div className="fixed top-[210px] md:top-[160px] z-0">
+    <div className="fixed top-[210px] md:top-[160px] z-0 h-[calc(100vh-180px)] overflow-y-auto">
       <div className="px-10">
         <div className="flex flex-col lg:flex-row w-full">
           <div

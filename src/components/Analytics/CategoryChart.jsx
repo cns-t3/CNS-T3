@@ -69,13 +69,13 @@ function CategoryChart({
   }, [categoryData]);
 
   return (
-    <div className="py-2">
+    <div className="py-2 w-full sm:w-[50%] lg:w-full">
       <div className="text-sm text-textgrey font-semibold py-3">
         Category
       </div>
       <div className="grid grid-cols-2 space-x-5">
         <div>
-          <canvas ref={categoryChartRef} />
+          <canvas ref={categoryChartRef} className="w-full h-auto" />
         </div>
         <div className="flex flex-col">
           {Object.keys(categoryData).map((label, index) => (
