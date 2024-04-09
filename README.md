@@ -37,10 +37,10 @@
 
 ## Introduction
 
-<br>
 <div align="center">
 	<img src="./public/readme/insightify_ui.jpg" alt="system" height="400">
 </div>
+<br>
 
 The objective of our application is to smoothen and automate the KYC process for banks. Our application uses `Next.js` for the frontend, `Python FastAPI` as the API backend, `Tailwind` for the CSS styling library and is deployed on `Azure Cloud` via k8s and Docker containers. Automated Docs with Swagger UI has been set up under the /docs route.
 
