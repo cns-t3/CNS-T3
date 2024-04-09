@@ -1,5 +1,6 @@
 import requests
 import json
+from datetime import datetime
 from fastapi import HTTPException
 from backend.api.searchAPI.pydantic_models import SearchResult
 from backend.api.searchAPI.azure_service import download_from_azure
@@ -24,9 +25,9 @@ if os.getenv("IDENTITY_DNS"):
 else:
     identity_hostname = "127.0.0.1"
 
+
 def search_person_service(search_query: str):
     params = {"name": search_query}
-
     # Get person's profile
     person_endpoint = f"http://{person_hostname}:8001/persons/search/"
     response = requests.get(person_endpoint, params=params)
@@ -49,6 +50,7 @@ def search_persons_service():
     for person in persons:
         search_result_arr.append(get_search_result_from_person(person, True))
     return search_result_arr
+
 
 def get_person_by_id(person_id):
     params = {"person_id": person_id}
@@ -81,7 +83,10 @@ def get_search_result_from_person(person, daily_job=False):
         )
 
     news_articles = response.json()
-    search_result = SearchResult(person=person, newsArticles=news_articles)
+    date_str = datetime.today().strftime("%Y-%m-%d")
+    search_result = SearchResult(
+        person=person, newsArticles=news_articles, lastUpdated=date_str
+    )
 
     # Get identity matching score
     identity_endpoint = f"http://{identity_hostname}:8003/identity"
@@ -93,12 +98,13 @@ def get_search_result_from_person(person, daily_job=False):
             status_code=500, detail="Error occurred during identity verification"
         )
 
-    return_object = SearchResult(**response.json())
+    return_object = SearchResult(**response.json(), lastUpdated=date_str)
     return return_object
 
 
 def get_search_result_azure(person):
     blob_name = str(person["person_id"])
-    json_data = json.loads(download_from_azure(blob_name))
-    result = SearchResult(**json_data)
+    azure_search_results, date_str = download_from_azure(blob_name)
+    json_data = json.loads(azure_search_results)
+    result = SearchResult(**json_data, lastUpdated=date_str)
     return result
