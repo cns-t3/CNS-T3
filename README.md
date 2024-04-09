@@ -15,7 +15,7 @@
             <a href="#introduction">Introduction</a>
         </li>
         <li>
-            <a href="#features">Features</a>
+            <a href="#important-features">Important Features</a>
         </li>
         <li>
             <a href="#system-architecture">System Architecture</a>
@@ -37,6 +37,7 @@
 
 ## Introduction
 
+<br>
 <div align="center">
 	<img src="./public/readme/insightify_ui.jpg" alt="system" height="400">
 </div>
