@@ -30,6 +30,10 @@ export default function NewsSummary({ article, onClose }) {
         <div className="flex items-center">
           <h1 className="text-xl font-bold text-gray-800">{article.title}</h1>
         </div>
+        <div className="pt-4">
+          <p className="font-semibold text-sm">Risk Justification:</p>
+          <p className="text-gray-600 text-sm pt-2">{article.risk_justification}</p>
+        </div>
         {/* Summary with smaller font */}
         <div className="pt-4">
           <p className="font-semibold text-sm">Summary:</p>
@@ -54,9 +58,6 @@ export default function NewsSummary({ article, onClose }) {
               {article.source_url}
             </a>
           </div>
-        </div>
-        <div className="mt-4">
-          <p>{article.risk_justification}</p>
         </div>
       </div>
     </div>

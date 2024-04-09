@@ -8,7 +8,7 @@
 
 3. Determine whether the article focuses on an individual engaging in the action rather than their associated company, and provide a true or false response. For example, ascertain if the article is about Tim Cook investing personally, not Apple as a company.
 
-4. Give me a risk rating (low, medium or high) based on the following cases and include a brief 15 word reasoning as the justification for the risk:
+4. Give me a risk rating (low, medium or high) based on the following cases and a brief 15 word reasoning as the justification for the risk that you have given:
 High Risk Rating Cases:
 - Legal Issues: Scandals or legal troubles involving the client, News about the client being involved in fraud or money laundering investigations.
 - Financial Distress: Reports of the client facing bankruptcy or financial instability, Significant debt or default issues.

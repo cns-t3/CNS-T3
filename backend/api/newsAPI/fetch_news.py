@@ -89,7 +89,7 @@ def get_summarised_news_articles(search_query: str):
             categories = [""] * len(articles)
             risks = [""] * len(articles)
             subject_summaries = [""] * len(articles)
-            risk_justifications = [""] * len(articles)
+            justifications = [""] * len(articles)
 
             # the summaries are not returned in the same order as the articles, so we need to keep track of the order
             for count, article in enumerate(articles):
@@ -102,7 +102,7 @@ def get_summarised_news_articles(search_query: str):
                         categories,
                         risks,
                         subject_summaries,
-                        risk_justifications,
+                        justifications,
                     ),
                 )
                 thread.start()
@@ -130,7 +130,7 @@ def get_summarised_news_articles(search_query: str):
                 news_articles[i].category = categories[i]
                 news_articles[i].risk_rating = risks[i]
                 news_articles[i].subject_summary = subject_summaries[i]
-                news_articles[i].risk_justification = risk_justifications[i]
+                news_articles[i].risk_justification = justifications[i]
             return news_articles
     except Exception as e:
         print("Error: ", e)
@@ -172,10 +172,10 @@ def summarise_article(article_body, client):
     return result
 
 
-def handle_body(article_body, news_id, summaries, categories, risks, subject_summaries,risk_justifications):
+def handle_body(article_body, news_id, summaries, categories, risks, subject_summaries,justifications):
     result = summarise_article(article_body, openAI_client)
     summaries[news_id] = result["summary"]
     categories[news_id] = result["category"]
     risks[news_id] = result["risk_rating"]
     subject_summaries[news_id] = result["subject_summary"]
-    risk_justifications[news_id] = result["risk_justification"]
+    justifications[news_id] = result["risk_justification"]

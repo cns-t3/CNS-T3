@@ -89,14 +89,14 @@ function RiskRating({ riskRating, riskJustification }) {
           </span>
         </p>
       </div>
-      {showJustification && (
+      {/* {showJustification && (
         <div className="absolute z-10 w-auto p-2 bg-white rounded-md shadow-lg 
         text-sm text-gray-700 transform -translate-x-1/2 left-1/2 
         top-full mt-2"
         >
           {riskJustification}
         </div>
-      )}
+      )} */}
     </div>
   );
 }
