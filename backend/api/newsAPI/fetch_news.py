@@ -1,5 +1,6 @@
 from openai import OpenAI
 from dotenv import load_dotenv
+from datetime import datetime
 from backend.api.newsAPI.pydantic_models import NewsArticle
 from tenacity import (
     retry,
@@ -38,7 +39,7 @@ def get_prompt():
 
 
 def get_search_patterns():
-    with open("backend/config/categories.json", "r") as file:
+    with open("backend/api/newsAPI/categories.json", "r") as file:
         data = json.load(file)
     formatted_string = ", ".join(
         [
@@ -50,21 +51,26 @@ def get_search_patterns():
     return formatted_string
 
 def get_reputable_news_sources():
-    with open('backend/api/newsAPI/news_sources.json', 'r') as file:
+    with open("backend/api/newsAPI/news_sources.json", "r") as file:
         data = json.load(file)
-    return data['sources']
+    return data["sources"]
+
 
 def get_summarised_news_articles(search_query: str):
     """
     Retrieves and summarises news articles using NewsAI API and GPT-3.5 API.
     """
+    today = datetime.today().strftime('%Y-%m-%d')
+
     url = (
         "http://eventregistry.org/api/v1/article/getArticles?apiKey="
         + os.getenv("NEWS_API_KEY")
         + "&keyword="
         + search_query
-        + "&lang=eng&articlesSortBy=rel&articlesCount=10&isDuplicateFilter=skipDuplicates"
+        + "&lang=eng&articlesSortBy=rel&articlesCount=20&isDuplicateFilter=skipDuplicates&dateStart=2023-01-01&dateEnd="
+        + today
     )
+
     reputable_sources = get_reputable_news_sources()  # Get reputable sources
 
     news_articles = []
@@ -72,7 +78,12 @@ def get_summarised_news_articles(search_query: str):
         response = requests.get(url)
         if response.status_code == 200:
             articles = response.json()["articles"]["results"]
-            articles = [article for article in articles if article["source"]["title"] in reputable_sources]
+            # Filter articles by reputable sources
+            articles = [
+                article
+                for article in articles
+                if article["source"]["title"] in reputable_sources
+            ]
             threads = []
             summaries = [""] * len(articles)
             categories = [""] * len(articles)
