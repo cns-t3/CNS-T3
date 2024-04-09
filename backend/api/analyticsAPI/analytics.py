@@ -4,7 +4,7 @@ from typing import List
 
 
 def get_analytics(newsArticles: List[NewsArticle]) -> AnalyticsResult:
-    
+
     risk_dict = {"low": 0, "medium": 0, "high": 0}
     categories_dict = {}
     identity_dict = {"identity_0_19": 0, "identity_20_39": 0, "identity_40_59": 0, "identity_60_79": 0, "identity_80_100": 0}
@@ -46,7 +46,7 @@ def get_analytics(newsArticles: List[NewsArticle]) -> AnalyticsResult:
 
 
 def add_to_dict(count_dict: dict, key: str) -> None:
-    if key != "" or key != None:
+    if key != "" or key is not None:
         if key in count_dict:
             count_dict[key] += 1
         else:

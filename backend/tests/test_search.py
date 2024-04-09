@@ -41,7 +41,7 @@ class TestSearchAPI(unittest.TestCase):
                 "subject_summary": "",
             }
         ]
-        
+
         analytics_data = {
             "risks": {
                 "low": 0,

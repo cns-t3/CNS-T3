@@ -20,7 +20,7 @@ def get_analytics_summary(summaries: List[str]):
     try:
         if len(summaries) == 0:
             return ""
-        
+
         input = "Summarise the following articles in less than 150 words in a clear and concise manner. The summary should be written to show what had happened./n"
 
         for summary in summaries:
@@ -36,5 +36,5 @@ def get_analytics_summary(summaries: List[str]):
             ],
         )
         return response.choices[0].message.content
-    except:
+    except Exception:
         return ""
