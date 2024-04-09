@@ -1,6 +1,6 @@
 from openai import OpenAI
 from dotenv import load_dotenv
-from datetime import date
+from datetime import datetime
 from backend.api.newsAPI.pydantic_models import NewsArticle
 from tenacity import (
     retry,
@@ -57,7 +57,8 @@ def get_summarised_news_articles(search_query: str):
     """
     Retrieves and summarises news articles using NewsAI API and GPT-3.5 API.
     """
-    today = date.today()
+    today = datetime.today().strftime('%Y-%m-%d')
+
     url = (
         "http://eventregistry.org/api/v1/article/getArticles?apiKey="
         + os.getenv("NEWS_API_KEY")
