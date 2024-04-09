@@ -143,7 +143,23 @@ Within each workflow, we run an assortment of checks and tests to ensure that th
 - unit-test-fastapi
 - sonarqube-scans
 
-We have CD which deploys to production (Azure Kubernetes Service) on every push to main. This is done via the yaml configuration files under the `k8s` folder. There are Dockerfiles for the frontend-service and for each backend API endpoint, and our `cd-pipeline.yaml` builds the Docker images and pushes them to the Docker Registry.
+We have CD which deploys to production (Azure Kubernetes Service) on every push to main. This is done via the yaml configuration files under the `k8s` folder. There are Dockerfiles for the frontend-service and for each backend API endpoint, and our `cd-pipeline.yaml` builds the Docker images, pushes them to the Docker Registry, pull images from the registry and deploy them to AKS. The environment variables needed for each microservices are stored as GitHub Actions Secrets which will be retrieved when the CD workflow is run. 
+
+The environment variables used for CI and CD workflow includes (stored in GitHub Action Secrets):
+* `ANALYTICS_DNS`: Analytics MS AKS ClusterIP
+* `AZURE_CREDENTIALS`: AKS Service Principal Details to log in to Azure (including clientId, clientSecret, subscriptionId, tenantId)
+* `AZURE_SQL_URL`: Azure SQL DB URL
+* `AZURE_STORAGE_CONNECTION_STRING`: Azure Blob Storage Connection URL
+* `DOCKER_ACCESS_TOKEN`: Docker Registry Access Token
+* `DOCKER_USERNAME`: Docker Registry Username
+* `IDENTITY_DNS`: Identity MS AKS ClusterIP
+* `NEWS_API_KEY`: NewsAPI API Key
+* `NEWS_DNS`: News MS AKS ClusterIP
+* `OPENAI_API_KEY`: OpenAI API Key
+* `PERSON_DNS`: Person MS AKS ClusterIP
+* `PROD`: Production status
+* `SEARCH_DNS`: Search MS AKS ClusterIP
+* `SONAR_TOKEN`: SonarQube Access Token
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
