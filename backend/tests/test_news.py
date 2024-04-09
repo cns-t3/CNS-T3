@@ -20,6 +20,7 @@ class TestNewsAPI(unittest.TestCase):
                 "image_url": "https://media.assettype.com/sunstar%2F2024-02%2F179db7ac-60f2-41ec-ac2e-f772d885e8ce%2FUntitled_design___2024_02_19T235531_760.png?w=1200&ar=40%3A21&auto=format%2Ccompress&ogImage=true&mode=crop&enlarge=true&overlay=false&overlay_position=bottom&overlay_width=100",
                 "source_url": "https://www.sunstar.com.ph/davao/feature/estrella-golingays-reflections-on-writing",
                 "risk_rating": "low",
+                "risk_justification": "The article has no indication of high or medium risk factors",
                 "summary": "The article discusses Estrella Taño Golingay, a veteran writer in Soccsksargen, who faced challenges in fitting into the local literary community due to her linguistic heritage. Despite struggles with identity and language, Golingay carved her unique linguistic identity and pursued writing in the 'SOX Bicol' style. Her journey included educational influences, personal tragedies, and successes in literary workshops, highlighting the resilience and adaptability of writers in the region.",
                 "score": 0,
                 "category": "Others",
