@@ -2,8 +2,8 @@
 
 import { React, useState } from 'react';
 import NewsArticle from '../NewsArticle/NewsArticle';
-import Profile from '../Profile/Profile';
 import NewsSummary from '../NewsArticleDetails/NewsSummary';
+import PersonOverview from './PersonOverview';
 
 function ResultsViewer({ data }) {
   const [articleDetails, setArticleDetails] = useState(null);
@@ -28,7 +28,7 @@ function ResultsViewer({ data }) {
   };
 
   return (
-    <div className="fixed top-[210px] md:top-[160px] z-0">
+    <div className="fixed top-[210px] md:top-[160px] z-0 h-[calc(100vh-180px)] overflow-y-auto">
       <div className="px-10">
         <div className="flex flex-col lg:flex-row w-full">
           <div
@@ -36,7 +36,13 @@ function ResultsViewer({ data }) {
               articleDetails == null ? 'lg:w-1/3' : 'lg:w-1/2'
             }`}
           >
-            {articleDetails == null && <Profile profileDetails={data.person} />}
+            {articleDetails == null && (
+              <PersonOverview
+                personData={data.person}
+                analyticsData={data.analytics}
+                showAnalytics={data.newsArticles.length !== 0}
+              />
+            )}
             {articleDetails != null && (
               <NewsSummary
                 article={articleDetails}

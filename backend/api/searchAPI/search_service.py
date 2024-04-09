@@ -8,6 +8,7 @@ from backend.api.searchAPI.azure_service import download_from_azure
 from dotenv import load_dotenv
 import os
 
+
 load_dotenv()
 
 if os.getenv("PERSON_DNS"):
@@ -25,6 +26,10 @@ if os.getenv("IDENTITY_DNS"):
 else:
     identity_hostname = "127.0.0.1"
 
+if os.getenv("ANALYTICS_DNS"):
+    analytics_hostname = os.getenv("ANALYTICS_DNS")
+else:
+    analytics_hostname = "127.0.0.1"
 
 def search_person_service(search_query: str):
     params = {"name": search_query}
@@ -97,8 +102,19 @@ def get_search_result_from_person(person, daily_job=False):
         raise HTTPException(
             status_code=500, detail="Error occurred during identity verification"
         )
+    response = response.json()
 
-    return_object = SearchResult(**response.json(), lastUpdated=date_str)
+    # analytics
+    encapsulated_dict = {"newsArticles": response["newsArticles"]}
+    analytics_endpoint = f"http://{analytics_hostname}:8004/analytics"
+    analytics_res = requests.post(
+        analytics_endpoint, data=json.dumps(encapsulated_dict)
+    )
+    if analytics_res.status_code != 200:
+        raise HTTPException(
+            status_code=500, detail="Error occurred during analytics retrieval"
+        )
+    return_object = SearchResult(person=response['person'], newsArticles=response['newsArticles'], analytics=analytics_res.json(), lastUpdated=date_str)
     return return_object
 
 

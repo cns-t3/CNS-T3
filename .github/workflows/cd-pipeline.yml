@@ -41,6 +41,11 @@ jobs:
           docker build --build-arg OPENAI_API_KEY=${{secrets.OPENAI_API_KEY}} -f ./backend/api/identityAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/identity:${{ github.sha }} .
           docker push ${{secrets.DOCKER_USERNAME}}/identity:${{ github.sha }}
 
+      - name: Build and Push Docker Images for AnalyticsAPI
+        run: |
+          docker build --build-arg OPENAI_API_KEY=${{secrets.OPENAI_API_KEY}} -f ./backend/api/analyticsAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/analytics:${{ github.sha }} .
+          docker push ${{secrets.DOCKER_USERNAME}}/analytics:${{ github.sha }}
+
       - name: Build and Push Docker Images for SearchAPI
         run: |
           docker build --build-arg PERSON_DNS=${{secrets.PERSON_DNS}} --build-arg NEWS_DNS=${{secrets.NEWS_DNS}} --build-arg IDENTITY_DNS=${{secrets.IDENTITY_DNS}} --build-arg AZURE_STORAGE_CONNECTION_STRING=${{secrets.AZURE_STORAGE_CONNECTION_STRING}} --build-arg PROD=${{secrets.PROD}} -f ./backend/api/searchAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/search:${{ github.sha }} .
@@ -72,6 +77,7 @@ jobs:
           sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/person-deployment.yml
           sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/news-deployment.yml
           sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/identity-deployment.yml
+          sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/analytics-deployment.yml
           sed -i "s/\${COMMIT-HASH}/${{ github.sha }}/g" ./k8s/search-deployment.yml
 
       - name: Deploy to AKS
@@ -87,6 +93,9 @@ jobs:
 
           kubectl apply -f ./k8s/identity-deployment.yml
           kubectl apply -f ./k8s/identity-service.yml
+
+          kubectl apply -f ./k8s/analytics-deployment.yml
+          kubectl apply -f ./k8s/analytics-service.yml
 
           kubectl apply -f ./k8s/search-deployment.yml
           kubectl apply -f ./k8s/search-service.yml
