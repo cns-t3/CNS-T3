@@ -36,3 +36,4 @@ class Person(BaseModel):
 class SearchResult(BaseModel):
     person: Person
     newsArticles: List[NewsArticle]
+    lastUpdated: str
