@@ -31,6 +31,7 @@ if os.getenv("ANALYTICS_DNS"):
 else:
     analytics_hostname = "127.0.0.1"
 
+
 def search_person_service(search_query: str):
     params = {"name": search_query}
     # Get person's profile
@@ -114,7 +115,12 @@ def get_search_result_from_person(person, daily_job=False):
         raise HTTPException(
             status_code=500, detail="Error occurred during analytics retrieval"
         )
-    return_object = SearchResult(person=response['person'], newsArticles=response['newsArticles'], analytics=analytics_res.json(), lastUpdated=date_str)
+    return_object = SearchResult(
+        person=response["person"],
+        newsArticles=response["newsArticles"],
+        analytics=analytics_res.json(),
+        lastUpdated=date_str,
+    )
     return return_object
 
 
@@ -122,5 +128,5 @@ def get_search_result_azure(person):
     blob_name = str(person["person_id"])
     azure_search_results, date_str = download_from_azure(blob_name)
     json_data = json.loads(azure_search_results)
-    result = SearchResult(**json_data, lastUpdated=date_str)
+    result = SearchResult(**json_data)
     return result
