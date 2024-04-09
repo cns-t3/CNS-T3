@@ -30,6 +30,13 @@ export default function NewsSummary({ article, onClose }) {
         <div className="flex items-center">
           <h1 className="text-xl font-bold text-gray-800">{article.title}</h1>
         </div>
+        {/* Risk Rating Justification */}
+        {article.risk_justification && (
+          <div className="pt-4">
+            <p className="font-semibold text-sm">Risk Justification:</p>
+            <p className="text-gray-600 text-sm pt-2">{article.risk_justification}</p>
+          </div>
+        )}
         {/* Summary with smaller font */}
         <div className="pt-4">
           <p className="font-semibold text-sm">Summary:</p>
