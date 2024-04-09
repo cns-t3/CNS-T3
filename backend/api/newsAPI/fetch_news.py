@@ -174,4 +174,3 @@ def handle_body(article_body, news_id, summaries, categories, risks, subject_sum
     risks[news_id] = result["risk_rating"]
     subject_summaries[news_id] = result["subject_summary"]
     justifications[news_id] = result["risk_justification"]
-
