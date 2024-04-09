@@ -41,15 +41,18 @@ class TestSearchAPI(unittest.TestCase):
                 "subject_summary": "",
             }
         ]
+        last_updated = "2024-04-09"
 
         mock_get.return_value = {
             "person": person_data,
             "newsArticles": news_data,
+            "lastUpdated": last_updated,
         }
         response = self.client.get("search?person_id=4")
         expected_response = {
             "person": person_data,
             "newsArticles": news_data,
+            "lastUpdated": last_updated,
         }
 
         self.assertEqual(response.status_code, 200)
