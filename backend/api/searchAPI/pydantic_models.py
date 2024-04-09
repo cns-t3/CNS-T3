@@ -56,3 +56,4 @@ class SearchResult(BaseModel):
     person: Person
     newsArticles: List[NewsArticle]
     analytics: Optional[Analytics] = None
+    lastUpdated: str

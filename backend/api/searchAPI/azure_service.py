@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from dotenv import load_dotenv
 from azure.storage.blob import BlobServiceClient
 
@@ -22,8 +23,10 @@ def download_from_azure(blob_name):
             container="fyp2024g01cns", blob=blob_name
         )
         downloader = blob_client.download_blob(max_concurrency=1, encoding="UTF-8")
+        last_modified = blob_client.get_blob_properties().last_modified
+        last_modified_readable = datetime.strftime(last_modified, "%Y-%m-%d")
         blob_text = downloader.readall()
-        return blob_text
+        return blob_text, last_modified_readable
     except Exception as e:
         print("error")
         print(e)

@@ -186,6 +186,7 @@ function Result({ data }) {
   return (
     <>
       <ResultHeader
+        dateModified={data.lastUpdated}
         selectedFilterOptions={selectedFilterOptions}
         setSelectedFilterOptions={setSelectedFilterOptions}
         setFilterNow={setFilterNow}
