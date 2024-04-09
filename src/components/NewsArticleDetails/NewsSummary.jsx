@@ -55,9 +55,9 @@ export default function NewsSummary({ article, onClose }) {
             </a>
           </div>
         </div>
-        {/* <div className="mt-4">
-          <p>Analytics: {article.analytics}</p>
-        </div> */}
+        <div className="mt-4">
+          <p>{article.risk_justification}</p>
+        </div>
       </div>
     </div>
   );

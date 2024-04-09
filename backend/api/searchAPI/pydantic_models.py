@@ -11,6 +11,7 @@ class NewsArticle(BaseModel):
     image_url: str
     source_url: str
     risk_rating: str
+    risk_justification:str
     summary: str
     score: int
     category: str

@@ -46,7 +46,10 @@ function NewsArticle({ articleDetails, onOpen }) {
         </p>
       </div>
       <div className="flex items-center relative md:flex-row flex-col md:space-x-3">
-        <RiskRating riskRating={articleDetails.risk_rating} />
+        <RiskRating
+          riskRating={articleDetails.risk_rating}
+          riskJustification={articleDetails.risk_justification}
+        />
         <IdentityMatching score={articleDetails.score} />
       </div>
     </button>
