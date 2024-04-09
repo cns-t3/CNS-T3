@@ -9,9 +9,13 @@
 
 <details id="table-of-contents">
     <summary>Content Page</summary>
+    <br>
     <ol>
         <li>
             <a href="#introduction">Introduction</a>
+        </li>
+        <li>
+            <a href="#features">Features</a>
         </li>
         <li>
             <a href="#system-architecture">System Architecture</a>
@@ -33,16 +37,38 @@
 
 ## Introduction
 
+<div align="center">
+	<img src="./public/readme/insightify_ui.jpg" alt="system" height="400">
+</div>
+
 The objective of our application is to smoothen and automate the KYC process for banks. Our application uses `Next.js` for the frontend, `Python FastAPI` as the API backend, `Tailwind` for the CSS styling library and is deployed on `Azure Cloud` via k8s and Docker containers. Automated Docs with Swagger UI has been set up under the /docs route.
 
 On localhost, the rewrite will be made to the `127.0.0.1:8000` port, which is where the FastAPI server is running. The frontend NextJs app is routed by default to the `127.0.0.1:3000` port.
 
 <p align="right">(<a href="#table-of-contents">back to top</a>)</p>
 
+## Important Features
+
+<ol>
+    <li>
+        Overview of all News Articles
+        <ul>
+            <li>Risk Levels</li>
+            <li>Identity Score</li>
+            <li>Categories</li>
+            <li>News Roundup (Articles with >75% Identity Match)</li>
+        </ul>
+    </li>
+    <li>View Summary of News Articles for selected client</li>
+    <li>View Risk Ratings and Identity Matching Score of News Articles</li>
+    <li>Sort and Filter by Category, Risk Rating and Identity Match</li>
+</ol>
+<p align="right">(<a href="#table-of-contents">back to top</a>)</p>
+
 ## System Architecture
 
 <div align="center">
-	<img src="./public/readme/microservice_diagram.jpg" alt="microservice" height="400">
+	<img src="./public/readme/system_archi.jpg" alt="system" height="400">
 </div>
 
 <p align="right">(<a href="#table-of-contents">back to top</a>)</p>
@@ -50,7 +76,7 @@ On localhost, the rewrite will be made to the `127.0.0.1:8000` port, which is wh
 ## Microservice Architecture
 
 <div align="center">
-	<img src="./public/readme/system_archi.jpg" alt="system" height="400">
+	<img src="./public/readme/microservice_diagram.jpg" alt="microservice" height="400">
 </div>
 
 <p align="right">(<a href="#table-of-contents">back to top</a>)</p>
@@ -83,10 +109,10 @@ Then, run the development server:
 ```bash
 npm run dev
 && 
-uvicorn backend.api.personAPI.main:app --port 8001 & uvicorn backend.api.newsAPI.main:app --port 8002 & uvicorn backend.api.searchAPI.main:app --port 8000
+uvicorn backend.api.searchAPI.main:app --port 8000  & uvicorn backend.api.personAPI.main:app --port 8001 & uvicorn backend.api.newsAPI.main:app --port 8002  & uvicorn backend.api.identityAPI.main:app --port 8003 & uvicorn backend.api.analyticsAPI.main:app --port 8004
 ```
 
-The FastApi server (searchAPI Complex Microservice) will be running on http://127.0.0.1:8000, while the NextJs frontend will be running on http://127.0.0.1:3000.
+The FastApi server (searchAPI Complex Microservice) will be running on `http://127.0.0.1:8000`, while the NextJs frontend will be running on `http://127.0.0.1:3000`.
 
 #### Running Unit and Integration Tests
 
