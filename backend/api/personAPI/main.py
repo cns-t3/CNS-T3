@@ -6,7 +6,7 @@ from backend.api.personAPI.person_service import (
     get_person_by_id,
     search_person_by_name,
     get_all_persons,
-    get_similar_names
+    get_similar_names,
 )
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
