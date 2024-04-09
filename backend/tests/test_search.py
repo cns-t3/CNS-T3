@@ -41,15 +41,36 @@ class TestSearchAPI(unittest.TestCase):
                 "subject_summary": "",
             }
         ]
+        
+        analytics_data = {
+            "risks": {
+                "low": 0,
+                "medium": 100,
+                "high": 0
+            },
+            "categories": {
+                "Source Of Wealth": 1
+            },
+            "identityScores": {
+                "identity_0_19": 1,
+                "identity_20_39": 0,
+                "identity_40_59": 0,
+                "identity_60_79": 0,
+                "identity_80_100": 0
+            },
+            "summary": "Article 1: The article discusses a new partnership between two major technology companies to develop a revolutionary product that will combine their expertise in software and hardware. This collaboration aims to create a cutting-edge device that will enhance user experiences and offer advanced features that have not been seen in the market before.\n\nArticle 2: The article reports on a significant breakthrough in the medical field, where researchers have successfully developed a new treatment for a previously incurable disease. This innovative therapy has shown promising results in clinical trials, providing hope for patients suffering from this debilitating condition. The medical community is optimistic about the potential impact of this new treatment in improving patient outcomes and quality of life."
+        }
 
         mock_get.return_value = {
             "person": person_data,
             "newsArticles": news_data,
+            "analytics": analytics_data,
         }
         response = self.client.get("search?person_id=4")
         expected_response = {
             "person": person_data,
             "newsArticles": news_data,
+            "analytics": analytics_data,
         }
 
         self.assertEqual(response.status_code, 200)
