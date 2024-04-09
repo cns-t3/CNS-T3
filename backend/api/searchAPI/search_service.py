@@ -40,7 +40,7 @@ def search_person_service(search_query: str):
 
 # To get all persons in the database
 def search_persons_service():
-    person_all_endpoint = "http://{person_hostname}:8001/persons/"
+    person_all_endpoint = f"http://{person_hostname}:8001/persons/"
     response = requests.get(person_all_endpoint)
     if response.status_code != 200:
         raise HTTPException(status_code=404, detail="No persons found")

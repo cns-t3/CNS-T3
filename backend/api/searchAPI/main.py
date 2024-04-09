@@ -20,9 +20,7 @@ app = FastAPI()
     response_model=SearchResult,
 )
 async def get_articles_by_query(
-    person_id: int = Query(
-        ..., description="Search query of the articles to return"
-    ),
+    person_id: int = Query(..., description="Search query of the articles to return"),
 ):
     response = get_person_by_id(person_id)
     return response
