@@ -6,6 +6,9 @@ from backend.api.searchAPI.azure_service import download_from_azure
 
 from dotenv import load_dotenv
 import os
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
 
@@ -77,7 +80,7 @@ def get_search_result_from_person(person, daily_job=False):
         except Exception as e:
             print("Not found in cache")
             print(e)
-
+    logging.info("bflkerbflekjfnkjrbfjlk")
     news_endpoint = f"http://{news_hostname}:8002/news/" + person["name"]
     response = requests.get(news_endpoint)
     if response.status_code != 200:
@@ -110,6 +113,7 @@ def get_search_result_from_person(person, daily_job=False):
             status_code=500, detail="Error occurred during analytics retrieval"
         )
     return_object = SearchResult(person=response['person'], newsArticles=response['newsArticles'], analytics=analytics_res.json())
+    logging.info(analytics_res["identityScores"]["identity_20_39"])
     return return_object
 
 
