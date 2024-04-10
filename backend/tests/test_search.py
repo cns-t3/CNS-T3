@@ -35,6 +35,7 @@ class TestSearchAPI(unittest.TestCase):
                 "image_url": "https://s.yimg.com/ny/api/res/1.2/k9CWikJ4u6pbuoJhjs0WvQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/techcrunch_350/46b1f5a3f001ab7511a238ce81c05e54",
                 "source_url": "https://news.yahoo.com/ac-ventures-closes-210m-indonesia-020033546.html?guccounter=1&guce_referrer=aHR0cDovL3Jzcy5uZXdzLnlhaG9vLmNvbS9yc3MvYnVzaW5lc3M&guce_referrer_sig=AQAAAIs1aP3gI3MbJGyy2kSB9iMziY24GMROefOvLPsx7zTUhtyPpagS7CGbDpIbSjG5ugBb4VBslI6CvfJBJU9PPViLxYsJ6wcQNJXzdeSHgHoZo38CWvH_hDDCsW78F9uyAtRkZvp4bOiPeP7BZInbNHtS_Z9fAOslC9AphaChubHH",
                 "risk_rating": "low",
+                "risk_justification": "This news is not related to any high or medium risk factors.",
                 "summary": "AC Ventures, based in Jakarta, Indonesia, raised $210 million for its fifth fund, attracting investors from various regions. The firm targets Southeast Asian startups for investment, with a focus on Indonesia's growing economy. Fund V will support startups in fintech, e-commerce, health tech, and climate sectors, prioritizing those with social and environmental impacts. AC Ventures stresses gender parity and inclusive leadership in its portfolio and offers support to startups in business development, partnerships, and fundraising.",
                 "score": 0,
                 "category": "business",

@@ -8,7 +8,7 @@
 
 3. Determine whether the article focuses on an individual engaging in the action rather than their associated company, and provide a true or false response. For example, ascertain if the article is about Tim Cook investing personally, not Apple as a company.
 
-4. Give me a risk rating (low, medium or high) based on the following cases:
+4. Give me a risk rating (low, medium or high) based on the following cases and include one sentence of 15 words or less reasoning for the justification of the selected risk:
 High Risk Rating Cases:
 - Legal Issues: Scandals or legal troubles involving the client, News about the client being involved in fraud or money laundering investigations.
 - Financial Distress: Reports of the client facing bankruptcy or financial instability, Significant debt or default issues.
@@ -27,4 +27,4 @@ If the news does not belong to any of the above cases, return Low for its risk r
 
 5. Identify the subject in the article, be it an entity or person. Generate a profile summary of the subject based on the information from the article in less than 100 words.
 
-Return the data in JSON format: {"summary": "", "category": "", "risk_rating":"", "subject_summary": ""}"""
+Return the data in JSON format: {"summary": "", "category": "", "risk_rating": "", "subject_summary": "", "risk_justification": ""}"""
