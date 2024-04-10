@@ -46,6 +46,18 @@ def get_search_patterns():
     return formatted_string
 
 
+def get_risk_cases():
+    with open("backend/api/newsAPI/risk_cases.json", "r") as file:
+        data = json.load(file)
+    final_string = ""
+    for risk_level, cases in data.items():
+        final_string += f"{risk_level}:"
+        for case in cases:
+            final_string += f"{case},"
+
+    return final_string.strip()
+
+
 # New function to get reputable news sources from JSON
 def get_reputable_news_sources():
     with open("backend/api/newsAPI/news_sources.json", "r") as file:
@@ -60,11 +72,11 @@ def get_summarised_news_articles(search_query: str):
     today = datetime.today().strftime('%Y-%m-%d')
 
     url = (
-        "http://eventregistry.org/api/v1/article/getArticles?apiKey="
+        "https://eventregistry.org/api/v1/article/getArticles?apiKey="
         + os.getenv("NEWS_API_KEY")
         + "&keyword="
         + search_query
-        + "&lang=eng&articlesSortBy=rel&articlesCount=20&isDuplicateFilter=skipDuplicates&dateStart=2023-01-01&dateEnd="
+        + "&lang=eng&articlesSortBy=rel&articlesCount=100&isDuplicateFilter=skipDuplicates&dateStart=2023-01-01&dateEnd="
         + today
     )
 
@@ -138,11 +150,13 @@ def summarise_article(article_body, client):
     prompt = get_prompt()
     categories = get_categories()
     search_patterns = get_search_patterns()
+    risk_rating_cases = get_risk_cases()
     prompt = prompt.replace("{{ categories }}", categories)
     prompt = prompt.replace("{{ search_patterns }}", search_patterns)
+    prompt = prompt.replace("{{ risk_rating_cases }}", risk_rating_cases)
 
     completion = client.chat.completions.create(
-        temperature=0.6,
+        temperature=0,
         model="gpt-3.5-turbo-0125",
         response_format={"type": "json_object"},
         messages=[

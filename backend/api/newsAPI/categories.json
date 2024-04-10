@@ -12,15 +12,18 @@
       "sale proceeds",
       "merger & acquisition",
       "M&A",
-      "leveraged buyout"
+      "leveraged buyout",
+      "layoff",
+      "retrenchment"
     ],
     "Family Circumstances": [
-      "Marry",
+      "marry",
       "marriage",
       "divorce",
       "separation",
       "children",
-      "child"
+      "child",
+      "parents"
     ],
     "Sanctioned Countries": [
       "Cuba",
