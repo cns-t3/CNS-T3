@@ -9,7 +9,7 @@ app = FastAPI()
 
 
 @app.get(
-    "/news/{search_query}",
+    "/news/",
     response_model=List[NewsArticle],
     tags=["news"],
     summary="Get news articles",

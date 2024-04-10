@@ -25,6 +25,8 @@ Medium-Risk Cases:
 
 If the news does not belong to any of the above cases, return Low for its risk rating.
 
-5. Identify the subject in the article, be it an entity or person. Generate a profile summary of the subject based on the information from the article in less than 100 words.
+5. Provide one sentence of 50 words or less for the justification of the selected risk. The format should be: The risk rating is due to [reason]
+
+6. Identify the subject in the article, be it an entity or person. Generate a profile summary of the subject based on the information from the article in less than 100 words.
 
 Return the data in JSON format: {"summary": "", "category": "", "risk_rating": "", "subject_summary": "", "risk_justification": ""}"""

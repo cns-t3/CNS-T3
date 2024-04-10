@@ -62,7 +62,7 @@ def get_person_by_id(person_id):
     params = {"person_id": person_id}
 
     # Get person's profile
-    person_endpoint = f"http://{person_hostname}:8001/persons/id"
+    person_endpoint = f"http://{person_hostname}:8001/person/id"
     response = requests.get(person_endpoint, params=params)
     if response.status_code != 200:
         raise HTTPException(
