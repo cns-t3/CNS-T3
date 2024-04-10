@@ -44,7 +44,7 @@ export default function SearchBar() {
               onChange={(e) => handleSearchChange(e.target.value)}
               onKeyDown={handleSearchSubmit}
               autoComplete="off"
-              className="text-gray-700 bg-transparent w-full md:text-base text-sm focus:outline-none caret-red-500"
+              className="text-gray-700 bg-transparent w-full text-base focus:outline-none caret-red-500"
             />
           </div>
           {isLoading ? <Spinner /> : null}

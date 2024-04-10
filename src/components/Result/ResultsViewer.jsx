@@ -28,11 +28,11 @@ function ResultsViewer({ data }) {
   };
 
   return (
-    <div className="fixed top-[210px] md:top-[160px] z-0 h-[calc(100vh-180px)] overflow-y-auto">
+    <div className="fixed top-[230px] md:top-[180px] z-0 h-[calc(100vh-230px)] md:h-[calc(100vh-180px)] overflow-y-auto">
       <div className="px-10">
         <div className="flex flex-col lg:flex-row w-full">
           <div
-            className={`flex bg-beige rounded-md h-min lg:order-last lg:overflow-y-auto lg:h-[calc(100vh-180px)] ${
+            className={`flex bg-beige rounded-md h-min lg:order-last lg:overflow-y-auto lg:h-[calc(100vh-200px)] w-full ${
               articleDetails == null ? 'lg:w-1/3' : 'lg:w-1/2'
             }`}
           >

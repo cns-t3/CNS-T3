@@ -33,6 +33,6 @@ if os.getenv("PROD"):
             schedule.run_pending()
             time.sleep(1)
 
-    schedule.every().day.at("00:00").do(get_daily_data)
+    schedule.every().day.at("02:10").do(get_daily_data)
     scheduler_thread = threading.Thread(target=run_scheduler)
     scheduler_thread.start()

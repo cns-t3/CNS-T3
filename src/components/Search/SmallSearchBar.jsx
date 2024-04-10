@@ -48,7 +48,7 @@ export default function SmallSearchBar({ initialValue }) {
             autoComplete="off"
             onChange={handleChange}
             onKeyDown={onSearchSubmit}
-            className="md:text-base text-sm bg-transparent w-4/5 focus:outline-none caret-red-500"
+            className="text-base bg-transparent w-4/5 focus:outline-none caret-red-500"
           />
           <div className="w-1/5 flex justify-end items-center">
             {isLoading ? (
