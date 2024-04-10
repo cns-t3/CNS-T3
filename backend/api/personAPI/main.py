@@ -25,7 +25,13 @@ app.add_middleware(
 )
 
 
-@app.get("/persons/id", response_model=PersonSchema)
+@app.get(
+    "/person/id",
+    tags=["person"],
+    summary="Get the profile of a single person",
+    description="Returns person's profile with the corresponding person id",
+    response_model=PersonSchema,
+)
 async def get_persons_by_id(
     person_id: int = Query(None), db: Session = Depends(get_db)
 ):
@@ -53,7 +59,13 @@ async def get_persons_by_id(
     )
 
 
-@app.get("/persons/search", response_model=List[PersonSchema])
+@app.get(
+    "/persons/search",
+    tags=["persons"],
+    summary="Get the profiles of persons with partial or full match",
+    description="Returns profiles of persons with partial or full match",
+    response_model=List[PersonSchema],
+)
 async def search_persons_by_name(
     name: str = Query(None, min_length=1), db: Session = Depends(get_db)
 ):
@@ -87,12 +99,23 @@ async def search_persons_by_name(
     return results
 
 
-@app.get("/persons")
+@app.get(
+    "/persons",
+    summary="Get the profiles of persons all the people in the database",
+    description="Returns all profiles in the database",
+    tags=["persons"],
+)
 async def get_persons(db: Session = Depends(get_db)):
     return get_all_persons(db)
 
 
-@app.get("/persons/similar_search", response_model=List[PersonSchema])
+@app.get(
+    "/persons/similar_search",
+    tags=["persons"],
+    summary="Get the profiles of persons based on matching algorithm",
+    description="Returns profiles of persons based on matching algorithm",
+    response_model=List[PersonSchema],
+)
 async def search_similar_names(
     name: str = Query(None, min_length=1), db: Session = Depends(get_db)
 ):

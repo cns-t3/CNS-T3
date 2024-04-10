@@ -24,7 +24,7 @@ function Result({ data }) {
     date: 'all time',
   });
   const [filteredData, setFilteredData] = useState(data);
-  const [selectedSortOption, setSelectedSortOption] = useState('Newest to Oldest');
+  const [selectedSortOption, setSelectedSortOption] = useState('High to Low Risk');
 
   useEffect(() => {
     setSelectedFilterOptions((prevOptions) => ({

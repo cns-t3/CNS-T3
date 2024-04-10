@@ -6,25 +6,46 @@
 - To determine the category, these are the search patterns for each category:
 {{ search_patterns }}
 
+Here are a few examples of articles and their correct category:
+
+Example 1 Article: Anthony Tan, the co-founder and CEO of Grab, Southeast Asia's leading super app, has seen his net worth dramatically increase in the past year, consolidating his position as one of the region's top tech billionaires. As of the latest reports, Tan's net worth is estimated to be around $820 million, a stark increase driven by Grab's recent financial performances and expanded market reach.
+Example 1 Category: Source of Wealth
+
+Example 2 Article: In a rare glimpse into his personal life, Prime Minister Lee Hsien Loong recently opened up about the balance he strives to maintain between his public duties and private family affairs. 
+Married to Ho Ching, the CEO of Temasek Holdings, Lee comes from a prominent family that has significantly influenced Singapore's political landscape. His father, Lee Kuan Yew, was Singapore's founding father and served as the first Prime Minister from 1959 to 1990, a legacy that deeply impacts the nation. Together, Lee and Ho Ching have two sons, who, despite their lineage, have been kept away from the limelight, reflecting Lee's commitment to their privacy and normalcy.
+Example 2 Category: Family Circumstances
+
+Based on the above instructions and examples, go through the article and decide what is the most suitable category for the article. Do not decide until you have looked through the article and thought about what is the most suitable category. If you cannot decide on a category for the article, return Others.
+
 3. Determine whether the article focuses on an individual engaging in the action rather than their associated company, and provide a true or false response. For example, ascertain if the article is about Tim Cook investing personally, not Apple as a company.
 
-4. Give me a risk rating (low, medium or high) based on the following cases and include one sentence of 15 words or less reasoning for the justification of the selected risk:
-High Risk Rating Cases:
-- Legal Issues: Scandals or legal troubles involving the client, News about the client being involved in fraud or money laundering investigations.
-- Financial Distress: Reports of the client facing bankruptcy or financial instability, Significant debt or default issues.
-- Sanctions and Embargoes: News indicating that the client or their associated entities are subject to sanctions or embargoes, News indicating that the client is investing in a sanctioned country (given above).
-- Politically Exposed Persons (PEP): Identification of the client as a PEP, News about the client's involvement with politically sensitive activities.
-Industry-specific Risks: Regulatory violations or controversies within the client's industry, Any news indicating non-compliance with industry standards.
+Here are a few examples of articles and their correct response (True/False):
 
-Medium-Risk Cases:
-- Change in Business Activities: Reports of significant changes in the client's business model or activities.
-- Mergers and Acquisitions: News about the client being involved in mergers, acquisitions, or significant corporate restructuring.
-- Market Performance: Fluctuations in the client's stock prices or financial performance.
-- Management Changes: Significant changes in the client's leadership or management team.
-- Partnerships and Alliances: News about the client forming partnerships or alliances that may pose moderate risks.
+Example 1 Article: Cupertino, CA - Tim Cook, CEO of Apple Inc., continues to steer the technology giant through periods of significant innovation and complex global challenges. Since taking over from Steve Jobs in 2011, Cook has overseen the launch of groundbreaking products including the Apple Watch, AirPods, and various new services such as Apple TV+, which have diversified Apple's revenue streams beyond the iPhone.
+Example 1 Answer: True
 
-If the news does not belong to any of the above cases, return Low for its risk rating.
+Example 2 Article: Cupertino, CA - Under the stewardship of CEO Tim Cook, Apple Inc. remains at the cutting edge of the technology sector, persistently introducing revolutionary products and services. Since assuming leadership in 2011 following the passing of founder Steve Jobs, Cook has successfully guided Apple through the launch of market-defining products like the Apple Watch and AirPods, as well as services such as Apple TV+ and Apple Arcade, significantly broadening Apple's market scope beyond the iconic iPhone.
+Example 2 Answer: False
 
-5. Identify the subject in the article, be it an entity or person. Generate a profile summary of the subject based on the information from the article in less than 100 words.
+Based on the examples above, look through the article and generate a suitable answer.
+
+4. Give me a risk rating (Low, Medium or High) of the article.
+
+To determine the risk rating of the article, these are the example cases of each risk rating:
+{{ risk_rating_cases }}
+
+Here are a few examples of articles and their correct risk rating:
+
+Example 1 Article: Anthony Tan, the co-founder and CEO of Grab, Southeast Asia's leading super app, has seen his net worth dramatically increase in the past year, consolidating his position as one of the region's top tech billionaires. As of the latest reports, Tan's net worth is estimated to be around $820 million, a stark increase driven by Grab's recent financial performances and expanded market reach.
+Example 1 Risk Rating: Low
+
+Example 2 Article: Singapore - Oversea-Chinese Banking Corporation (OCBC), one of Singapore’s leading financial institutions, is currently under investigation for potential regulatory violations within the banking industry, authorities said Thursday. The investigation focuses on possible lapses in OCBC's money laundering controls which may have breached both local and international compliance standards.
+Example 2 Risk Rating: High
+
+Based on the examples above, look through the article and decide on the risk rating. If the news does not belong to any of the above cases, return Low for its risk rating.
+
+5. Provide one sentence of 50 words or less for the justification of the selected risk. The format should be: The risk rating is due to [reason].
+
+6. Identify the subject in the article, be it an entity or person. Generate a profile summary of the subject based on the information from the article in less than 100 words.
 
 Return the data in JSON format: {"summary": "", "category": "", "risk_rating": "", "subject_summary": "", "risk_justification": ""}"""

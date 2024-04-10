@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from backend.api.newsAPI.main import app
 from unittest.mock import patch
 
+
 class TestNewsAPI(unittest.TestCase):
 
     def setUp(self):
@@ -28,6 +29,6 @@ class TestNewsAPI(unittest.TestCase):
             }
         ]
         mock_get.side_effect = [mock_news_data]
-        response = self.client.get("/news/anthony%20tan")
+        response = self.client.get("/news/?search_query=anthony%20tan")
         self.assertListEqual(response.json(), mock_news_data)
         self.assertEqual(response.status_code, 200)

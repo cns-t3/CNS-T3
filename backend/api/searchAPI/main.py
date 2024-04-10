@@ -15,8 +15,8 @@ app = FastAPI()
 @app.get(
     "/search",
     tags=["search"],
-    summary="Get relevant news articles and social media posts by search query",
-    description="Returns person's profile and an array of news articles",
+    summary="Get profile, summary analytics and relevant news articles by search query",
+    description="Returns person's profile, summary analytics and an array of news articles",
     response_model=SearchResult,
 )
 async def get_articles_by_query(

@@ -11,7 +11,7 @@ app = FastAPI()
     response_model=SearchResult,
     tags=["identity"],
     summary="Get identity search results",
-    description="Returns a person and an array of news articles with identity matching",
+    description="Returns a person and an array of news articles with identity matching score",
 )
 async def get_identity_search_results(searchResult: SearchResult):
     try:

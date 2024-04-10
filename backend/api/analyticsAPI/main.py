@@ -11,8 +11,11 @@ app = FastAPI()
     response_model=AnalyticsResult,
     tags=["analytics"],
     summary="Get analytics for search results",
+    description="Returns overall count of risk ratings, categories, identity matching scores and overall news roundup",
 )
-async def get_identity_search_results(analyticsRequest: AnalyticsRequest) -> AnalyticsResult:
+async def get_identity_search_results(
+    analyticsRequest: AnalyticsRequest,
+) -> AnalyticsResult:
     try:
         analyticsRequest = get_analytics(analyticsRequest.newsArticles)
         return analyticsRequest
