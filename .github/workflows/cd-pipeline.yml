@@ -8,7 +8,7 @@ on:
   #     - completed
   push:
     branches:
-      - "feature/*"
+      - "hotfix/*"
 
 jobs:
   build-and-push-images:
