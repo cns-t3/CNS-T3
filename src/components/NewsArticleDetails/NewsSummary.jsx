@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function NewsSummary({ article, onClose }) {
   return (
-    <div className="flex flex-row p-8">
+    <div className="flex flex-row p-8 pl-4">
       <button
         type="button"
         className="text-red transition duration-300 ease-in-out pr-4"
@@ -40,14 +40,8 @@ export default function NewsSummary({ article, onClose }) {
         {/* Summary with smaller font */}
         <div className="pt-4">
           <p className="font-semibold text-sm">Summary:</p>
-          <p className="text-gray-600 text-sm pt-2">{article.summary}</p>
+          <p className="text-gray-600 text-sm pt-2 text-balance">{article.summary}</p>
         </div>
-        {/* Content with a top border as a divider and smaller font */}
-        {/* <div className="mt-4 pt-4 border-t border-blue-300">
-          <p className="text-gray-600 text-sm whitespace-pre-wrap">
-            {article.content}
-          </p>
-        </div> */}
         {/* Read More Link */}
         <div className="pt-4">
           <div>
@@ -56,15 +50,12 @@ export default function NewsSummary({ article, onClose }) {
               href={article.source_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 hover:text-gray-800 text-sm underline transition duration-300 ease-in-out"
+              className="text-gray-600 hover:text-gray-800 text-sm underline transition duration-300 ease-in-out break-all"
             >
               {article.source_url}
             </a>
           </div>
         </div>
-        {/* <div className="mt-4">
-          <p>Analytics: {article.analytics}</p>
-        </div> */}
       </div>
     </div>
   );

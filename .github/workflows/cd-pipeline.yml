@@ -51,7 +51,7 @@ jobs:
 
       - name: Build and Push Docker Images for SearchAPI
         run: |
-          docker build --build-arg PERSON_DNS=${{secrets.PERSON_DNS}} --build-arg NEWS_DNS=${{secrets.NEWS_DNS}} --build-arg IDENTITY_DNS=${{secrets.IDENTITY_DNS}} --build-arg AZURE_STORAGE_CONNECTION_STRING=${{secrets.AZURE_STORAGE_CONNECTION_STRING}} --build-arg PROD=${{secrets.PROD}} -f ./backend/api/searchAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/search:${{ github.sha }} .
+          docker build --build-arg PERSON_DNS=${{secrets.PERSON_DNS}} --build-arg NEWS_DNS=${{secrets.NEWS_DNS}} --build-arg IDENTITY_DNS=${{secrets.IDENTITY_DNS}} --build-arg ANALYTICS_DNS=${{secrets.ANALYTICS_DNS}} --build-arg AZURE_STORAGE_CONNECTION_STRING=${{secrets.AZURE_STORAGE_CONNECTION_STRING}} --build-arg PROD=${{secrets.PROD}} -f ./backend/api/searchAPI/Dockerfile -t ${{secrets.DOCKER_USERNAME}}/search:${{ github.sha }} .
           docker push ${{secrets.DOCKER_USERNAME}}/search:${{ github.sha }}
 
   deploy-to-aks:

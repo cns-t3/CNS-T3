@@ -32,7 +32,11 @@ const formatDate = (inputDate) => {
 
 const customLoader = ({ src }) => src;
 
-function Profile({ profileDetails }) {
+function Profile({
+  profileDetails,
+  showMore,
+  setShowMore,
+}) {
   const formattedDate = profileDetails.dob !== '' ? formatDate(profileDetails.dob) : '';
 
   return (
@@ -72,9 +76,22 @@ function Profile({ profileDetails }) {
           )}
         </div>
       </div>
-      <div id="profile-description" className="text-sm mt-5">
-        {profileDetails.description}
-      </div>
+      {showMore ? (
+        <div
+          id="profile-description"
+          className="text-sm mt-5 text-balance"
+        >
+          {profileDetails.description}
+        </div>
+      ) : (
+        <button
+          className="text-xs mt-5 underline cursor-pointer text-sky-800 w-full text-center font-bold"
+          onClick={() => setShowMore(true)}
+          type="button"
+        >
+          Show More
+        </button>
+      )}
     </div>
   );
 }

@@ -8,7 +8,7 @@ function Analytics({
   analyticsData,
 }) {
   return (
-    <div className="p-8 pt-0">
+    <div className="px-8">
       <div className="text-base font-bold">
         Overview
       </div>
