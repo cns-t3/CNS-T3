@@ -1,19 +1,14 @@
 ---
 name: FYP CD Pipeline
 on:
-  # workflow_run:
-  #   workflows: [FYP CI Pipeline]
-  #   branches: [main]
-  #   types:
-  #     - completed
-  push:
-    branches:
-      - "hotfix/*"
-
+  workflow_run:
+    workflows: [FYP CI Pipeline]
+    branches: [main]
+    types:
+      - completed
 jobs:
   build-and-push-images:
     runs-on: ubuntu-latest
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
