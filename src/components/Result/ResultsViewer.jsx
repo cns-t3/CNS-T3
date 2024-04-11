@@ -28,11 +28,11 @@ function ResultsViewer({ data }) {
   };
 
   return (
-    <div className="fixed top-[210px] md:top-[160px] z-0 h-[calc(100vh-180px)] overflow-y-auto">
+    <div className="fixed top-[230px] md:top-[180px] z-0 h-[calc(100vh-250px)] md:h-[calc(100vh-180px)] overflow-y-auto">
       <div className="px-10">
         <div className="flex flex-col lg:flex-row w-full">
           <div
-            className={`flex bg-beige rounded-md h-min lg:order-last lg:overflow-y-auto lg:h-[calc(100vh-180px)] ${
+            className={`flex bg-beige rounded-md lg:order-last lg:overflow-y-auto lg:h-[calc(100vh-200px)] w-full ${
               articleDetails == null ? 'lg:w-1/3' : 'lg:w-1/2'
             }`}
           >
@@ -52,7 +52,7 @@ function ResultsViewer({ data }) {
           </div>
           <div
             id="news-articles-container"
-            className={`flex flex-col pt-5 lg:pt-0 lg:overflow-y-auto lg:h-[calc(100vh-180px)] ${
+            className={`flex flex-col pt-5 lg:pt-0 lg:overflow-y-auto h-[calc(100vh-250px)] lg:h-[calc(100vh-180px)] ${
               articleDetails == null
                 ? 'lg:w-2/3 pr-4'
                 : 'lg:w-1/2 lg:pr-4 hidden lg:flex'

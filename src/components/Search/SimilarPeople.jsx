@@ -67,7 +67,7 @@ export default function SimilarPeople({
       {similarPeopleArr.length > 0 ? (
         <div id="similarPeople" className="flex flex-row space-x-2 text-sm text-gray-700">
           <div className="italic">Did you mean: </div>
-          <div className={isSmall ? 'p-0' : 'flex flex-col space-y-2'}>
+          <div className={isSmall ? 'p-0 flex flex-row space-x-3' : 'flex flex-col space-y-2'}>
             {similarPeopleArr.map((person) => (
               <SearchTag
                 key={person.person_id}

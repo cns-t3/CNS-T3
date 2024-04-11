@@ -24,12 +24,6 @@ function ResultHeader({
             <p className="px-3 font-semibold text-gray-500">Results</p>
             <hr className="border-red border-t-2" />
           </div>
-          <div className="flex place-items-end">
-            <p className="font-light italic text-xs px-5 pb-1 text-gray-500">
-              {dateString}
-            </p>
-            <hr className="border-t-2" />
-          </div>
         </div>
         <div className="flex flex-row relative">
           <SortButton
@@ -44,7 +38,13 @@ function ResultHeader({
           />
         </div>
       </div>
-      <hr className=" mb-5" />
+      <hr className=" mb-3" />
+      <div className="flex place-items-end">
+        <p className="font-light italic text-xs pl-3 pb-1 text-gray-500">
+          {dateString}
+        </p>
+        <hr className="border-t-2" />
+      </div>
     </div>
   );
 }

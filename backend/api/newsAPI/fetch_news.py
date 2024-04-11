@@ -134,8 +134,8 @@ def get_summarised_news_articles(search_query: str):
                 thread.join()
             for i in range(len(news_articles)):
                 news_articles[i].summary = summaries[i]
-                news_articles[i].category = categories[i]
-                news_articles[i].risk_rating = risks[i]
+                news_articles[i].category = categories[i] if categories[i] != "" else "Others"
+                news_articles[i].risk_rating = risks[i] if risks[i] != "" else "Low"
                 news_articles[i].subject_summary = subject_summaries[i]
                 news_articles[i].risk_justification = justifications[i]
             return news_articles
